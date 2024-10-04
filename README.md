@@ -1,2 +1,2 @@
 # C-Examples
-C++ (11) Examples
+C++ Examples
