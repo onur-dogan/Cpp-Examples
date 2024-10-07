@@ -1,5 +1,5 @@
 # C-Examples
-C++ (11) Examples
+C++ Project with some examples and notes
 
 
 **Some Quick Notes**
