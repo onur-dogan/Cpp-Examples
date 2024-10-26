@@ -180,6 +180,37 @@ const void calculateBMI()
          << endl;
 }
 
+const void calculateVehicleExpenses()
+{
+    float gasolinePerLiterPrice, averageDistanceWithPerLiter, parkingFees, vehicleTolls, traveledKM, totalExpenses = 0, totalUsedGasolineLiter = 0, totalGasolineExpenses = 0;
+
+    cout << "-- Calculate Daily Vehicle Expenses (All input should be number!) --" << endl;
+
+    cout << "Enter Gasoline liter price:" << endl;
+    cin >> gasolinePerLiterPrice;
+
+    cout << "Enter Parking fees:" << endl;
+    cin >> parkingFees;
+
+    cout << "Enter Vehicle tolls:" << endl;
+    cin >> vehicleTolls;
+
+    cout << "Enter Distance traveled by the vehicle with 1 liter of gasoline:" << endl;
+    cin >> averageDistanceWithPerLiter;
+
+    cout << "How many km will be traveled" << endl;
+    cin >> traveledKM;
+
+    totalUsedGasolineLiter = traveledKM / averageDistanceWithPerLiter;
+    totalGasolineExpenses = totalUsedGasolineLiter * gasolinePerLiterPrice;
+    totalExpenses = parkingFees + vehicleTolls + totalGasolineExpenses;
+
+    cout << "Total traveled KM: " << traveledKM << " KM" << endl;
+    cout << "Total Gasoline Expenses: " << totalGasolineExpenses << endl;
+    cout << "Total Daily Expenses: " << totalExpenses << endl;
+    cout << "Total Daily Expenses for 1 KM: " << totalExpenses / traveledKM << endl;
+}
+
 int main()
 {
     // Makes some calculations between two integers entered by the user
@@ -196,4 +227,7 @@ int main()
 
     // Calculates BMI(Body Mass Index) and show the result
     // calculateBMI();
+
+    // Calculates daily vehicle drive expenses
+    calculateVehicleExpenses();
 }
