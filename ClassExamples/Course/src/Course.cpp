@@ -51,6 +51,11 @@ float Course::getCourseGradeLength() const
 void Course::displayCourseGradeAverageText() const
 {
     std::cout << "Number of participants: " << getCourseGradeLength();
+    /**
+     * ** setprecision ** limitates the length of the numbers after comma
+     * ** fixed ** writes floating-point values in fixed-point notation.
+     * The value is represented with exactly as many digits in the decimal part as specified by the precision field (precision) and with no exponent part.
+     * */
     std::cout << std::setprecision(2) << std::fixed;
     std::cout << "\nAverage Grade: " << getCourseGradeAverage() << std::endl;
 }

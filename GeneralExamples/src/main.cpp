@@ -231,22 +231,26 @@ void forLoopFunction(int loopLength)
 
 void whileLoopFunction(int loopLength)
 {
-    int total, counter = 1;
-    while (counter <= loopLength)
+    int total, counter = 0;
+    // Shorthand to increase counter in order instead of increasing it at last in func
+    while (++counter <= loopLength)
     {
         total += counter;
-        counter++;
+        std::cout << counter << std::endl;
+        ;
     }
 }
 
 void doWhileLoopFunction(int loopLength)
 {
+    // Because of do works initially, the counter should start from 1
     int total, counter = 1;
     do
     {
         total += counter;
-        counter++;
-    } while (counter <= loopLength);
+        std::cout << counter << std::endl;
+        ;
+    } while (++counter <= loopLength);
 }
 
 const void loopComparator()
@@ -265,6 +269,17 @@ const void loopComparator()
     double doWhileLoopSpentTime = loopReader(loopLength, doWhileLoopFunction);
     std::cout << doWhileLoopSpentTime << " Milisecond spent - Do-While Loop\n"
               << std::endl;
+}
+
+const void printNumbersInOrder(){
+    int shouldPrintEvenNumbers;
+    std::cout << "Enter 1 to print even numbers. Otherwise, it prints odd numbers" << std::endl;
+    std::cin >> shouldPrintEvenNumbers;
+
+    std::cout << " ** Numbers ** \n";
+    for(unsigned i = shouldPrintEvenNumbers == 1 ? 2 : 1; i <= 100; i+=2){
+        std::cout << i << std::endl;;
+    }
 }
 
 int main()
@@ -288,5 +303,8 @@ int main()
     // calculateVehicleExpenses();
 
     // Loop comparator by getting a length value from the user
-    loopComparator();
+    // loopComparator();
+
+    // Print even or odd numbers
+    printNumbersInOrder();
 }
