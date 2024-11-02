@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 0.1)
-project(test VERSION 0.1.0 LANGUAGES C CXX)
+project(cppExamples)
 
 add_executable(Cpp-Examples GeneralExamples/src/main.cpp)
 

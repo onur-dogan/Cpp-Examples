@@ -1,37 +1,36 @@
 #include <iostream>
 #include <math.h>
 #include <unordered_map>
-
-using namespace std;
+#include <chrono>
 
 const void calculateWithNumbers()
 {
     int number1 = 0, number2 = 0, sum = 0;
 
-    cout << "Enter the first integer: " << endl;
-    cin >> number1;
+    std::cout << "Enter the first integer: " << std::endl;
+    std::cin >> number1;
 
-    cout << "Enter the second integer: " << endl;
-    cin >> number2;
+    std::cout << "Enter the second integer: " << std::endl;
+    std::cin >> number2;
 
-    cout << "Number 1 + Number 2 ==>  " << number1 + number2
-         << "\nNumber 1 - Number 2 ==> " << number1 - number2
-         << "\nNumber 1 * Number 2 ==> " << number1 * number2
-         << "\nNumber 1 / Number 2 ==> " << number1 / number2 << endl;
+    std::cout << "Number 1 + Number 2 ==>  " << number1 + number2
+              << "\nNumber 1 - Number 2 ==> " << number1 - number2
+              << "\nNumber 1 * Number 2 ==> " << number1 * number2
+              << "\nNumber 1 / Number 2 ==> " << number1 / number2 << std::endl;
 }
 
 const void compareNumbers()
 {
     int number1 = 0, number2 = 0;
-    cout << "Enter the first number" << endl;
-    cin >> number1;
+    std::cout << "Enter the first number" << std::endl;
+    std::cin >> number1;
 
-    cout << "Enter the second number" << endl;
-    cin >> number2;
+    std::cout << "Enter the second number" << std::endl;
+    std::cin >> number2;
 
-    cout << ((number1 > number2) ? "1. number is higher than 2. number" : (number1 == number2) ? "The numbers are equal"
-                                                                                               : "2. number is higher than 1. number")
-         << endl;
+    std::cout << ((number1 > number2) ? "1. number is higher than 2. number" : (number1 == number2) ? "The numbers are equal"
+                                                                                                    : "2. number is higher than 1. number")
+              << std::endl;
 }
 
 const void drawShapes()
@@ -39,8 +38,8 @@ const void drawShapes()
     int selectedShape;
     size_t totalShapeLength = 10;
 
-    cout << "Draw one of the shapes (Enter the number to draw it):" << "\n1 ==> Square" << "\n2 ==> Ellipse" << endl;
-    cin >> selectedShape;
+    std::cout << "Draw one of the shapes (Enter the number to draw it):" << "\n1 ==> Square" << "\n2 ==> Ellipse" << std::endl;
+    std::cin >> selectedShape;
 
     switch (selectedShape)
     {
@@ -50,29 +49,29 @@ const void drawShapes()
             for (int col = 0; col <= totalShapeLength; col++)
             {
                 // After putting the last *, go to the next line.
-                // endl manipulator inserts a **newline** and flushes the stream.
+                // std::endl manipulator inserts a **newline** and flushes the stream.
                 if (col == totalShapeLength)
                 {
-                    cout << "*" << endl;
+                    std::cout << "*" << std::endl;
                     continue;
                 }
 
                 // Draw the asteriks in a line at the first and the latest lines
                 if ((row == 0) || (row == totalShapeLength))
                 {
-                    cout << "* ";
+                    std::cout << "* ";
                     continue;
                 }
 
                 // Draw asteriks at the first column only if the row isn't first or the last
                 if (col == 0)
                 {
-                    cout << "* ";
+                    std::cout << "* ";
                     continue;
                 }
 
                 // Draw empty lines to equalize the spaces
-                cout << "  ";
+                std::cout << "  ";
             }
         }
         break;
@@ -85,11 +84,11 @@ const void drawShapes()
                 {
                     if (col == totalShapeLength)
                     {
-                        cout << " " << endl;
+                        std::cout << " " << std::endl;
                         continue;
                     }
 
-                    cout << (((col > 3) && (col < 7)) ? "*" : " ");
+                    std::cout << (((col > 3) && (col < 7)) ? "*" : " ");
                     continue;
                 }
 
@@ -97,11 +96,11 @@ const void drawShapes()
                 {
                     if (col == totalShapeLength)
                     {
-                        cout << "  " << endl;
+                        std::cout << "  " << std::endl;
                         continue;
                     }
 
-                    cout << (((col == 2) || (col == 8)) ? "*" : " ");
+                    std::cout << (((col == 2) || (col == 8)) ? "*" : " ");
                     continue;
                 }
 
@@ -109,26 +108,26 @@ const void drawShapes()
                 {
                     if (col == totalShapeLength)
                     {
-                        cout << "  " << endl;
+                        std::cout << "  " << std::endl;
                         continue;
                     }
 
-                    cout << (((col == 1) || (col == 9)) ? "*" : " ");
+                    std::cout << (((col == 1) || (col == 9)) ? "*" : " ");
                     continue;
                 }
 
                 if (col == 0)
                 {
-                    cout << "*";
+                    std::cout << "*";
                     continue;
                 }
 
                 if (col == totalShapeLength)
                 {
-                    cout << "*" << endl;
+                    std::cout << "*" << std::endl;
                     continue;
                 }
-                cout << " ";
+                std::cout << " ";
             }
         }
         break;
@@ -140,75 +139,132 @@ const void drawShapes()
 const void showASCIIEquivalent()
 {
     char character;
-    cout << "Enter any character to see ASCII equivalent" << endl;
-    cin >> character;
+    std::cout << "Enter any character to see ASCII equivalent" << std::endl;
+    std::cin >> character;
 
-    cout << static_cast<int>(character) << endl;
+    std::cout << static_cast<int>(character) << std::endl;
 
     int number;
-    cout << "Enter any ASCII number to see it's equivalent character" << endl;
-    cin >> number;
+    std::cout << "Enter any ASCII number to see it's equivalent character" << std::endl;
+    std::cin >> number;
 
-    cout << static_cast<char>(number) << endl;
+    std::cout << static_cast<char>(number) << std::endl;
 }
 
 const void calculateBMI()
 {
     double height, weight, bmiValue;
-    unordered_map<string, string> bmiValues{{"Obese", " > 30"}, {"Overweight", " 25 * 29.9"}, {"Normal", " 18.5 - 24.9"}, {"Underweight", " < 18.5"}};
+    std::unordered_map<std::string, std::string> bmiValues{{"Obese", " > 30"}, {"Overweight", " 25 * 29.9"}, {"Normal", " 18.5 - 24.9"}, {"Underweight", " < 18.5"}};
 
-    cout << "** BMI LIMITS **" << endl;
+    std::cout << "** BMI LIMITS **" << std::endl;
 
     for (auto value = bmiValues.begin(); value != bmiValues.end(); value++)
     {
-        cout << value->first + ":" << value->second << endl;
+        std::cout << value->first + ":" << value->second << std::endl;
     }
-    cout << "\nEnter your height: " << endl;
-    cin >> height;
+    std::cout << "\nEnter your height: " << std::endl;
+    std::cin >> height;
 
-    cout << "Enter your weight: " << endl;
-    cin >> weight;
+    std::cout << "Enter your weight: " << std::endl;
+    std::cin >> weight;
 
     bmiValue = weight / (pow(height / 100, 2));
-    cout << "Your BMI index is: "
-         << bmiValue
-         << " (" + (next(bmiValues.begin(), (bmiValue < 18.5) ? 0 : (bmiValue < 25) ? 1
-                                                                : (bmiValue < 30)   ? 2
-                                                                                    : 3)
-                        ->first) +
-                ")"
-         << endl;
+    std::cout << "Your BMI index is: "
+              << bmiValue
+              << " (" + (next(bmiValues.begin(), (bmiValue < 18.5) ? 0 : (bmiValue < 25) ? 1
+                                                                     : (bmiValue < 30)   ? 2
+                                                                                         : 3)
+                             ->first) +
+                     ")"
+              << std::endl;
 }
 
 const void calculateVehicleExpenses()
 {
     float gasolinePerLiterPrice, averageDistanceWithPerLiter, parkingFees, vehicleTolls, traveledKM, totalExpenses = 0, totalUsedGasolineLiter = 0, totalGasolineExpenses = 0;
 
-    cout << "-- Calculate Daily Vehicle Expenses (All input should be number!) --" << endl;
+    std::cout << "-- Calculate Daily Vehicle Expenses (All input should be number!) --" << std::endl;
 
-    cout << "Enter Gasoline liter price:" << endl;
-    cin >> gasolinePerLiterPrice;
+    std::cout << "Enter Gasoline liter price:" << std::endl;
+    std::cin >> gasolinePerLiterPrice;
 
-    cout << "Enter Parking fees:" << endl;
-    cin >> parkingFees;
+    std::cout << "Enter Parking fees:" << std::endl;
+    std::cin >> parkingFees;
 
-    cout << "Enter Vehicle tolls:" << endl;
-    cin >> vehicleTolls;
+    std::cout << "Enter Vehicle tolls:" << std::endl;
+    std::cin >> vehicleTolls;
 
-    cout << "Enter Distance traveled by the vehicle with 1 liter of gasoline:" << endl;
-    cin >> averageDistanceWithPerLiter;
+    std::cout << "Enter Distance traveled by the vehicle with 1 liter of gasoline:" << std::endl;
+    std::cin >> averageDistanceWithPerLiter;
 
-    cout << "How many km will be traveled" << endl;
-    cin >> traveledKM;
+    std::cout << "How many km will be traveled" << std::endl;
+    std::cin >> traveledKM;
 
     totalUsedGasolineLiter = traveledKM / averageDistanceWithPerLiter;
     totalGasolineExpenses = totalUsedGasolineLiter * gasolinePerLiterPrice;
     totalExpenses = parkingFees + vehicleTolls + totalGasolineExpenses;
 
-    cout << "Total traveled KM: " << traveledKM << " KM" << endl;
-    cout << "Total Gasoline Expenses: " << totalGasolineExpenses << endl;
-    cout << "Total Daily Expenses: " << totalExpenses << endl;
-    cout << "Total Daily Expenses for 1 KM: " << totalExpenses / traveledKM << endl;
+    std::cout << "Total traveled KM: " << traveledKM << " KM" << std::endl;
+    std::cout << "Total Gasoline Expenses: " << totalGasolineExpenses << std::endl;
+    std::cout << "Total Daily Expenses: " << totalExpenses << std::endl;
+    std::cout << "Total Daily Expenses for 1 KM: " << totalExpenses / traveledKM << std::endl;
+}
+
+const auto loopReader(int loopLength, void (*loopFunction)(int))
+{
+    auto startTime = std::chrono::high_resolution_clock::now();
+    loopFunction(loopLength);
+    auto endTime = std::chrono::high_resolution_clock::now();
+
+    auto timeDifference = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
+    return timeDifference.count();
+}
+
+void forLoopFunction(int loopLength)
+{
+    int total;
+    for (int i = 1; i <= loopLength; i++)
+    {
+        total += i;
+    }
+}
+
+void whileLoopFunction(int loopLength)
+{
+    int total, counter = 1;
+    while (counter <= loopLength)
+    {
+        total += counter;
+        counter++;
+    }
+}
+
+void doWhileLoopFunction(int loopLength)
+{
+    int total, counter = 1;
+    do
+    {
+        total += counter;
+        counter++;
+    } while (counter <= loopLength);
+}
+
+const void loopComparator()
+{
+    int loopLength, total, forLoop;
+
+    std::cout << "Enter loop length: " << std::endl;
+    std::cin >> loopLength;
+
+    double forLoopSpentTime = loopReader(loopLength, forLoopFunction);
+    std::cout << forLoopSpentTime << " Milisecond spent - For Loop\n";
+
+    double whileLoopSpentTime = loopReader(loopLength, whileLoopFunction);
+    std::cout << whileLoopSpentTime << " Milisecond spent - While Loop\n";
+
+    double doWhileLoopSpentTime = loopReader(loopLength, doWhileLoopFunction);
+    std::cout << doWhileLoopSpentTime << " Milisecond spent - Do-While Loop\n"
+              << std::endl;
 }
 
 int main()
@@ -229,5 +285,8 @@ int main()
     // calculateBMI();
 
     // Calculates daily vehicle drive expenses
-    calculateVehicleExpenses();
+    // calculateVehicleExpenses();
+
+    // Loop comparator by getting a length value from the user
+    loopComparator();
 }
