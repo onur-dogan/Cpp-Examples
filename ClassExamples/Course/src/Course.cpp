@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Course.h"
+#include <iomanip>
 
 Course::Course(std::string defaultCourseName, std::string defaultCourseInstructor, int defaultCourseNameLimit)
     : courseNameLimit(defaultCourseNameLimit), courseInstructor(defaultCourseInstructor)
@@ -18,6 +19,15 @@ void Course::setCourseInstructor(std::string newCourseInstructor)
     courseInstructor = newCourseInstructor;
 }
 
+void Course::setCourseGradeAverage(float totalGrade, int gradesLength)
+{
+    if (totalGrade <= 0 | gradesLength < 1)
+        return;
+
+    courseGradeLength = gradesLength;
+    courseGradeAverage = static_cast<double>(totalGrade) / gradesLength;
+}
+
 std::string Course::getCourseName() const
 {
     return courseName;
@@ -26,6 +36,23 @@ std::string Course::getCourseName() const
 std::string Course::getCourseInstructor() const
 {
     return courseInstructor;
+}
+
+float Course::getCourseGradeAverage() const
+{
+    return courseGradeAverage;
+}
+
+float Course::getCourseGradeLength() const
+{
+    return courseGradeLength;
+}
+
+void Course::displayCourseGradeAverageText() const
+{
+    std::cout << "Number of participants: " << getCourseGradeLength();
+    std::cout << std::setprecision(2) << std::fixed;
+    std::cout << "\nAverage Grade: " << getCourseGradeAverage() << std::endl;
 }
 
 int Course::getCourseNameLength() const

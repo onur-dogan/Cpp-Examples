@@ -11,6 +11,8 @@ private:
     // Define variables that will be private and be able to be used in the class functions only
     std::string courseName;
     std::string courseInstructor;
+    float courseGradeAverage; 
+    int courseGradeLength;
     // Limit variable to store a limited string
     int courseNameLimit;
 
@@ -23,12 +25,18 @@ public:
     void setCourseName(std::string);
     // Set course instructor variable
     void setCourseInstructor(std::string);
+    // Set student grades in this course 
+    void setCourseGradeAverage(float, int);
 
     // *** Getter Functions ***
     // Get course name
     std::string getCourseName() const;
     // Get course instructor
     std::string getCourseInstructor() const;
+    // Get course grade average
+    float getCourseGradeAverage() const;
+    // Get course grades length
+    float getCourseGradeLength() const;
     // Get course name's character length
     int getCourseNameLength() const;
 
@@ -36,4 +44,6 @@ public:
     void displayCourseName() const;
     // Displays course instructor information
     void displayCourseInstructor() const;
+    // Displays course grade average text
+    void displayCourseGradeAverageText() const;
 };

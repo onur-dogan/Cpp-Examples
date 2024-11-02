@@ -22,5 +22,24 @@ int main()
     testCourse.displayCourseName();
     testCourse.displayCourseInstructor();
 
+    // Get notes for each participans
+    float grade = 0, totalGrade = 0;
+
+    // **unsigned** keyword allows the variable to be only a positive. The integer can never be a negative value
+    unsigned gradeCounter = -1;
+
+    std::cout << "Enter grades in order.. (Enter -1 to quit): \n";
+    while (grade != -1)
+    {
+        gradeCounter++;
+        totalGrade += grade;
+
+        std::cout << (gradeCounter + 1) << ". Note: ";
+        std::cin >> grade;
+    }
+
+    testCourse.setCourseGradeAverage(totalGrade, gradeCounter);
+    testCourse.displayCourseGradeAverageText();
+
     return 0;
 }
