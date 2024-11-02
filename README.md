@@ -4,3 +4,4 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 
 **Some Quick Notes**
 - `endl` manipulator inserts a **newline** and flushes the stream.
+- **Header** files shouldn't include namespaces.
