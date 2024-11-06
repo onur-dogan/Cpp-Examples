@@ -2,6 +2,8 @@
 #include <math.h>
 #include <unordered_map>
 #include <chrono>
+#include <math.h>
+#include <iomanip>
 
 const void calculateWithNumbers()
 {
@@ -212,73 +214,77 @@ const void calculateVehicleExpenses()
 
 const auto loopReader(int loopLength, void (*loopFunction)(int))
 {
+    // Time recorder
     auto startTime = std::chrono::high_resolution_clock::now();
     loopFunction(loopLength);
     auto endTime = std::chrono::high_resolution_clock::now();
 
+    // Calculate elapsed time the loop takes
     auto timeDifference = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
     return timeDifference.count();
 }
 
 void forLoopFunction(int loopLength)
 {
-    int total;
-    for (int i = 1; i <= loopLength; i++)
-    {
-        total += i;
-    }
+    int total = 0;
+    // Single line for
+    for (unsigned int i = 1; i <= loopLength; total += pow(i, 2), i++);
+
+    std::cout << "Total With For ==> " << std::setw(10) << total << std::endl;
 }
 
 void whileLoopFunction(int loopLength)
 {
-    int total, counter = 0;
+    int total = 0, counter = 0;
     // Shorthand to increase counter in order instead of increasing it at last in func
     while (++counter <= loopLength)
     {
-        total += counter;
-        std::cout << counter << std::endl;
-        ;
+        total += pow(counter, 2);
     }
+
+    std::cout << "Total With While ==> " << std::setw(10) << total << std::endl;
 }
 
 void doWhileLoopFunction(int loopLength)
 {
     // Because of do works initially, the counter should start from 1
-    int total, counter = 1;
+    int total = 0, counter = 1;
     do
     {
-        total += counter;
-        std::cout << counter << std::endl;
-        ;
+        total += pow(counter, 2);
     } while (++counter <= loopLength);
+
+    std::cout << "Total With Do-While ==> " << std::setw(10) << total << std::endl;
 }
 
 const void loopComparator()
 {
     int loopLength, total, forLoop;
 
-    std::cout << "Enter loop length: " << std::endl;
+    std::cout << "Enter number to find the sum of the squares of the numbers up to the entered number: " << std::endl;
     std::cin >> loopLength;
 
     double forLoopSpentTime = loopReader(loopLength, forLoopFunction);
-    std::cout << forLoopSpentTime << " Milisecond spent - For Loop\n";
+    std::cout << forLoopSpentTime << " Milisecond spent - For Loop\n\n";
 
     double whileLoopSpentTime = loopReader(loopLength, whileLoopFunction);
-    std::cout << whileLoopSpentTime << " Milisecond spent - While Loop\n";
+    std::cout << whileLoopSpentTime << " Milisecond spent - While Loop\n\n";
 
     double doWhileLoopSpentTime = loopReader(loopLength, doWhileLoopFunction);
-    std::cout << doWhileLoopSpentTime << " Milisecond spent - Do-While Loop\n"
+    std::cout << doWhileLoopSpentTime << " Milisecond spent - Do-While Loop\n\n"
               << std::endl;
 }
 
-const void printNumbersInOrder(){
+const void printNumbersInOrder()
+{
     int shouldPrintEvenNumbers;
     std::cout << "Enter 1 to print even numbers. Otherwise, it prints odd numbers" << std::endl;
     std::cin >> shouldPrintEvenNumbers;
 
     std::cout << " ** Numbers ** \n";
-    for(unsigned i = shouldPrintEvenNumbers == 1 ? 2 : 1; i <= 100; i+=2){
-        std::cout << i << std::endl;;
+    for (unsigned i = shouldPrintEvenNumbers == 1 ? 2 : 1; i <= 100; i += 2)
+    {
+        std::cout << i << std::endl;
     }
 }
 
