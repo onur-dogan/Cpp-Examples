@@ -6,6 +6,8 @@
 #include <iomanip>
 #include <map>
 #include <cstdlib>
+#include <random>
+#include <vector>
 
 const void calculateWithNumbers()
 {
@@ -364,6 +366,21 @@ const void generateRandomNumbers()
     if (std::cin.fail())
         throw std::invalid_argument("The limit number must be a number!");
 
+    // According to the CERT (MSC300CPP), the rand function doesn't have good statistical features so it provides predictable results,
+    // Therefore, C++11 provides the "random" library which is much safer and generates random numbers that are hard to predict.
+
+    // It uses default_random_engine to seed the engine, instead of srand func
+    std::default_random_engine randomNumberEngine(static_cast<unsigned int>(time(0)));
+    // Defines the limits of the generated numbers
+    std::uniform_int_distribution<unsigned int> randomNumberGenerator(1, numberLimit);
+
+    std::cout << "\nGenerated random numbers:\n";
+    for (int i = 0; i < 5; i++)
+        std::cout << randomNumberGenerator(randomNumberEngine) << std::endl;
+
+    return;
+    // THIS PART (Srand func usage) DISABLED BUT REVIEWABLE
+
     // Seed the number by calculating the difference between the current GMT (Greenwich Mean Time) time from 01.01.1970
     // After seeding a number via srand function, it always returns the same random number.
     // Because it changes the “seed” (starting point) of the algorithm.
@@ -419,6 +436,6 @@ int main()
     // According to the user enters, calculates average grades by using grade points and displays the class information
     // calculateGrades();
 
-    // Generates random numbers for different seed values by using srand function according to the limit
+    // Generates random numbers according to the user entered limit
     generateRandomNumbers();
 }
