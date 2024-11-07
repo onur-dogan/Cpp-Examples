@@ -4,6 +4,7 @@
 #include <chrono>
 #include <math.h>
 #include <iomanip>
+#include <map>
 
 const void calculateWithNumbers()
 {
@@ -230,7 +231,7 @@ void forLoopFunction(int loopLength)
     // Single line for
     for (unsigned int i = 1; i <= loopLength; total += pow(i, 2), i++);
 
-    std::cout << "Total With For ==> " << std::setw(10) << total << std::endl;
+    std::cout << std::setw(25) << std::left << "Total With For ==> " << std::setw(5) << std::left << total << std::endl;
 }
 
 void whileLoopFunction(int loopLength)
@@ -242,7 +243,7 @@ void whileLoopFunction(int loopLength)
         total += pow(counter, 2);
     }
 
-    std::cout << "Total With While ==> " << std::setw(10) << total << std::endl;
+    std::cout << std::setw(25) << std::left << "Total With While ==> " << std::setw(5) << std::left << total << std::endl;
 }
 
 void doWhileLoopFunction(int loopLength)
@@ -254,7 +255,7 @@ void doWhileLoopFunction(int loopLength)
         total += pow(counter, 2);
     } while (++counter <= loopLength);
 
-    std::cout << "Total With Do-While ==> " << std::setw(10) << total << std::endl;
+    std::cout << std::setw(25) << std::left << "Total With Do-While ==> " << std::setw(5) << std::left << total << std::endl;
 }
 
 const void loopComparator()
@@ -288,6 +289,65 @@ const void printNumbersInOrder()
     }
 }
 
+// Letter constants
+const std::unordered_map<char, int> lettersWithGradePoints = {{'A', 5}, {'B', 4}, {'C', 3}, {'D', 2}, {'F', 1}};
+const int groupAndCalculateGradesByLetter(char letter, int letterCount)
+{
+    try
+    {
+        // Find related letter with grade point
+        auto relatedLetter = lettersWithGradePoints.find(letter);
+
+        // Display related grade letter information and how many students got that grade
+        std::cout << letter << " (" << relatedLetter->second << ") \t" << std::setw(10) << letterCount << "\n";
+
+        return relatedLetter->second * letterCount;
+    }
+    catch (std::exception error)
+    {
+        // If any issue occurs or the related letter doesn't exist, this shouldn't affect the total results
+        return 0;
+    }
+}
+
+const void calculateGrades()
+{
+    char grade;
+    std::map<char, int> gradeCounters;
+    std::cout << "Enter grades incessantly (A, B, C, D, F) and type (Ctrl + D) to end it" << std::endl;
+
+    while ((grade = std::cin.get()) != EOF)
+    {
+        // Allows only digits a-z, A-Z and 0-9, don't allow any empty character
+        if (isxdigit(grade) && !iswdigit(grade))
+        {
+            gradeCounters[toupper(grade)]++;
+        }
+    }
+
+    std::cout << "Letter" << "\t" << "Number Of Students\n";
+
+    float totalGrade, attendersLength;
+    for (auto const &gradesWithCount : gradeCounters)
+    {
+        int calculatedTotalGradeByLetter = groupAndCalculateGradesByLetter(gradesWithCount.first, gradesWithCount.second);
+        // If the letter doesn't an available grade letter, then just ignore it
+        if (calculatedTotalGradeByLetter <= 0)
+            continue;
+
+        // Sum grades to find the total grade
+        totalGrade += calculatedTotalGradeByLetter;
+        // Increase attended student's length
+        attendersLength += gradesWithCount.second;
+    }
+
+    // Display the final results
+    std::cout << "\n *** Total Results *** \n"
+              << std::setw(35) << std::left << "Number of Students Attended:" << attendersLength << "\n"
+              << std::setw(35) << std::left << "Grage Point Average:" << std::setprecision(2) << totalGrade / attendersLength
+              << std::endl;
+}
+
 int main()
 {
     // Makes some calculations between two integers entered by the user
@@ -312,5 +372,8 @@ int main()
     // loopComparator();
 
     // Print even or odd numbers
-    printNumbersInOrder();
+    // printNumbersInOrder();
+
+    // According to the user enters, calculates average grades by using grade points and displays the class information
+    calculateGrades();
 }
