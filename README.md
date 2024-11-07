@@ -6,4 +6,4 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - `endl` manipulator inserts a **newline** and flushes the stream.
 - **Header** files shouldn't include namespaces.
 - **unsigned** keyword allows the variable to be only a positive. The integer can never be a negative value
-- `srand` function changes the seed(starting point) of the random number generator algorithm.
+- `default_random_engine` - `srand` functions change the seed(starting point) of the random number generator algorithm.
