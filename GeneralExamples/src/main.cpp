@@ -5,6 +5,7 @@
 #include <math.h>
 #include <iomanip>
 #include <map>
+#include <cstdlib>
 
 const void calculateWithNumbers()
 {
@@ -330,9 +331,9 @@ const void calculateGrades()
     float totalGrade, attendersLength;
     for (auto const &gradesWithCount : gradeCounters)
     {
-        int calculatedTotalGradeByLetter = groupAndCalculateGradesByLetter(gradesWithCount.first, gradesWithCount.second);
+        unsigned int calculatedTotalGradeByLetter = groupAndCalculateGradesByLetter(gradesWithCount.first, gradesWithCount.second);
         // If the letter doesn't an available grade letter, then just ignore it
-        if (calculatedTotalGradeByLetter <= 0)
+        if (calculatedTotalGradeByLetter == 0)
             continue;
 
         // Sum grades to find the total grade
@@ -345,6 +346,47 @@ const void calculateGrades()
     std::cout << "\n *** Total Results *** \n"
               << std::setw(35) << std::left << "Number of Students Attended:" << attendersLength << "\n"
               << std::setw(35) << std::left << "Grage Point Average:" << std::setprecision(2) << totalGrade / attendersLength
+              << std::endl;
+}
+
+const int generateRandomNumberByLimit(int limit)
+{
+    // Add 1 to each calculated number since it is available to generate 0 (between (0, limit-1)) randomly
+    return 1 + rand() % limit;
+}
+
+const void generateRandomNumbers()
+{
+    int numberLimit;
+    std::cout << "Enter a limit number that the random number can take biggest:" << std::endl;
+    std::cin >> numberLimit;
+
+    if (std::cin.fail())
+        throw std::invalid_argument("The limit number must be a number!");
+
+    // Seed the number by calculating the difference between the current GMT (Greenwich Mean Time) time from 01.01.1970
+    // After seeding a number via srand function, it always returns the same random number.
+    // Because it changes the “seed” (starting point) of the algorithm.
+    // Therefore, using the time difference ensures that a different random number is obtained each time
+    srand(static_cast<unsigned int>(time(0)));
+    std::cout << std::setw(60) << std::left << "\nGenerated random number when using time function:" << generateRandomNumberByLimit(numberLimit);
+
+    srand(12);
+    std::cout << std::setw(60) << std::left << "\nGenerated random number when seeding 12:" << generateRandomNumberByLimit(numberLimit);
+
+    srand(23);
+    std::cout << std::setw(60) << std::left << "\nGenerated random number when seeding 23:" << generateRandomNumberByLimit(numberLimit);
+
+    srand(12);
+    std::cout << std::setw(60) << std::left << "\nGenerated random number when seeding 12 again:" << generateRandomNumberByLimit(numberLimit);
+
+    srand(36);
+    std::cout << std::setw(60) << std::left << "\nGenerated random number when seeding 36:" << generateRandomNumberByLimit(numberLimit);
+
+    srand(23);
+    std::cout << std::setw(60) << std::left << "\nGenerated random number when seeding 23 again:" << generateRandomNumberByLimit(numberLimit);
+
+    std::cout << "\nWhen seeding the same number via srand function, it generates the same random number\n"
               << std::endl;
 }
 
@@ -375,5 +417,8 @@ int main()
     // printNumbersInOrder();
 
     // According to the user enters, calculates average grades by using grade points and displays the class information
-    calculateGrades();
+    // calculateGrades();
+
+    // Generates random numbers for different seed values by using srand function according to the limit
+    generateRandomNumbers();
 }
