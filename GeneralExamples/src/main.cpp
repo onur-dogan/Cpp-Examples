@@ -407,6 +407,30 @@ const void generateRandomNumbers()
               << std::endl;
 }
 
+int multiply(int num1, int num2)
+{
+    return num1 * num2;
+}
+
+double multiply(double num1, double num2)
+{
+    return num1 * num2;
+}
+
+void overloadMultiplyCalculation()
+{
+    // Function overloading is a feature of object-oriented programming
+    // where the multiple functions with the same name has different parameter data types
+    int number1 = 5, number2 = 3;
+    std::cout << "Multiply Integers (" << number1 << " with " << number2 << "):\t" << multiply(number1, number2) << std::endl;
+
+    double number3 = 5.6, number4 = 3.7;
+    std::cout << "Multiply Decimal Numbers via Same Overloaded Function ("
+              << number3 << " with " << number4 << "):\t"
+              << multiply(number3, number4)
+              << std::endl;
+}
+
 int main()
 {
     // Makes some calculations between two integers entered by the user
@@ -437,5 +461,8 @@ int main()
     // calculateGrades();
 
     // Generates random numbers according to the user entered limit
-    generateRandomNumbers();
+    // generateRandomNumbers();
+
+    // Multiply the numbers for different parameter data types in the overloaded functions with same name
+    overloadMultiplyCalculation();
 }
