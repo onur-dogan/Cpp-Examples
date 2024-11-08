@@ -5,5 +5,14 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 **Some Quick Notes**
 - `endl` manipulator inserts a **newline** and flushes the stream.
 - **Header** files shouldn't include namespaces.
-- **unsigned** keyword allows the variable to be only a positive. The integer can never be a negative value
+- **unsigned** keyword allows the variable to be only a positive. The integer can never be a negative value.
 - `default_random_engine` - `srand` functions change the seed(starting point) of the random number generator algorithm.
+- [`float (4)`, `long (4)`, `double (8)`, `long double (8)`](https://learn.microsoft.com/en-us/cpp/cpp/fundamental-types-cpp?view=msvc-170#sizes-of-built-in-types)
+- Stack: LIFO, Queue: FIFO.
+- The ampersand(&) is used in variable declarations to declare reference variable.
+- **Overloaded Function**: Function overloading is a feature of OOP where the multiple functions with the same name has different parameter data types.
+- **Temporary** is a construct that generates an ordinary type or function at compile time based on arguments the user supplies for the template parameters.
+- **Performance Concern**: If the performance is important, then better to avoid using recursion functions. It takes more time and uses more memory. The deeper the recursion, the more memory is used. Because each recursive call requires its own stack frame to store variables and other information.
+- `vector.insert()` and `vector.emplace` are used for the same purpose. However;
+    - `emplace` constructs an object in place at a specified position, potentially **avoiding a copy operation**.
+    - `insert` adds a **copy** of the object at the specified position.
