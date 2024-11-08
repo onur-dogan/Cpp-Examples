@@ -10,6 +10,7 @@
 #include <vector>
 #include <array>
 #include <algorithm>
+#include "colors.h"
 
 const void calculateWithNumbers()
 {
@@ -456,6 +457,96 @@ void sortAndSearchInArray()
               << (isExist ? "YES, it exists!!" : "Unfortunately, it doesn't exist..") << std::endl;
 }
 
+void generalVectorFeatures()
+{
+    size_t intListLength = 3, floatListLength = 4;
+
+    // For the array, it's not allowed to change array size. It has a constant length.
+    // For vectors, it's free to push or remove elements from the vector list.
+    std::vector<int> intList(intListLength);
+    std::vector<float> floatList(floatListLength);
+
+    std::cout << "Enter integer values to the list: ";
+    for (int &intItem : intList)
+        std::cin >> intItem;
+
+    std::cout << "Enter float values to the list: ";
+    for (float &floatItem : floatList)
+        std::cin >> floatItem;
+
+    // Copy vector to a new one
+    std::vector<int> backupIntList(intList);
+
+    // Compare them
+    std::cout << "Is the integer vector list same with backup vector list?:\t" << (intList == backupIntList ? "Yes!" : "No!") << std::endl;
+
+    // Try to achieve to an element index that doesn't exist and catch the error
+    try
+    {
+        std::cout << "Let's see the 100. element of the vector: " << intList.at(100) << std::endl;
+    }
+    catch (std::out_of_range &err)
+    {
+        std::cout << FORERED
+                  << "\nOops! An error occurred while attempting to see 100. element of the vector: \n"
+                  << err.what() << "\n"
+                  << RESETTEXT
+                  << std::endl;
+    }
+
+    // Push a new value to the integer list
+    std::cout << "Enter an integer value to insert into the integer list: ";
+    int newValue;
+    std::cin >> newValue;
+
+    // Add new value to the end of the vector list
+    intList.push_back(newValue);
+
+    bool isSame = intList == backupIntList;
+    // Compare it with the backup now
+    std::cout << "Is the integer vector list same with backup vector list now?:\t" << std::endl;
+    if (isSame)
+        std::cout << "Yes!\n";
+    else
+        std::cout << "No! The integer list with the latest inserting includes " << intList.size() << " element.\n"
+                  << "While the backup integer list includes " << backupIntList.size() << " element\n"
+                  << "*** So, we must take a backup again! *** \n";
+
+    std::cout << "\n\nLet's remove the latest pushed element from the vector (FIFO)" << std::endl;
+    intList.pop_back();
+
+    isSame = intList == backupIntList;
+    // Compare it with the backup after removing the latest added element
+    std::cout << "Is the integer vector list same with backup vector list after removing the latest inserted element?:\t" << std::endl;
+    if (isSame)
+        std::cout << "Yes!\n";
+    else
+        std::cout << "No! The integer list with the latest inserting includes " << intList.size() << " element.\n"
+                  << "While the backup integer list includes " << backupIntList.size() << " element\n"
+                  << "So, must take a backup again!\n";
+
+    std::cout << "*** Integer List Exercises Are Done! *** \n\n" << "*** Remaining Exercises with Decimal elements: *** \n";
+    for (float &floatItem : floatList)
+        std::cout << floatItem << std::endl;
+
+    float replaceNum1, replaceNum2;
+    std::cout << "Enter two decimal number to replace them with the first 2 element in the list";
+    std::cin >> replaceNum1 >> replaceNum2;
+
+    // Remove the first 2 element
+    floatList.erase(floatList.begin(), floatList.begin() + 2);
+
+    // *** Insert vs Emplace ***
+    // Insert adds a copy of the object at the specified position
+    floatList.insert(floatList.begin(), replaceNum2);
+    // Emplace does in place insertion and constructs an object in-place at a specified position, potentially avoiding a copy operation
+    floatList.emplace(floatList.begin(), replaceNum1);
+
+    std::cout << "\nUpdated decimal elements: \n";
+    for (float &floatItem : floatList)
+        std::cout << floatItem << std::endl;
+}
+
 int main()
 {
     // Makes some calculations between two integers entered by the user
@@ -492,5 +583,8 @@ int main()
     // overloadMultiplyCalculation();
 
     // General basic sorting and searching in array (used with array library)
-    sortAndSearchInArray();
+    // sortAndSearchInArray();
+
+    // Create some vector variables, review and test some of the vector features
+    generalVectorFeatures();
 }
