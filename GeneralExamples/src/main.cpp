@@ -8,6 +8,8 @@
 #include <cstdlib>
 #include <random>
 #include <vector>
+#include <array>
+#include <algorithm>
 
 const void calculateWithNumbers()
 {
@@ -431,6 +433,29 @@ void overloadMultiplyCalculation()
               << std::endl;
 }
 
+void sortAndSearchInArray()
+{
+    const size_t array_size = 6;
+    std::array<std::string, array_size> programming_languages = {"C", "C++", "C#", "Java", "JavaScript", "Assembly"};
+
+    std::string search;
+    std::cout << "Enter a string to search an programming languages in the list:\n";
+    std::cin >> search;
+
+    std::cout << "Array Elements: \n";
+    for (unsigned int i = 0; i < programming_languages.size(); i++)
+        std::cout << i + 1 << ". \t" << programming_languages[i] << "\n";
+
+    std::sort(programming_languages.begin(), programming_languages.end());
+    std::cout << "\nSorted Array Elements: \n";
+    for (unsigned int i = 0; i < programming_languages.size(); i++)
+        std::cout << i + 1 << ". \t" << programming_languages[i] << "\n";
+
+    bool isExist = std::binary_search(programming_languages.begin(), programming_languages.end(), search);
+    std::cout << "\n"
+              << (isExist ? "YES, it exists!!" : "Unfortunately, it doesn't exist..") << std::endl;
+}
+
 int main()
 {
     // Makes some calculations between two integers entered by the user
@@ -464,5 +489,8 @@ int main()
     // generateRandomNumbers();
 
     // Multiply the numbers for different parameter data types in the overloaded functions with same name
-    overloadMultiplyCalculation();
+    // overloadMultiplyCalculation();
+
+    // General basic sorting and searching in array (used with array library)
+    sortAndSearchInArray();
 }
