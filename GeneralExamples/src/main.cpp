@@ -637,7 +637,8 @@ void stringCharArrayUsages()
     char enteredCharacters[characterLimit];
     // Using getLine limitations when getting an input helps us to take only limited characters from the entered text
     // It gets the entered text's 20 character after the 10 character cause the above functionality takes and stores the first 10 character
-    std::cin.getline(enteredCharacters, characterLimit, '\n');
+    std::cin.getline(enteredCharacters, characterLimit);
+    // Char arrays can be displayed as a string on the terminal without using any loop
     std::cout << "The list with the allowed characters in the system:\t" << enteredCharacters << std::endl;
 }
 
