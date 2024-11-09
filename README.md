@@ -16,3 +16,6 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - `vector.insert()` and `vector.emplace` are used for the same purpose. However;
     - `emplace` constructs an object in place at a specified position, potentially **avoiding a copy operation**.
     - `insert` adds a **copy** of the object at the specified position.
+- It is important to set a default value like `nullptr` to the pointers. It might cause critical issues to update a pointer that doesn't have a default value since the value might not point to a valid memory location.
+- `lvalue` simply means an object that has an identifiable location in memory
+- `r-value` simply means, an object that has no identifiable location in memory
