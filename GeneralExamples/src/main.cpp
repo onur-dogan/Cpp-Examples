@@ -525,7 +525,8 @@ void generalVectorFeatures()
                   << "While the backup integer list includes " << backupIntList.size() << " element\n"
                   << "So, must take a backup again!\n";
 
-    std::cout << "*** Integer List Exercises Are Done! *** \n\n" << "*** Remaining Exercises with Decimal elements: *** \n";
+    std::cout << "*** Integer List Exercises Are Done! *** \n\n"
+              << "*** Remaining Exercises with Decimal elements: *** \n";
     for (float &floatItem : floatList)
         std::cout << floatItem << std::endl;
 
@@ -545,6 +546,49 @@ void generalVectorFeatures()
     std::cout << "\nUpdated decimal elements: \n";
     for (float &floatItem : floatList)
         std::cout << floatItem << std::endl;
+}
+
+size_t getSize(double *ptr)
+{
+    // Returns the pointer's size as byte
+    return sizeof(ptr);
+}
+
+void findArrayLengthBySize()
+{
+    double numbers[20];
+
+    std::cout << "The number of bytes in the array: (1 Double: 8 byte): " << sizeof(numbers)
+              << "\nThe number of bytes of the array's pointer size: " << getSize(numbers)
+              << "\nArray length (total_size/first_element_size): " << sizeof(numbers) / sizeof(numbers[0])
+              << std::endl;
+}
+
+void displayBytesByDataType()
+{
+    char c;
+    short s;
+    int i;
+    long l;
+    long long ll;
+    float f;
+    double d;
+    long double ld;
+    int array[1];
+    int *ptr = array;
+
+    std::cout << "*** Byte Sizes For Each Data Type ***" << std::endl;
+    std::cout << "\nsizeof c(char) ==> " << sizeof(c)
+              << "\nsizeof s(short) ==> " << sizeof(s)
+              << "\n\nsizeof i(int) ==> " << sizeof(i)
+              << "\n\nsizeof f(float) ==> " << sizeof(f)
+              << "\n\nsizeof d(double) ==> " << sizeof(d)
+              << "\n\nsizeof l(long) ==> " << sizeof(l)
+              << "\nsizeof ll(long long) ==> " << sizeof(ll)
+              << "\nsizeof ld(long double) ==> " << sizeof(ld)
+              << "\n\nsizeof array(int array (1 element)) ==> " << sizeof(array)
+              << "\nsizeof pointer(ptr) ==> " << sizeof(ptr)
+              << std::endl;
 }
 
 int main()
@@ -586,5 +630,11 @@ int main()
     // sortAndSearchInArray();
 
     // Create some vector variables, review and test some of the vector features
-    generalVectorFeatures();
+    // generalVectorFeatures();
+
+    // Find array length by calculating the byte size of the variables
+    // findArrayLengthBySize();
+
+    // Displays bytes for each data type
+    displayBytesByDataType();
 }
