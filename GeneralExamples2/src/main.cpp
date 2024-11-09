@@ -1,15 +1,28 @@
 #include <iostream>
 #include <math.h>
+#include <iomanip>
+
+// Ref and Ptr Examples
 
 // Set default value to the parameter
 int squareByValue(unsigned int value = 2);
 void squareByValueReference(int &);
 void squareValueAndReference();
 
+void setPointerAndMultiplyNumber();
+void multiplyNumber(int *);
+void updateConstantPointer();
+
 int main()
 {
     // Squares values in different functions to compare updating referenced values
     // squareValueAndReference();
+
+    // First setting initialization pointer and multiply calculation example
+    // setPointerAndMultiplyNumber();
+
+    // Test updating a constant pointer
+    updateConstantPointer();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -37,4 +50,79 @@ void squareValueAndReference()
     std::cout << "\nY value before triggering the squareByValue function: " << y;
     squareByValueReference(y);
     std::cout << "\nY value after squareByValue function is completed (It squares the value by taking its reference): " << y << std::endl;
+}
+
+void multiplyNumber(int *numberPtr)
+{
+    // numberPtr returns the address of the value
+    // *numberPtr returns value of the addressed variable
+    // &numberPtr returns the address of the pointer
+    *numberPtr = pow(*numberPtr, 3);
+}
+
+void setPointerAndMultiplyNumber()
+{
+    int value = 5;
+    std::cout << "Value: " << value << "\tIt's address in memory: (& gives address of a value) " << &value << std::endl;
+
+    /**
+     * Set value's address to a pointer. So, valuePtr stores the memory address of the value variable.
+     * However, as a quick note, valuePtr has another memory address. It stores the address of other value.
+     *
+     * value ==> (Value: 5, Address: 60000 (e.g.))
+     *   |             |__________________________________________________________________
+     *   |_____________________                                                           |
+     *                         |                                                          |
+     * valuePtr ==> (Value: value's Address(60000), Address: 500000 (e.g.), Pointer(*valuePtr): 5 (value variable's value))
+     */
+    int *valuePtr = &value;
+
+    // Example to explain with more detail:
+    std::cout << "\n*** Pointer stores the value's memory address as a value. Note that, it has another memory address ***"
+              << std::setw(40) << std::left << "\nValue_pointer's value: " << valuePtr
+              << std::setw(40) << std::left << "\nValue variable's memory address: " << &value
+              << std::setw(40) << std::left << "\nValue_pointer's memory address: " << &valuePtr << std::endl;
+
+    std::cout << "*** Calculation Example by using the pointers ***" << std::endl;
+    // Let's update value by making calculations with valuePtr. It has the address of value so *valuePtr mentions the value of number.
+    // Therefore, making any process on *valuePtr affects the value in the related address.
+    // So, when calculating the *valuePtr, it makes the calculation on the value. See the example:
+    std::cout << "Value before calculation: " << value << std::endl;
+
+    multiplyNumber(valuePtr);
+    std::cout << "Value after getting 3rd power of the pointer(has address of value): " << value
+              << "\nValue changes but its address (pointer value) stays the same: " << valuePtr << std::endl;
+}
+
+void updateConstantPointer()
+{
+    int number = 12, updateNumber = 20;
+    int *const ptr = &number;
+
+    std::cout << "*** Test changing the const pointer's value and address **"
+              << "\n- It allows to change the value of the const pointers but doesn't allow to change the address of it"
+              << std::endl;
+
+    std::cout << "Number: " << number
+              << "\nPointer's value (number's address) (ptr): " << ptr
+              << "\nThe number's value in the address of the pointer (*ptr): " << *ptr
+              << "\nPointer's default address (&ptr): " << &ptr << std::endl;
+    // Update pointer's value (number's value as well). It allows
+    *ptr = updateNumber;
+    std::cout << "\nUpdated Number (Updated to " << updateNumber << "): " << number
+              << "\nPointer's value after update(Should be same): " << ptr
+              << "\nThe number's value in the address of the pointer(Should be updated): " << *ptr
+              << "\nPointer's address after update(Should be same): " << &ptr << std::endl;
+
+    // However, updating the address of the pointer doesn't allow since the pointer is defined as a constant.
+    // If a pointer is defined as a constant, changing its address isn't allowed. Changing the value is allowed.
+    // Just comment out the following line to test
+    // ptr = &value;
+    
+    // If we would define the ptr as; 
+    const int *const ptr2 = &number; 
+    // Then it doesn't allow to change both of the value and address. Just comment out the following line to test
+    // It says `expression must be a modifiable lvalue`. lvalue means the variables that has an identifiable location in memory
+    // Because of it is a constant variable here, it isn't a modifiable **lvalue**. Without const tag, it would be a modifiable **lvalue**
+    // *ptr2 = updateNumber;
 }
