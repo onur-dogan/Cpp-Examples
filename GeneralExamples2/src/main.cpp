@@ -34,6 +34,7 @@ int main()
     // Test updating a constant pointer
     // updateConstantPointer();
 
+    // Explanations and examples about array, pointer connection
     arrayPointerCalculations();
 }
 

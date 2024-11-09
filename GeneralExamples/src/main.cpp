@@ -10,6 +10,14 @@
 #include <vector>
 #include <array>
 #include <algorithm>
+/**
+ * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
+ * Used {
+ *  boost::adaptors::indexed
+ * }
+ */
+#include <boost/range/adaptor/indexed.hpp>
+
 #include "colors.h"
 
 const void calculateWithNumbers()
@@ -590,6 +598,48 @@ void displayBytesByDataType()
               << "\nsizeof pointer(ptr) ==> " << sizeof(ptr)
               << std::endl;
 }
+void stringCharArrayUsages()
+{
+    // *** Character array constants have a static storage duration (they exist throughout the program) ***
+
+    // Both are the same.
+    char language[] = "Assembly";
+    // When defining char array variables, single quote should be used ==>
+    char languageWithSingleQuotes[] = {'A', 's', 's', 'e', 'm', 'b', 'l', 'y'};
+
+    std::cout << "*** First Array Elements ***" << std::endl;
+    for (auto const &character : language | boost::adaptors::indexed(1))
+        std::cout << character.index() << ". " << character.value() << std::endl;
+
+    std::cout << "*** Second Array Elements ***" << std::endl;
+    for (auto const &character : languageWithSingleQuotes | boost::adaptors::indexed(1))
+        std::cout << character.index() << ". " << character.value() << std::endl;
+
+    std::cout << language[7] << std::endl;
+    std::cout << language[0] << "\t" << languageWithSingleQuotes[0] << std::endl;
+    std::cout << "\n*** Char type array's sizes (Each char data type takes up 1 bit of space) ***"
+              << "\nFirst array's byte size: " << sizeof(language)
+              << "\nSecond array's byte size: " << sizeof(languageWithSingleQuotes)
+              << FOREYEL << "\nSo, why the first array's byte size is 9 but the second one's is 8?"
+              << FOREGRN << "\nBecause, when defining a char array as a string, it adds an epmty('\\n') element to the end of the array. See below lines ==>"
+              << RESETTEXT
+              << "\nThe last element of the first array: " << language[sizeof(language) / sizeof(language[0]) - 1]
+              << "\nThe last element of the second array: " << languageWithSingleQuotes[sizeof(languageWithSingleQuotes) / sizeof(languageWithSingleQuotes[0]) - 1]
+              << std::endl;
+
+    std::string enteredString;
+    std::cout << "\nEnter any long string\n";
+    // Using setw when getting an input helps us to take only limited characters from the entered text
+    std::cin >> std::setw(10) >> enteredString;
+    std::cout << "Allowed string to store in the system:\t" << enteredString << std::endl;
+
+    size_t characterLimit = 20; 
+    char enteredCharacters[characterLimit];
+    // Using getLine limitations when getting an input helps us to take only limited characters from the entered text
+    // It gets the entered text's 20 character after the 10 character cause the above functionality takes and stores the first 10 character
+    std::cin.getline(enteredCharacters, characterLimit, '\n');
+    std::cout << "The list with the allowed characters in the system:\t" << enteredCharacters << std::endl;
+}
 
 int main()
 {
@@ -636,5 +686,8 @@ int main()
     // findArrayLengthBySize();
 
     // Displays bytes for each data type
-    displayBytesByDataType();
+    // displayBytesByDataType();
+
+    // Gives some examples about using string/char array usages
+    stringCharArrayUsages();
 }
