@@ -1,6 +1,15 @@
 #include <iostream>
 #include <math.h>
 #include <iomanip>
+/**
+ * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
+ * Used {
+ *  boost::adaptors::indexed
+ * }
+ */
+#include <boost/range/adaptor/indexed.hpp>
+
+#include "colors.h"
 
 // Ref and Ptr Examples
 
@@ -12,6 +21,7 @@ void squareValueAndReference();
 void setPointerAndMultiplyNumber();
 void multiplyNumber(int *);
 void updateConstantPointer();
+void arrayPointerCalculations();
 
 int main()
 {
@@ -22,7 +32,9 @@ int main()
     // setPointerAndMultiplyNumber();
 
     // Test updating a constant pointer
-    updateConstantPointer();
+    // updateConstantPointer();
+
+    arrayPointerCalculations();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -118,11 +130,86 @@ void updateConstantPointer()
     // If a pointer is defined as a constant, changing its address isn't allowed. Changing the value is allowed.
     // Just comment out the following line to test
     // ptr = &value;
-    
-    // If we would define the ptr as; 
-    const int *const ptr2 = &number; 
+
+    // If we would define the ptr as;
+    const int *const ptr2 = &number;
     // Then it doesn't allow to change both of the value and address. Just comment out the following line to test
     // It says `expression must be a modifiable lvalue`. lvalue means the variables that has an identifiable location in memory
     // Because of it is a constant variable here, it isn't a modifiable **lvalue**. Without const tag, it would be a modifiable **lvalue**
     // *ptr2 = updateNumber;
+}
+
+void arrayPointerCalculations()
+{
+    // Array elements addresses are designed as ==>
+    // Values:  15    20    30    40   50   60
+    // Adress: 6000  6004  6008  6012 6014 6018
+    int number[6]{15, 20, 30, 40, 50, 60};
+    // When setting the number to a pointer, it sets the first element (15)
+    int *numberPtr = number; // Same with the int *numberPtr = &number[0];
+
+    std::cout << "*** Array Elements ***" << std::endl;
+    std::cout << "Each array element has " << sizeof(number[0]) << " byte" << std::endl;
+    for (auto const &element : number | boost::adaptors::indexed(1))
+    {
+        std::cout << element.index() << ". Element: " << element.value() << std::endl;
+    }
+
+    std::cout << "\nPointer's addressed value(Should be the first element of number array): " << *numberPtr
+              << "\nPointer's address(Should be the first number array's element's address): " << numberPtr
+              << std::endl;
+
+    std::cout << "\n*** Let's reach the two up level pointer. It should be equal to the array's 3. element ***" << std::endl;
+    // It updates the address. It adds 4 byte (byte size of array element) to the address. Let's see the process steps ==>
+    // The numberPtr was storing the number[0]'s address (6000).
+    // For each increment, it's address is updated to 6004 and then 6008. So, it has 6008 address value now.
+    // In the 6008 address, number[2] (30) exists. Therefore, *numberPtr displays the 30 and numberPtr displays 6008.
+    numberPtr += 2;
+    std::cout << "\nPointer's addressed value(Should be the third element of number array): " << *numberPtr
+              << FOREGRN
+              << "\nPointer's address(Should be the third number array's element's address (First address + (2(Increment) * 4(1 array element's byte value)))): "
+              << RESETTEXT
+              << numberPtr
+              << std::endl;
+
+    std::cout << "\n*** Let's react the 1 down level pointer. It should be equal to the array's 2. element ***" << std::endl;
+    // The numberPtr was storing the number[2]'s address (6008).
+    // It's address is updated to 6004 (and then 6000 for 2 decrement). So, it has 6004 address value now.
+    // In the 6004 address, number[1] (20) exists. Therefore, *numberPtr displays the 20 and numberPtr displays 6004.
+    numberPtr--;
+
+    std::cout << "\nPointer's addressed value(Should be the second element of number array): " << *numberPtr
+              << FOREGRN
+              << "\nPointer's address(Should be the second number array's element's address (First address + (1(Increment) * 4(1 array element's byte value)))): "
+              << RESETTEXT
+              << numberPtr
+              << std::endl;
+
+    // Let's subtract pointers from each other. Note that, for these type calculations, both of the pointers must be addressed to the same array
+    // Create a new pointer. It stores the first element of the array as default
+    int *numberPtr2 = number; // Same with the int *numberPtr2 = &number[0];
+
+    // Subtracting the pointers addresses from each other gives us the element index difference between them
+    // Examples ==>
+    std::cout << "\nAfter the latest pointer calculations, the old pointer has the address of the **second** element: " << numberPtr
+              << "\nThe new pointer is addressed to the **first** element of the array: " << numberPtr2
+              << "\nAfter subtracting their addresses, the response provides the index length between the elements: "
+              << numberPtr - numberPtr2
+              << FOREGRN << "\n(It calculates it by dividing the result to the byte size of an element (4 == 1))" << RESETTEXT
+              << "\n\nAfter the latest pointer calculations, the old pointer has the value of the **second** element: " << *numberPtr
+              << "\nThe new pointer has the value of the **first** element of the array: " << *numberPtr2
+              << "\nAfter subtracting their values: " << *numberPtr - *numberPtr2
+              << std::endl;
+
+    numberPtr += 4;
+    std::cout << "\n\n*** Let's make the same calculation by increasing both of the pointers ***"
+              << "\nAfter increasing the old pointer's address for 4 level up, it is addressed to the **sixth** element: " << numberPtr
+              << "\nThe new pointer is still addressed to the **first** element of the array: " << numberPtr2
+              << "\nAfter subtracting their addresses, the response provides the index length between the elements: "
+              << numberPtr - numberPtr2
+              << FOREGRN << "\n(It calculates it by dividing the result to the byte size of an element ((4 == 1) * 5))" << RESETTEXT
+              << "\nAfter increasing the old pointer's address for 4 level up, it has the **sixth** element's value: " << *numberPtr
+              << "\nThe new pointer is still has the **first** element's value: " << *numberPtr2
+              << "\nAfter subtracting their values: " << *numberPtr - *numberPtr2
+              << std::endl;
 }
