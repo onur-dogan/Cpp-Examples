@@ -1,3 +1,8 @@
+// Course.h
+
+#ifndef COURSE_H
+#define COURSE_H
+
 #include <iostream>
 // Need to define the used types in the header file to be able to use them in file.
 // This informs the compiler to decide how much memory should be allocated.
@@ -11,7 +16,7 @@ private:
     // Define variables that will be private and be able to be used in the class functions only
     std::string courseName;
     std::string courseInstructor;
-    float courseGradeAverage; 
+    float courseGradeAverage;
     int courseGradeLength;
     // Limit variable to store a limited string
     int courseNameLimit;
@@ -20,12 +25,13 @@ public:
     // Set course name as default in explicit(constructor)
     // It is mostly good to define a default variable in constructur instead of waiting to set a value to the variables
     explicit Course(std::string, std::string, int);
+
     // *** Setter Functions ***
     // Set course name variable
     void setCourseName(std::string);
     // Set course instructor variable
     void setCourseInstructor(std::string);
-    // Set student grades in this course 
+    // Set student grades in this course
     void setCourseGradeAverage(float, int);
 
     // *** Getter Functions ***
@@ -47,3 +53,6 @@ public:
     // Displays course grade average text
     void displayCourseGradeAverageText() const;
 };
+
+
+#endif
