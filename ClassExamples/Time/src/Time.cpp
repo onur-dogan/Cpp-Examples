@@ -63,22 +63,22 @@ void Time::setSecond(int s)
     second = s;
 }
 
-int Time::getHour()
+unsigned int Time::getHour() const
 {
     return hour;
 }
 
-int Time::getMinute()
+unsigned int Time::getMinute() const
 {
     return minute;
 }
 
-int Time::getSecond()
+unsigned int Time::getSecond() const
 {
     return second;
 }
 
-void Time::showTime()
+void Time::showTime() const
 {
     std::cout << "Time is: \t"
               << std::setfill('0')
