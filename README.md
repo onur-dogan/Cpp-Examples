@@ -17,7 +17,9 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
     - `emplace` constructs an object in place at a specified position, potentially **avoiding a copy operation**.
     - `insert` adds a **copy** of the object at the specified position.
 - It is important to set a default value like `nullptr` to the pointers. It might cause critical issues to update a pointer that doesn't have a default value since the value might not point to a valid memory location.
-- `lvalue` simply means an object that has an identifiable location in memory
-- `r-value` simply means, an object that has no identifiable location in memory
-- `char` array constants have a static storage duration (they exist throughout the program)
+- `lvalue` simply means an object that has an identifiable location in memory.
+- `r-value` simply means, an object that has no identifiable location in memory.
+- `char` array constants have a static storage duration (they exist throughout the program).
 - The `~` operator is used to reverse operation on the bytes so it makes sense to use it for `destructor` function definitions like `~Destroy()`
+- When a variable is declared as `static`, space for it gets allocated for the lifetime of the program. The space for the static variable is allocated only once.
+- Objects are created from the inside out and destroyed from the outside in via `destructor` functions.
