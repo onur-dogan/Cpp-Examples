@@ -35,12 +35,12 @@ public:
     void setSecond(int);
 
     // Getter functions to set private fields
-    int getHour();
-    int getMinute();
-    int getSecond();
+    unsigned int getHour() const;
+    unsigned int getMinute() const;
+    unsigned int getSecond() const;
 
     // Display functions
-    void showTime();
+    void showTime() const;
 
 private:
     unsigned int hour;
