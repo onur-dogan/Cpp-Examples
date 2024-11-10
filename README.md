@@ -20,3 +20,4 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - `lvalue` simply means an object that has an identifiable location in memory
 - `r-value` simply means, an object that has no identifiable location in memory
 - `char` array constants have a static storage duration (they exist throughout the program)
+- The `~` operator is used to reverse operation on the bytes so it makes sense to use it for `destructor` function definitions like `~Destroy()`
