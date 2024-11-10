@@ -1,3 +1,8 @@
+// GuessNumberTemplate.h
+
+#ifndef GUESS_NUMBER_TEMPLATE_H
+#define GUESS_NUMBER_TEMPLATE_H
+
 /**
  * Template definition uses to define parameters with temporary data types. Due to this, it allows any parameter type.
  * When the compiler sees that this function is triggered, it sets the parameter's type instead of the temporary (T) type
@@ -25,3 +30,5 @@ T GuessNumberTemplate(T randomNumber, T value1, T value2, T value3)
 
     return nearestNumber;
 }
+
+#endif
