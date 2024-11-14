@@ -19,8 +19,9 @@ public:
 
     // Setters
     void setInformations(std::string, std::string, int, Date, Date);
-    void setFirstName(std::string);
-    void setLastName(std::string);
+    Person &setFirstName(std::string);
+    Person &setLastName(std::string);
+    void setFullName(std::string, std::string);
     void setGender(int);
     void setBirthDate(Date);
     void setJoinDate(Date);

@@ -87,7 +87,7 @@ Date::~Date()
 {
     std::cout << "\nDate Class is destructing with fields:..."
               << "Year: " << year
-              << "Month: " << month
-              << "Day: " << day
+              << "\tMonth: " << month
+              << "\tDay: " << day
               << std::endl;
 }
