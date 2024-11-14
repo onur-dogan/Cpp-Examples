@@ -23,3 +23,6 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - The `~` operator is used to reverse operation on the bytes so it makes sense to use it for `destructor` function definitions like `~Destroy()`
 - When a variable is declared as `static`, space for it gets allocated for the lifetime of the program. The space for the static variable is allocated only once.
 - Objects are created from the inside out and destroyed from the outside in via `destructor` functions.
+- The `friend` class/function can access private and protected members of a class.
+    - `friend` functions in the class have permission to access any property(public/protected/private) of the class which it is defined
+    - `friend` class have permission to access public/private/protected members of other classes in which it is declared as a friend 
