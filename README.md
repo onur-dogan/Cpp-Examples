@@ -22,6 +22,7 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - `char` array constants have a static storage duration (they exist throughout the program).
 - The `~` operator is used to reverse operation on the bytes so it makes sense to use it for `destructor` function definitions like `~Destroy()`
 - When a variable is declared as `static`, space for it gets allocated for the lifetime of the program. The space for the static variable is allocated only once.
+- A `static` variable of a class, gets allocated once so it stores one value for each generated same type class. So, it isn't used to store special values for each class. It stores the class specific global variables.
 - Objects are created from the inside out and destroyed from the outside in via `destructor` functions.
 - The `friend` class/function can access private and protected members of a class.
     - `friend` functions in the class have permission to access any property(public/protected/private) of the class which it is defined
