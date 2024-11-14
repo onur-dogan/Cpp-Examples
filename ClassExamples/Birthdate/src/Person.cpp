@@ -3,13 +3,18 @@
 #include "Person.h"
 #include "Date.h"
 
+// First, set the default value of the static variables
+unsigned int Person::count = 0;
+
 // Default constructor
 Person::Person() : Person("", "", "", Date(2000, 1, 1), Date(2000, 1, 1)) {}
 
+// Main constructor
 Person::Person(std::string fName, std::string lName, std::string pGender, const Date &pBirthDate, const Date &pJoinDate)
     : firstName(fName), lastName(lName), gender(pGender), joinDate(pJoinDate)
 {
     setBirthDate(pBirthDate);
+    increaseCounter();
 }
 
 // Setter Functions
@@ -70,6 +75,11 @@ void Person::setJoinDate(Date pJoinDate)
     joinDate = pJoinDate;
 }
 
+void Person::increaseCounter()
+{
+    count++;
+}
+
 // Getter Functions
 std::string Person::getFirstName() const
 {
@@ -96,6 +106,13 @@ Date Person::getJoinDate() const
     return joinDate;
 }
 
+unsigned int Person::getPersonsCount()
+{
+    // Static functions work independently of the class so, this keyword is meaningless in the static functions
+    return count;
+}
+
+// Helper function to get gender by index
 std::string Person::getGenderByIndex(int genderIndex) const
 {
     const size_t genderLength = 3;

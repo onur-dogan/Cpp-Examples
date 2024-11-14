@@ -25,6 +25,8 @@ public:
     void setGender(int);
     void setBirthDate(Date);
     void setJoinDate(Date);
+    // Static variable setters
+    void increaseCounter();
 
     // Getters
     std::string getFirstName() const;
@@ -32,14 +34,20 @@ public:
     std::string getGender() const;
     Date getBirthDate() const;
     Date getJoinDate() const;
+    // Static variable getters
+    static unsigned int getPersonsCount();
 
     // Printers
     void showInformations() const;
+
+    // Static variables which are available to reach independently of properties of this class
+    static unsigned int count;
 
     // Destructor
     ~Person();
 
 private:
+    // Variables
     std::string firstName;
     std::string lastName;
     int age;
@@ -48,6 +56,7 @@ private:
     Date birthDate;
     Date joinDate;
 
+    // Helpers
     // It checks the gender list and returns the gender so the genders can't be different value from the defined list
     std::string getGenderByIndex(int) const;
 };

@@ -66,6 +66,7 @@ void Date::showDate() const
 
 bool Date::checkDayByMonth(int birthDay) const
 {
+    // Static variable that is allocated for the lifetime of the program so it will not be created again and again when this function is called
     static const std::array<int, monthsPerYear + 1> daysPerMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     int dayByMonth = daysPerMonth[month];
