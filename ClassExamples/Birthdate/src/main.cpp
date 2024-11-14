@@ -17,6 +17,13 @@ int main()
     firstPerson.showInformations();
     secondPerson.showInformations();
 
+    std::string newFirstName, newLastName;
+    std::cout << "Enter first and last name to change the first person's full name" << std::endl;
+    std::cin >> newFirstName >> newLastName;
+
+    firstPerson.setFullName(newFirstName, newLastName);
+    firstPerson.showInformations();
+
     std::string newName;
     std::cout << "Enter a name to change the second person's name" << std::endl;
     std::cin >> newName;

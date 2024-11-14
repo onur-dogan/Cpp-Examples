@@ -22,16 +22,36 @@ void Person::setInformations(std::string fName, std::string lName, int genderInd
     setJoinDate(pJoinDate);
 }
 
-void Person::setFirstName(std::string fName)
+Person &Person::setFirstName(std::string firstName)
 {
-    if (fName.length() > 0)
-        firstName = fName;
+    if (firstName.length() > 0)
+        // Use this keyword to access the properties of class.
+        // e.g. the parameter has the same name as a private member so this keyword is used to specify the related class's field
+        this->firstName = firstName;
+
+    // Return class properties reference to support repeatedly updates
+    return *this;
 }
 
-void Person::setLastName(std::string lName)
+Person &Person::setLastName(std::string lastName)
 {
-    if (lName.length() > 0)
-        lastName = lName;
+    if (lastName.length() > 0)
+        // Use this keyword to access the properties of class.
+        // e.g. the parameter has the same name as a private member so this keyword is used to specify the related class's field
+        this->lastName = lastName;
+
+    // Return class properties reference to support repeatedly updates
+    return *this;
+}
+
+// Function to update fields repeatedly
+void Person::setFullName(std::string firstName, std::string lastName)
+{
+    // this-> is same with (*this). So, why used parentheses here? Wouldn't it work without parentheses?
+    // Because the dot(.) operator is prioritized higher than the asterisk(*) operator.
+    // The compiler would show an error if try to use it without parentheses
+    // this->setFirstName(firstName).setLastName(lastName);
+    (*this).setFirstName(firstName).setLastName(lastName);
 }
 
 void Person::setGender(int genderIndex)
