@@ -8,6 +8,11 @@
 
 class Person
 {
+    // Friend setter function
+    // The friend functions in the class have permission to access any property(public/protected/private) of the class which it is defined
+    // and can update the private fields directly. If the func wouldn't be declared as a friend, it can't even access the private properties
+    friend void setFirstNameByFriendFunc(Person &, std::string);
+
 public:
     explicit Person(const std::string, const std::string, const std::string, const Date &, const Date &);
     Person();
