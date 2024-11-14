@@ -107,6 +107,12 @@ void Person::showInformations() const
     joinDate.showDate();
 }
 
+// Friend Setter Functions
+void setFirstNameByFriendFunc(Person &person, std::string newFirstName)
+{
+    person.firstName = newFirstName;
+}
+
 // Destructor
 Person::~Person()
 {

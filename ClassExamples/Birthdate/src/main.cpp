@@ -16,4 +16,11 @@ int main()
 
     firstPerson.showInformations();
     secondPerson.showInformations();
+
+    std::string newName;
+    std::cout << "Enter a name to change the second person's name" << std::endl;
+    std::cin >> newName;
+
+    setFirstNameByFriendFunc(secondPerson, newName);
+    secondPerson.showInformations();
 }
