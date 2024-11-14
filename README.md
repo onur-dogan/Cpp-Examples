@@ -26,3 +26,4 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - The `friend` class/function can access private and protected members of a class.
     - `friend` functions in the class have permission to access any property(public/protected/private) of the class which it is defined
     - `friend` class have permission to access public/private/protected members of other classes in which it is declared as a friend 
+- Using `this->` is same with `(*this).`. Because the dot(.) operator is prioritized higher than the asterisk(*) operator, it is necessary to use parentheses.
