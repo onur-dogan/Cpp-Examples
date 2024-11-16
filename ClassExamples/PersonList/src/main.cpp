@@ -44,13 +44,25 @@ int main()
 
     personPhoneNumber.setPhoneNumber(countryCode, areaCode, phoneDigits);
     firstPerson.setPhoneNumber(personPhoneNumber);
+
     firstPerson.showInformations();
 
+    // SECOND PERSON UPDATES
     // Update second person's information by using a friend function
     std::string newName;
     std::cout << "Enter a name to change the second person's name" << std::endl;
     std::cin >> newName;
 
     setFirstNameByFriendFunc(secondPerson, newName);
+
+    std::string countryCode2, areaCode2, phoneDigits2;
+    std::cout << "Enter phone country code, area code and phone digits (e.g. 902120001122) in order to change "
+              << secondPerson.getFullName() << "'s phone number"
+              << std::endl;
+    std::cin >> std::setw(2) >> countryCode2 >> std::setw(3) >> areaCode2 >> std::setw(7) >> phoneDigits2;
+
+    personPhoneNumber2.setPhoneNumber(countryCode2, areaCode2, phoneDigits2);
+    secondPerson.setPhoneNumber(personPhoneNumber2);
+
     secondPerson.showInformations();
 }

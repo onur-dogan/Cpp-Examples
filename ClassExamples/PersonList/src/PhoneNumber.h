@@ -33,6 +33,9 @@ private:
     std::string countryCode;
     std::string areaCode;
     std::string phoneDigits;
+
+    // Helper function to check phone number format
+    bool hasPhoneNumberCorrectFormat() const;
 };
 
 #endif

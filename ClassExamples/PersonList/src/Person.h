@@ -35,6 +35,7 @@ public:
     std::string getLastName() const;
     std::string getFullName() const;
     std::string getGender() const;
+    std::string getAge() const;
     std::string getPhoneNumber() const;
     Date getBirthDate() const;
     Date getJoinDate() const;
