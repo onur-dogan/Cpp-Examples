@@ -25,7 +25,8 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - A `static` variable of a class, gets allocated once so it stores one value for each generated same type class. So, it isn't used to store special values for each class. It stores the class specific global variables.
 - The `static` variable can't be defined with `const` since `const` keyword means that it can't change the objects in the function/class in which it is defined. However, the `static` variables are independent of the class objects
 - Objects are created from the inside out and destroyed from the outside in via `destructor` functions.
-- The `friend` class/function can access private and protected members of a class.
+- The `friend` class/function can access private and protected members of a class. The parameter object that references the class must be a constant. 
     - `friend` functions in the class have permission to access any property(public/protected/private) of the class which it is defined
     - `friend` class have permission to access public/private/protected members of other classes in which it is declared as a friend 
 - Using `this->` is same with `(*this).`. Because the dot(.) operator is prioritized higher than the asterisk(*) operator, it is necessary to use parentheses.
+- The operators can be overloaded to customize some functionalities. It is like overloading the `<<` operator to print a text specifically by the class requirements or the `++` operator to update a character in the text instead of increasing the number.
