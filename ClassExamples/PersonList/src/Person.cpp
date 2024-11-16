@@ -162,7 +162,10 @@ void Person::showInformations() const
 
     // Show phone number only if all of the requred fields are filled
     std::cout << "\n*** Phone Number ***\n";
-    phoneNumber.showPhoneNumber();
+    // Print phone number by using the overloaded << operator that is customized to display phone numbers 
+    std::cout << phoneNumber;
+    // It is also possible to print via another function
+    // phoneNumber.showPhoneNumber();
 
     std::cout << "\n*** Birth Date ***";
     birthDate.showDate();

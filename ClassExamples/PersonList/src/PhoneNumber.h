@@ -4,9 +4,16 @@
 #define PHONENUMBER_H
 
 #include <string>
+#include <ostream>
 
 class PhoneNumber
 {
+    // Overload << operator that is customized to print phone numbers specifically.
+    // Note that, `const` usage is necessary for the parameter object that references the class (const PhoneNumber &)
+    // Because the friend function shouldn't update private fields manually and also the compiler throws an error without const keyword.
+    // Therefore, it should allow the object as constant. Otherwise, it doesn't allow to access the private fields.
+    friend std::ostream &operator<<(std::ostream &, const PhoneNumber &);
+
 public:
     explicit PhoneNumber(const std::string, const std::string, const std::string);
     PhoneNumber();

@@ -73,6 +73,16 @@ bool PhoneNumber::hasPhoneNumberCorrectFormat() const
     return !this->getAreaCode().empty() && !this->getCountryCode().empty() && !this->getPhoneDigits().empty();
 }
 
+// Overloaded << operator function to print phone number in a specific order
+std::ostream &operator<<(std::ostream &output, const PhoneNumber &phoneNumber)
+{
+    return output << std::setfill(' ')
+                  << std::setw(4) << "+" + phoneNumber.getCountryCode()
+                  << std::setw(4) << phoneNumber.getAreaCode()
+                  << std::setw(8) << phoneNumber.getPhoneDigits()
+                  << std::endl;
+}
+
 PhoneNumber::~PhoneNumber()
 {
     std::cout << "\nPhone Number class is destructing... for:\t";
