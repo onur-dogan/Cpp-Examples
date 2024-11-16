@@ -35,7 +35,10 @@ void PhoneNumber::setPhoneDigits(std::string phoneDigits)
 
 std::string PhoneNumber::getPhoneNumber() const
 {
-    return "+" + this->getCountryCode() + " " + this->getAreaCode() + " " + this->getPhoneDigits();
+    if (hasPhoneNumberCorrectFormat())
+        return "+" + this->getCountryCode() + " " + this->getAreaCode() + " " + this->getPhoneDigits();
+
+    return "-";
 }
 
 std::string PhoneNumber::getCountryCode() const
@@ -55,11 +58,19 @@ std::string PhoneNumber::getPhoneDigits() const
 
 void PhoneNumber::showPhoneNumber() const
 {
-    std::cout << std::setfill(' ')
-              << std::setw(4) << "+" + this->getCountryCode()
-              << std::setw(4) << this->getAreaCode()
-              << std::setw(8) << this->getPhoneDigits()
-              << std::endl;
+    if (hasPhoneNumberCorrectFormat())
+        std::cout << std::setfill(' ')
+                  << std::setw(4) << "+" + this->getCountryCode()
+                  << std::setw(4) << this->getAreaCode()
+                  << std::setw(8) << this->getPhoneDigits()
+                  << std::endl;
+    else
+        std::cout << "\n(Phone number is not available. Please update it later)" << std::endl;
+}
+
+bool PhoneNumber::hasPhoneNumberCorrectFormat() const
+{
+    return !this->getAreaCode().empty() && !this->getCountryCode().empty() && !this->getPhoneDigits().empty();
 }
 
 PhoneNumber::~PhoneNumber()

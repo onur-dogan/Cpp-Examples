@@ -114,6 +114,11 @@ std::string Person::getGender() const
     return gender;
 }
 
+std::string Person::getAge() const
+{
+    return this->gender;
+}
+
 Date Person::getBirthDate() const
 {
     return birthDate;
@@ -148,19 +153,16 @@ std::string Person::getGenderByIndex(int genderIndex) const
 // Printer Functions
 void Person::showInformations() const
 {
-    std::cout << "\n*** Welcome, " << firstName << " " << lastName << " ***" << std::endl;
+    std::cout << "\n*** Welcome, " << getFirstName() << " " << getLastName() << " ***" << std::endl;
     std::cout << "\n*** Personal Information ***"
-              << "\nFirst Name: \t" << firstName
-              << "\nLast Name: \t" << lastName
-              << "\nAge: \t" << age
-              << "\nGender: \t" << gender;
+              << "\nFirst Name: \t" << getFirstName()
+              << "\nLast Name: \t" << getLastName()
+              << "\nAge: \t" << getAge()
+              << "\nGender: \t" << getGender();
 
     // Show phone number only if all of the requred fields are filled
     std::cout << "\n*** Phone Number ***\n";
-    if (!phoneNumber.getAreaCode().empty() && !phoneNumber.getCountryCode().empty() && !phoneNumber.getPhoneDigits().empty())
-        phoneNumber.showPhoneNumber();
-    else
-        std::cout << "\n(Phone number is not available. Please update it later)";
+    phoneNumber.showPhoneNumber();
 
     std::cout << "\n*** Birth Date ***";
     birthDate.showDate();
@@ -179,10 +181,11 @@ void setFirstNameByFriendFunc(Person &person, std::string newFirstName)
 Person::~Person()
 {
     std::cout << "\nPerson Class is destructing with fields:..."
-              << "\nFirst Name: \t" << firstName
-              << "\nLast Name: \t" << lastName
-              << "\nAge: \t" << age
-              << "\nGender: \t" << gender
+              << "\nFirst Name: \t" << getFirstName()
+              << "\nLast Name: \t" << getLastName()
+              << "\nAge: \t" << getAge()
+              << "\nGender: \t" << getGender()
+              << "\nPhone Number: \t" << phoneNumber.getPhoneNumber()
               << "\nBirth Date: \t" << birthDate.getDate()
               << "\nJoin Date: \t" << joinDate.getDate()
               << std::endl;
