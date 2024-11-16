@@ -58,8 +58,8 @@ void Date::showDate() const
 {
     std::cout << "\n Date: \t"
               << std::setfill('0')
-              << std::setw(2) << day
-              << std::setw(2) << month
+              << std::setw(2) << day << '/'
+              << std::setw(2) << month << '/'
               << std::setw(4) << year
               << std::endl;
 }
@@ -86,9 +86,9 @@ bool Date::checkMonth(int monthP) const
 
 Date::~Date()
 {
-    std::cout << "\nDate Class is destructing with fields:..."
-              << "Year: " << year
-              << "\tMonth: " << month
-              << "\tDay: " << day
-              << std::endl;
+    // std::cout << "\nDate Class is destructing with fields:..."
+    //           << "\tYear: " << year
+    //           << "\tMonth: " << month
+    //           << "\tDay: " << day
+    //           << std::endl;
 }

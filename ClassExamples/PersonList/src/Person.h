@@ -5,6 +5,7 @@
 
 #include <array>
 #include "Date.h"
+#include "PhoneNumber.h"
 
 class Person
 {
@@ -14,15 +15,16 @@ class Person
     friend void setFirstNameByFriendFunc(Person &, std::string);
 
 public:
-    explicit Person(const std::string, const std::string, const std::string, const Date &, const Date &);
+    explicit Person(const std::string, const std::string, const std::string, const PhoneNumber &, const Date &, const Date &);
     Person();
 
     // Setters
-    void setInformations(std::string, std::string, int, Date, Date);
+    void setInformations(std::string, std::string, int, PhoneNumber, Date, Date);
     Person &setFirstName(std::string);
     Person &setLastName(std::string);
     void setFullName(std::string, std::string);
     void setGender(int);
+    void setPhoneNumber(PhoneNumber&);
     void setBirthDate(Date);
     void setJoinDate(Date);
     // Static variable setters
@@ -31,7 +33,9 @@ public:
     // Getters
     std::string getFirstName() const;
     std::string getLastName() const;
+    std::string getFullName() const;
     std::string getGender() const;
+    std::string getPhoneNumber() const;
     Date getBirthDate() const;
     Date getJoinDate() const;
     // Static variable getters
@@ -52,6 +56,7 @@ private:
     std::string lastName;
     int age;
     std::string gender;
+    PhoneNumber phoneNumber;
     // Using another class properties in other class.
     Date birthDate;
     Date joinDate;
