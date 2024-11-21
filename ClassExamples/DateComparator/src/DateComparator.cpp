@@ -15,7 +15,7 @@ std::ostream &operator<<(std::ostream &output, DateComparator &dateComparator)
            << std::setw(2) << dateComparator.getDay() << "/"
            << std::setw(2) << dateComparator.getMonth() << "/"
            << std::setw(4) << dateComparator.getYear()
-           << (dateComparator.getTimezone()[0] == '+' ? "(" : "(+") << dateComparator.getTimezone() << ")"
+           << dateComparator.formatTimezoneAsText()
            << std::endl;
 
     return output;
@@ -42,9 +42,8 @@ DateComparator::DateComparator(bool setNowAsDefault = true)
 
     // Get the current time and set it as deafult
     time_t timestamp = time(NULL);
-    struct tm currentTime = *localtime(&timestamp);
-    // Store current time
-    this->currentTime = currentTime;
+    // Store the current time
+    this->currentTime = *localtime(&timestamp);;
 
     // Set current date as default
     year = currentTime.tm_year + 1900;
@@ -56,29 +55,6 @@ DateComparator::DateComparator(bool setNowAsDefault = true)
 DateComparator::DateComparator(int yearP, int monthP, int dayP, std::string timezoneP)
     : year(yearP), month(monthP), day(dayP), timezone(timezoneP) {}
 
-// Overloaded operators
-DateComparator &DateComparator::operator++()
-{
-    this->increaseDate(1);
-    return *this;
-}
-
-void DateComparator::operator++(int increment)
-{
-    this->increaseDate(1);
-}
-
-DateComparator &DateComparator::operator--()
-{
-    this->decreaseDate(1);
-    return *this;
-}
-
-void DateComparator::operator--(int decrement)
-{
-    this->decreaseDate(1);
-}
-
 // Getters
 std::string DateComparator::getDate() const
 {
@@ -88,7 +64,7 @@ std::string DateComparator::getDate() const
     return (dayStr.length() == 1 ? ('0' + dayStr) : dayStr) + '/' +
            (monthStr.length() == 1 ? ('0' + monthStr) : monthStr) + '/' +
            std::to_string(year) + ' ' +
-           timezone;
+           formatTimezoneAsText();
 }
 
 unsigned int DateComparator::getYear() const
@@ -111,72 +87,180 @@ std::string DateComparator::getTimezone() const
     return this->timezone;
 }
 
-// Private Setters
-void DateComparator::increaseDate(int)
+// Setters
+// Set the last month of the year as default
+void DateComparator::setMonth()
 {
-    // If there are days remaining in the current month, then increase it as normal
-    if (this->day < daysPerMonth[this->month - 1])
-    {
-        this->day++;
-        return;
-    }
-
-    // If the day was the last day of the month, then need to increase the month and set day to the first day of the new month
-    if (this->month < monthsPerYear)
-    {
-        this->month++;
-        this->day = 1;
-        return;
-    }
-
-    // If the month was the last month of the year, then need to increase the year and set the first day and month of the year
-    this->year++;
-    this->month = 1;
-    this->day = 1;
+    setMonth(monthsPerYear);
 }
 
-void DateComparator::decreaseDate(int)
+void DateComparator::setMonth(int month)
 {
-    // If the day isn't 1, then decrease it as normal
-    if (this->day > 1)
+    this->month = month;
+}
+
+void DateComparator::setDay()
+{
+    setDay(daysPerMonth[this->month - 1]);
+}
+
+void DateComparator::setDay(int day)
+{
+    this->day = day;
+}
+
+// Overloaded operators
+DateComparator &DateComparator::operator++()
+{
+    this->increaseDate(1);
+    return *this;
+}
+
+void DateComparator::operator++(int)
+{
+    this->increaseDate(1);
+}
+
+DateComparator &DateComparator::operator+=(int increment)
+{
+    this->increaseDate(increment);
+    return *this;
+}
+
+DateComparator &DateComparator::operator--()
+{
+    this->decreaseDate(1);
+    return *this;
+}
+
+void DateComparator::operator--(int)
+{
+    this->decreaseDate(1);
+}
+
+DateComparator &DateComparator::operator-=(int decrement)
+{
+    this->decreaseDate(decrement);
+    return *this;
+}
+
+int DateComparator::operator>(DateComparator &dateToCompare) const noexcept
+{
+    int compareResult = this->compareDates(dateToCompare);
+    return compareResult;
+}
+
+int DateComparator::operator<(DateComparator &dateToCompare) const noexcept
+{
+    int compareResult = this->compareDates(dateToCompare);
+    return -compareResult;
+}
+
+// Private Setters
+void DateComparator::increaseDate(int increment)
+{
+    // If there are days remaining in the current month, then increase it as normal
+    if (this->day + increment <= daysPerMonth[this->month - 1])
     {
-        this->day--;
+        this->day += increment;
         return;
     }
 
-    // If the day was 1, then need to decrease month and set day to the latest day of the new month
-    if (this->month > 1)
+    // If the incremented day isn't available in current month, map months to find new date
+    increment -= (daysPerMonth[this->month - 1] - this->day);
+    while (increment > 0)
+    {
+        this->month++;
+        // If the month is the latest month of the year, then increase year and set month to the first month
+        if (this->month > this->monthsPerYear)
+        {
+            this->year++;
+            this->month = 1;
+        }
+
+        // If the increment value is less than the days of the month, then add it to the day
+        if (increment <= daysPerMonth[this->month - 1])
+        {
+            this->day = increment;
+            break;
+        }
+
+        // Otherwise, decrease increment value and check the next month
+        increment -= daysPerMonth[this->month - 1];
+    }
+}
+
+void DateComparator::decreaseDate(int decrement)
+{
+    int difference = this->day - decrement;
+    if (difference > 0)
+    {
+        this->day -= decrement;
+        return;
+    }
+
+    // If the incremented day isn't available in current month, map months to find new date
+    decrement -= this->day;
+    while (decrement > 0)
     {
         this->month--;
-        this->day = daysPerMonth[this->month - 1];
-        return;
-    }
+        // If the month is the latest month of the year, then increase year and set month to the first month
+        if (this->month < 1)
+        {
+            this->year--;
+            this->month = this->monthsPerYear;
+        }
 
-    // If the month was 0, then need to decrease the year and set the latest day and month of the year
-    this->year--;
-    this->month = monthsPerYear;
-    this->day = daysPerMonth[this->month - 1];
+        // If the increment value is less than the days of the month, then add it to the day
+        if (decrement < daysPerMonth[this->month - 1])
+        {
+            this->day = daysPerMonth[this->month - 1] - decrement;
+            break;
+        }
+
+        // Otherwise, decrease increment value and check the next month
+        decrement -= daysPerMonth[this->month - 1];
+    }
+}
+
+int DateComparator::compareDates(DateComparator &dateToCompare) const
+{
+    if (this->getYear() != dateToCompare.getYear())
+        return this->getYear() > dateToCompare.getYear() ? 1 : -1;
+
+    if (this->getMonth() != dateToCompare.getMonth())
+        return this->getMonth() > dateToCompare.getMonth() ? 1 : -1;
+
+    if (this->getDay() == dateToCompare.getDay())
+        return 0;
+
+    return this->getDay() > dateToCompare.getDay() ? 1 : -1;
 }
 
 void DateComparator::checkInputs()
 {
-    // If the month field isn't in the correct format, set the defaults  
+    // If the month field isn't in the correct format, set the defaults
     if (this->month < 1)
         this->month = 1;
     if (this->month > monthsPerYear)
         this->month = monthsPerYear;
 
-    // Year shouldn't be less than 0, if it isn't in the correct format, set the defaults  
+    // Year shouldn't be less than 0, if it isn't in the correct format, set the defaults
     if (this->year < 0)
         this->year = 0001;
 
-    // If the day field isn't in the correct format, set the defaults  
+    // If the day field isn't in the correct format, set the defaults
     if (this->day < 1)
         this->day = 1;
 
     int dayOfMonth = daysPerMonth[this->month - 1];
     if (this->day > dayOfMonth)
         this->day = dayOfMonth;
+}
+
+std::string DateComparator::formatTimezoneAsText() const
+{
+    return (this->timezone[0] == '+' ? "(" : "(+") + this->timezone + ")";
 }
 
 // Destructor
