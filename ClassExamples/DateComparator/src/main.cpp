@@ -33,4 +33,34 @@ int main()
     // Set current date again by using the overloaded *prefix* increment order
     ++enteredDate;
 
+    unsigned int increment;
+    std::cout << "Enter a positive number to see the dates based on the number you entered" << std::endl;
+    std::cin >> increment;
+
+    currentDate += increment;
+    std::cout << "Current Date after insertion: " << currentDate;
+    currentDate -= increment;
+    std::cout << "Current Date was: " << currentDate << std::endl;
+
+    enteredDate += increment;
+    std::cout << "Entered Date after insertion: " << enteredDate;
+    enteredDate -= increment;
+    std::cout << "Entered Date was: " << enteredDate << std::endl;
+
+    std::cout << "*** FINAL RESULTS ***" << std::endl;
+    int compareEnteredDateToCurrent = enteredDate > currentDate;
+    std::cout << "Entered date is "
+              << ((compareEnteredDateToCurrent == 1) ? "later than" : compareEnteredDateToCurrent == -1 ? "earlier than"
+                                                                                                        : "equal to")
+              << " the current date\n"
+              << std::endl;
+
+    DateComparator lastDateOfTheYear;
+    lastDateOfTheYear.setMonth();
+    lastDateOfTheYear.setDay();
+    int enteredDateEarlierThanLastDay = enteredDate < lastDateOfTheYear;
+    std::cout << "Question: Is entered date earlier than last day of this year ("
+              << enteredDate.getDate() << ") < (" << lastDateOfTheYear.getDate() << ") ?\n"
+              << "Answer: " << (enteredDateEarlierThanLastDay == 1 ? "Yes" : "No")
+              << std::endl;
 }

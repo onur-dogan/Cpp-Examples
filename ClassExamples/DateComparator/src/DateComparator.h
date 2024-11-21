@@ -8,7 +8,7 @@
 #include <array>
 
 class DateComparator
-{   
+{
     // Overloaded stream operators
     // Output stream
     friend std::ostream &operator<<(std::ostream &, DateComparator &);
@@ -27,6 +27,12 @@ public:
     unsigned int getDay() const;
     std::string getTimezone() const;
 
+    // Setters
+    void setMonth();
+    void setMonth(int);
+    void setDay();
+    void setDay(int);
+
     // Overloads
     // It overloads the prefix increment operator like ++i
     DateComparator &operator++();
@@ -38,6 +44,8 @@ public:
     void operator--(int);
     DateComparator &operator+=(int);
     DateComparator &operator-=(int);
+    int operator>(DateComparator &) const noexcept;
+    int operator<(DateComparator &) const noexcept;
 
     // Destructor
     ~DateComparator();
@@ -52,7 +60,14 @@ private:
     // Setters
     void increaseDate(int);
     void decreaseDate(int);
+
+    // Helpers
+    // Check whether the date fields are in correct format
     void checkInputs();
+    // Compare current date with another one
+    int compareDates(DateComparator &) const;
+    // Format timezone
+    std::string formatTimezoneAsText() const;
 
     // Current time structure
     struct tm currentTime;
