@@ -1,13 +1,13 @@
 #include <iostream>
 #include <math.h>
 #include <iomanip>
+#include <boost/range/adaptor/indexed.hpp>
 /**
  * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
  * Used {
  *  boost::adaptors::indexed
  * }
  */
-#include <boost/range/adaptor/indexed.hpp>
 
 #include "colors.h"
 
@@ -23,6 +23,8 @@ void multiplyNumber(int *);
 void updateConstantPointer();
 void arrayPointerCalculations();
 
+void deallocateVariables();
+
 int main()
 {
     // Squares values in different functions to compare updating referenced values
@@ -35,7 +37,10 @@ int main()
     // updateConstantPointer();
 
     // Explanations and examples about array, pointer connection
-    arrayPointerCalculations();
+    // arrayPointerCalculations();
+
+    // Deallocate variables
+    deallocateVariables();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -213,4 +218,20 @@ void arrayPointerCalculations()
               << "\nThe new pointer is still has the **first** element's value: " << *numberPtr2
               << "\nAfter subtracting their values: " << *numberPtr - *numberPtr2
               << std::endl;
+}
+
+void deallocateVariables()
+{
+    size_t arrayLength = 10;
+    char *newArray = new char[arrayLength]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k', 'p'};
+
+    std::cout << "*** BEFORE ***" << std::endl;
+    for (unsigned int i = 0; i < arrayLength; i++)
+        std::cout << newArray[i] << "\n";
+
+    delete[] newArray;
+
+    std::cout << "*** AFTER ***" << std::endl;
+    for (unsigned int i = 0; i < arrayLength; i++)
+        std::cout << newArray[i] << "\n";
 }
