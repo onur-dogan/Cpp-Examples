@@ -40,3 +40,5 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
     ```
 - A memory leak occurs when new memory is allocated dynamically and never deallocated. In `C` programs, new memory is allocated by the `malloc` or `calloc` functions, and deallocated by the `free` function. In C++, new memory is usually allocated by the `new` operator and deallocated by the `delete` or the `delete []` operator. The list variables should be deallocated by the `delete []` since it guarantees to call all of the elements in the list. Similarly, use `delete` to deallocate the memory that is defined as a single element. Using `delete []` to deallocate the single memorized element is undefined. 
 - `friend` functions can't be inherited in C++. If the base class has any friend function, this function doesn’t become the friend of the derived class.
+- To `override` an inherited function in the derived class, define the same function prototype with `override` keyword. Also, the base class must be declared as a `virtual` function to enable dynamic overriding.
+- `virtual` functions cannot be `static` but can be a `friend` function of another class.
