@@ -42,3 +42,6 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - `friend` functions can't be inherited in C++. If the base class has any friend function, this function doesn’t become the friend of the derived class.
 - To `override` an inherited function in the derived class, define the same function prototype with `override` keyword. Also, the base class must be declared as a `virtual` function to enable dynamic overriding.
 - `virtual` functions cannot be `static` but can be a `friend` function of another class.
+- For the inherited classes;
+    - When an object of the **derived class** is created, the constructor of the **base class** executes first. Then, the constructor of the **derived class** executes. If there is a deeper inheritance hierarchy, then this flow executes in the same order **(cascade)**.
+    - In the opposite way, when the **derived class's object** is destroyed, the destructors are called in the **reverse order of the constructors**. So, the destructor function of the derived class executes first, followed by execution of the destructor of the base class.
