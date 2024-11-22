@@ -24,7 +24,7 @@ public:
     Person &setLastName(std::string);
     void setFullName(std::string, std::string);
     void setGender(int);
-    void setPhoneNumber(PhoneNumber&);
+    void setPhoneNumber(PhoneNumber &);
     void setBirthDate(Date);
     void setJoinDate(Date);
     // Static variable setters
@@ -35,15 +35,16 @@ public:
     std::string getLastName() const;
     std::string getFullName() const;
     std::string getGender() const;
-    std::string getAge() const;
+    int getAge() const;
     std::string getPhoneNumber() const;
     Date getBirthDate() const;
     Date getJoinDate() const;
     // Static variable getters
     static unsigned int getPersonsCount();
 
-    // Printers
-    void showInformations() const;
+    // Virtual Functions
+    // The functions declared as a virtual function which can be overridden by the derived classes
+    virtual void showInformations() const;
 
     // Static variables which are available to reach independently of properties of this class
     static unsigned int count;

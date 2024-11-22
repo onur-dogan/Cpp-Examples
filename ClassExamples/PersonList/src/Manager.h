@@ -25,6 +25,9 @@ public:
     void showTitle() const noexcept;
     void showSharesPercentage() const noexcept;
 
+    // Overrides
+    void showInformations() const override;
+
     // Destructor
     ~Manager();
 
