@@ -1,7 +1,9 @@
 #include <iostream>
+#include <unistd.h>
 #include "Date.cpp"
 #include "Person.cpp"
 #include "PhoneNumber.cpp"
+#include "Manager.cpp"
 
 int main()
 {
@@ -47,7 +49,7 @@ int main()
 
     firstPerson.showInformations();
 
-    // SECOND PERSON UPDATES
+    // Second Person Processes
     // Update second person's information by using a friend function
     std::string newName;
     std::cout << "Enter a name to change the second person's name" << std::endl;
@@ -65,4 +67,25 @@ int main()
     secondPerson.setPhoneNumber(personPhoneNumber2);
 
     secondPerson.showInformations();
+
+    // Manager Processes
+    // Manager class is the derived class that is inherited of the Person(Base) Class.
+    // It has inherited members of the base class. Also has additional fields like `title`
+    PhoneNumber firstManagerPhoneNumber = PhoneNumber("90", "111", "2223344");
+    Date firstManagerBirthDate = Date(1995, 4, 4);
+
+    // Using the new keyword to manage memory allocation of this value manually
+    Manager *firstManager = new Manager("First", "Manager", "Female", firstManagerPhoneNumber, firstManagerBirthDate, Date(), "Co-Founder", 22.4);
+    firstManager->showInformations();
+    // Show the additional fields
+    firstManager->showTitle();
+    firstManager->showSharesPercentage();
+
+    // Wait a bit to show informations before destruction
+    sleep(2);
+
+    // Destruct the manually created class after it's responsibilities are done. It should be deallocated manually since it's created by `new` keyword.
+    // If we don't deallocate it manually, it stays alive on the memory and these type memory management problems occur memory leak problems.
+    // To test, just comment out the following line, run this part and check desctructing logs. Then uncomment it and check again.
+    delete firstManager;
 }

@@ -39,6 +39,7 @@ private:
     unsigned int month;
     unsigned int day;
 
+    // Helpers
     // Check functions flow shouldn't be updated from any other location. It might cause to break check functionalities.
     // If they don't work properly, this class's functionalities don't work correctly.
     bool checkDayByMonth(int) const;
