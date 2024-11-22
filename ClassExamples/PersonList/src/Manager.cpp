@@ -47,28 +47,11 @@ void Manager::showSharesPercentage() const noexcept
 // Overridden functions
 void Manager::showInformations() const
 {
-    std::cout << "\n*** Welcome, " << getFirstName() << " " << getLastName() << " ***" << std::endl;
-    std::cout << "\n*** Manager Information ***"
-              << "\nFirst Name: \t" << getFirstName()
-              << "\nLast Name: \t" << getLastName()
-              << "\nAge: \t" << getAge()
-              << "\nGender: \t" << getGender()
-              << std::endl;
+    // Print the base information by calling the default (virtual) function of the base class
+    // Calling the base function first is a good practice to avoid code duplication (DRY principle)
+    Person::showInformations();
 
-    // Show phone number only if all of the requred fields are filled
-    std::cout << "\n*** Phone Number ***\n";
-    // Print phone number by using the overloaded << operator that is customized to display phone numbers
-    std::cout << this->getPhoneNumber() << std::endl;
-    // It is also possible to print via another function
-    // phoneNumber.showPhoneNumber();
-
-    std::cout << "\n*** Birth Date ***";
-    this->getBirthDate().showDate();
-
-    std::cout << "\n*** Join Date ***";
-    this->getJoinDate().showDate();
-
-    // Show the additional fields for manager class
+    // Then, print the additional specific fields of this derived class
     this->showTitle();
     this->showSharesPercentage();
 }
