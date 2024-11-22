@@ -32,15 +32,45 @@ float Manager::getSharesPercentage() const
 void Manager::showTitle() const noexcept
 {
     std::cout << "\n*** Title ***\n"
-              << this->getTitle() << std::endl;
+              << this->getTitle()
+              << std::endl;
 }
 
 void Manager::showSharesPercentage() const noexcept
 {
-    std::cout << "\n*** Shares ***\n"
+    std::cout << "\n*** Shares (%) ***\n"
               << this->getSharesPercentage()
               << "%"
               << std::endl;
+}
+
+// Overridden functions
+void Manager::showInformations() const
+{
+    std::cout << "\n*** Welcome, " << getFirstName() << " " << getLastName() << " ***" << std::endl;
+    std::cout << "\n*** Manager Information ***"
+              << "\nFirst Name: \t" << getFirstName()
+              << "\nLast Name: \t" << getLastName()
+              << "\nAge: \t" << getAge()
+              << "\nGender: \t" << getGender()
+              << std::endl;
+
+    // Show phone number only if all of the requred fields are filled
+    std::cout << "\n*** Phone Number ***\n";
+    // Print phone number by using the overloaded << operator that is customized to display phone numbers
+    std::cout << this->getPhoneNumber() << std::endl;
+    // It is also possible to print via another function
+    // phoneNumber.showPhoneNumber();
+
+    std::cout << "\n*** Birth Date ***";
+    this->getBirthDate().showDate();
+
+    std::cout << "\n*** Join Date ***";
+    this->getJoinDate().showDate();
+
+    // Show the additional fields for manager class
+    this->showTitle();
+    this->showSharesPercentage();
 }
 
 // Destructor

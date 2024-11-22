@@ -76,10 +76,8 @@ int main()
 
     // Using the new keyword to manage memory allocation of this value manually
     Manager *firstManager = new Manager("First", "Manager", "Female", firstManagerPhoneNumber, firstManagerBirthDate, Date(), "Co-Founder", 22.4);
+    // Shows informations by using the overridden showInformations function of the derived class instead of virtual function of the base class
     firstManager->showInformations();
-    // Show the additional fields
-    firstManager->showTitle();
-    firstManager->showSharesPercentage();
 
     // Wait a bit to show informations before destruction
     sleep(2);

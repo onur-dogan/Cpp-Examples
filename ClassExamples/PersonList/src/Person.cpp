@@ -114,9 +114,9 @@ std::string Person::getGender() const
     return gender;
 }
 
-std::string Person::getAge() const
+int Person::getAge() const
 {
-    return this->gender;
+    return this->age;
 }
 
 Date Person::getBirthDate() const
