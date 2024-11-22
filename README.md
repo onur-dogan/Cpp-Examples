@@ -31,10 +31,12 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - Using `this->` is same with `(*this).`. Because the dot(.) operator is prioritized higher than the asterisk(*) operator, it is necessary to use parentheses.
 - The operators can be overloaded to customize some functionalities. It is like overloading the `<<` operator to print a text specifically by the class requirements or the `++` operator to update a character in the text instead of increasing the number.
 - `struct` keyword allows us to create structures. Structures are a way to group several related variables into one place like an object and can contain different data types:
-    ```c
+    ```c++
     struct {
         int num;
         string text;
         ...
     }
     ```
+- A memory leak occurs when new memory is allocated dynamically and never deallocated. In `C` programs, new memory is allocated by the `malloc` or `calloc` functions, and deallocated by the `free` function. In C++, new memory is usually allocated by the `new` operator and deallocated by the `delete` or the `delete []` operator. The list variables should be deallocated by the `delete []` since it guarantees to call all of the elements in the list. Similarly, use `delete` to deallocate the memory that is defined as a single element. Using `delete []` to deallocate the single memorized element is undefined. 
+- `friend` functions can't be inherited in C++. If the base class has any friend function, this function doesn’t become the friend of the derived class.
