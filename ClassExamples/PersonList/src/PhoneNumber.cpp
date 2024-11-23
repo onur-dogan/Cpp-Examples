@@ -76,6 +76,10 @@ bool PhoneNumber::hasPhoneNumberCorrectFormat() const
 // Overloaded << operator function to print phone number in a specific order
 std::ostream &operator<<(std::ostream &output, const PhoneNumber &phoneNumber)
 {
+    // If the phone number hasn't correct format, don't display anything
+    if (!phoneNumber.hasPhoneNumberCorrectFormat())
+        return output;
+
     return output << std::setfill(' ')
                   << std::setw(4) << "+" + phoneNumber.getCountryCode()
                   << std::setw(4) << phoneNumber.getAreaCode()

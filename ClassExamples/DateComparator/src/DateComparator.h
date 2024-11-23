@@ -7,7 +7,8 @@
 #include <ostream>
 #include <array>
 
-class DateComparator
+// This class can't(shouldn't) be a base class
+class DateComparator final
 {
     // Overloaded stream operators
     // Output stream
