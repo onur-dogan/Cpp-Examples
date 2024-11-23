@@ -6,7 +6,8 @@
 #include <iostream>
 #include <array>
 
-class Date
+// This class can't(shouldn't) be a base class
+class Date final
 {
 public:
     // When a variable is declared as static, space for it gets allocated for the lifetime of the program.

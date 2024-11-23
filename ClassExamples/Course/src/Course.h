@@ -10,7 +10,8 @@
 #include <string>
 
 // ** Header files shouldn't include namespaces. **
-class Course
+// This class can't(shouldn't) be a base class
+class Course final
 {
 private:
     // Define variables that will be private and be able to be used in the class functions only
