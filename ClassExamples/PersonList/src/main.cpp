@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <queue>
+#include <typeinfo>
 #include <unistd.h>
 #include "Date.cpp"
 #include "Person.cpp"
@@ -28,8 +31,16 @@ int main()
               << "\nPerson Count which is registered to the system: \t" << Person::getPersonsCount()
               << std::endl;
 
-    firstPerson.showInformations();
-    secondPerson.showInformations();
+    std::vector<Person *> persons{&firstPerson, &secondPerson};
+    for (const auto *person : persons)
+    {
+        // typeid expression allows us to reach the class information of the variable
+        std::cout << "\n"
+                  << typeid(person).name() << " Information"
+                  << std::endl;
+
+        person->showInformations();
+    }
 
     // Update first person's information by using a common function
     std::string newFirstName, newLastName;
@@ -76,8 +87,24 @@ int main()
 
     // Using the new keyword to manage memory allocation of this value manually
     Manager *firstManager = new Manager("First", "Manager", "Female", firstManagerPhoneNumber, firstManagerBirthDate, Date(), "Co-Founder", 22.4);
-    // Shows informations by using the overridden showInformations function of the derived class instead of virtual function of the base class
-    firstManager->showInformations();
+
+    // Second Manager definitions
+    PhoneNumber secondManagerPhoneNumber = PhoneNumber("90", "222", "1112233");
+    Date secondManagerBirthDate = Date(1992, 6, 18);
+
+    // Using the new keyword to manage memory allocation of this value manually
+    Manager *secondManager = new Manager("Second", "Manager", "Male", secondManagerPhoneNumber, secondManagerBirthDate, Date(), "Co-Founder", 77.6);
+
+    std::vector<Manager *> managers{firstManager, secondManager};
+    for (const auto *manager : managers)
+    {
+        // typeid expression allows us to reach the class information of the variable
+        std::cout << "\n"
+                  << typeid(manager).name() << " Information"
+                  << std::endl;
+        // Shows informations by using the overridden showInformations function of the derived class instead of virtual function of the base class
+        manager->showInformations();
+    }
 
     // Wait a bit to show informations before destruction
     sleep(2);
@@ -86,4 +113,5 @@ int main()
     // If we don't deallocate it manually, it stays alive on the memory and these type memory management problems occur memory leak problems.
     // To test, just comment out the following line, run this part and check desctructing logs. Then uncomment it and check again.
     delete firstManager;
+    delete secondManager;
 }
