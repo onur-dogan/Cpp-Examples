@@ -1,5 +1,5 @@
 # Cpp-Examples
-C++ Project with examples and notes from C++ How to Program (9th Edition) book. Also, it includes some extra examples, apart from this book.
+The C++ Project includes some examples and notes (mostly C++11). It also includes some additional examples/notes from the C++ How to Program (9th Edition) book.
 
 
 **Some Quick Notes**
@@ -32,7 +32,7 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
 - The operators can be overloaded to customize some functionalities. It is like overloading the `<<` operator to print a text specifically by the class requirements or the `++` operator to update a character in the text instead of increasing the number.
 - `struct` keyword allows us to create structures. Structures are a way to group several related variables into one place like an object and can contain different data types:
     ```c++
-    struct {
+    struct str {
         int num;
         string text;
         ...
@@ -59,3 +59,5 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
     - A customized `vector` definition could be defined like `typedef std::vector<Person> vPerson;`
     - A customized `vector pointer` definition could be defined like `typedef std::vector<Person *> vPersonPtr;`
     - A customized `function` definition could be defined like `typedef void (* personFunctionPtr)(std::char, int);`
+- The `string_view` template specialization provides an efficient way to pass a **read-only(constant)**, **exception-safe**, **non-owning handle** to the character data of any string. It is optimized for the constant string operations. For example, when declaring constant(enum) strings that shouldn't be modified anywhere, it is a good choice.
+- `constexpr` keyword improves program performance by computing at compile time rather than run time. Unlike `const`, `constexpr` can also be applied to **functions** and **class** constructors.
