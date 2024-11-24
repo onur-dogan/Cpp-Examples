@@ -19,6 +19,7 @@
 #include <boost/range/adaptor/indexed.hpp>
 
 #include "colors.h"
+#include "constants.hpp"
 
 const void calculateWithNumbers()
 {
@@ -153,19 +154,37 @@ const void drawShapes()
     }
 }
 
+const void clearInputStream()
+{
+    // Ignore and clear the input stream to prevent the conflicts situations between this and the below input stream
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.clear();
+}
+
 const void showASCIIEquivalent()
 {
     char character;
     std::cout << "Enter any character to see ASCII equivalent" << std::endl;
     std::cin >> character;
+    clearInputStream();
 
-    std::cout << static_cast<int>(character) << std::endl;
+    int asciiNumber = static_cast<int>(character);
+    std::cout << "Character you entered: \n";
+    // Put returns the ASCII equivalent of any number. It can be used multiple times as combined. \n was used to move one line down
+    std::cout.put(asciiNumber).put('\n');
+    std::cout << "ASCII Equivalent: \n"
+              << asciiNumber << std::endl;
 
     int number;
     std::cout << "Enter any ASCII number to see it's equivalent character" << std::endl;
     std::cin >> number;
 
     std::cout << static_cast<char>(number) << std::endl;
+
+    const char *const word = "Word";
+    std::cout << "Value of static_cast<void *> is of the " << word << " is:\n"
+              << static_cast<const void *>(word)
+              << std::endl;
 }
 
 const void calculateBMI()
@@ -430,7 +449,7 @@ double multiply(double num1, double num2)
     return num1 * num2;
 }
 
-void overloadMultiplyCalculation()
+const void overloadMultiplyCalculation()
 {
     // Function overloading is a feature of object-oriented programming
     // where the multiple functions with the same name has different parameter data types
@@ -444,7 +463,7 @@ void overloadMultiplyCalculation()
               << std::endl;
 }
 
-void sortAndSearchInArray()
+const void sortAndSearchInArray()
 {
     const size_t array_size = 6;
     std::array<std::string, array_size> programming_languages = {"C", "C++", "C#", "Java", "JavaScript", "Assembly"};
@@ -467,7 +486,7 @@ void sortAndSearchInArray()
               << (isExist ? "YES, it exists!!" : "Unfortunately, it doesn't exist..") << std::endl;
 }
 
-void generalVectorFeatures()
+const void generalVectorFeatures()
 {
     size_t intListLength = 3, floatListLength = 4;
 
@@ -564,7 +583,7 @@ size_t getSize(double *ptr)
     return sizeof(ptr);
 }
 
-void findArrayLengthBySize()
+const void findArrayLengthBySize()
 {
     double numbers[20];
 
@@ -574,7 +593,7 @@ void findArrayLengthBySize()
               << std::endl;
 }
 
-void displayBytesByDataType()
+const void displayBytesByDataType()
 {
     char c;
     short s;
@@ -600,7 +619,7 @@ void displayBytesByDataType()
               << "\nsizeof pointer(ptr) ==> " << sizeof(ptr)
               << std::endl;
 }
-void stringCharArrayUsages()
+const void stringCharArrayUsages()
 {
     // *** Character array constants have a static storage duration (they exist throughout the program) ***
 
@@ -617,8 +636,6 @@ void stringCharArrayUsages()
     for (auto const &character : languageWithSingleQuotes | boost::adaptors::indexed(1))
         std::cout << character.index() << ". " << character.value() << std::endl;
 
-    std::cout << language[7] << std::endl;
-    std::cout << language[0] << "\t" << languageWithSingleQuotes[0] << std::endl;
     std::cout << "\n*** Char type array's sizes (Each char data type takes up 1 bit of space) ***"
               << "\nFirst array's byte size: " << sizeof(language)
               << "\nSecond array's byte size: " << sizeof(languageWithSingleQuotes)
@@ -644,53 +661,110 @@ void stringCharArrayUsages()
     std::cout << "The list with the allowed characters in the system:\t" << enteredCharacters << std::endl;
 }
 
+struct OptionStructure
+{
+    std::string desc;
+    const void (*function)();
+};
+
+OptionStructure getOptionModel(const void (*function)()) noexcept
+{
+    return OptionStructure{
+        function : function
+    };
+}
+
+typedef std::vector<OptionStructure> vOption;
+vOption getOptions() noexcept
+{
+    std::vector<OptionStructure> options{
+        // Makes some calculations between two integers entered by the user
+        getOptionModel(calculateWithNumbers),
+        // Compares the numbers
+        getOptionModel(compareNumbers),
+        // Draws shapes
+        getOptionModel(drawShapes),
+        // Show ASCII equivalent of any character the user entered
+        getOptionModel(showASCIIEquivalent),
+        // Calculates BMI(Body Mass Index) and show the result
+        getOptionModel(calculateBMI),
+        // Calculates daily vehicle drive expenses
+        getOptionModel(calculateVehicleExpenses),
+        // Loop comparator by getting a length value from the user
+        getOptionModel(loopComparator),
+        // Print even or odd numbers
+        getOptionModel(printNumbersInOrder),
+        // According to the user entries, calculates average grades by using grade points and displays the class information
+        getOptionModel(calculateGrades),
+        // Generates random numbers according to the user entered limit
+        getOptionModel(generateRandomNumbers),
+        // Multiply the numbers for different parameter data types in the overloaded functions with same name
+        getOptionModel(overloadMultiplyCalculation),
+        // General basic sorting and searching in array (used with array library)
+        getOptionModel(sortAndSearchInArray),
+        // Create some vector variables, review and test some of the vector features
+        getOptionModel(generalVectorFeatures),
+        // Find array length by calculating the byte size of the variables
+        getOptionModel(findArrayLengthBySize),
+        // Displays bytes for each data type
+        getOptionModel(displayBytesByDataType),
+        // Gives some examples about using string/char array usages
+        getOptionModel(stringCharArrayUsages),
+    };
+
+    return options;
+}
+
+const void displayOptions(vOption &options)
+{
+    for (const auto &option : options | boost::adaptors::indexed(1))
+        std::cout << option.index() << ". " << option.value().desc << std::endl;
+}
+
 int main()
 {
-    // Makes some calculations between two integers entered by the user
-    // calculateWithNumbers();
+    std::cout << "Enter the number of the function which you would like to run: "
+              << "(Type '" << std::cin.eof() << "' to end the process)"
+              << std::endl;
 
-    // Compares the numbers
-    // compareNumbers();
+    vOption options = getOptions();
 
-    // Draws shapes
-    // drawShapes();
+    for (unsigned int i = 0; i < options.size(); i++)
+    {
+        // Assign the descriptions from the constant texts
+        options[i].desc = Constants[i];
 
-    // Show ASCII equivalent of any character the user entered
-    // showASCIIEquivalent();
+        // Display the options
+        std::cout << (i + 1) << ". " << options[i].desc << std::endl;
+    }
 
-    // Calculates BMI(Body Mass Index) and show the result
-    // calculateBMI();
+    int selection;
+    while (std::cin >> selection && selection != EOF)
+    {
+        // Don't allow to enter an integer that causes any error
+        if (selection < 0 || selection > options.size())
+        {
+            std::cout << "Unavailable number to run any function. Please make sure you entered an available number:" << std::endl;
+            continue;
+        }
 
-    // Calculates daily vehicle drive expenses
-    // calculateVehicleExpenses();
+        // If the user types 0, print the menu again
+        if (selection == 0)
+            displayOptions(options);
 
-    // Loop comparator by getting a length value from the user
-    // loopComparator();
+        // Show selected option information
+        std::cout << "\nSelected option is: "
+                  << selection << ". " << options[selection - 1].desc
+                  << "\nThe function is running...\n"
+                  << std::endl;
 
-    // Print even or odd numbers
-    // printNumbersInOrder();
+        // Run the related function
+        options[selection - 1].function();
 
-    // According to the user enters, calculates average grades by using grade points and displays the class information
-    // calculateGrades();
-
-    // Generates random numbers according to the user entered limit
-    // generateRandomNumbers();
-
-    // Multiply the numbers for different parameter data types in the overloaded functions with same name
-    // overloadMultiplyCalculation();
-
-    // General basic sorting and searching in array (used with array library)
-    // sortAndSearchInArray();
-
-    // Create some vector variables, review and test some of the vector features
-    // generalVectorFeatures();
-
-    // Find array length by calculating the byte size of the variables
-    // findArrayLengthBySize();
-
-    // Displays bytes for each data type
-    // displayBytesByDataType();
-
-    // Gives some examples about using string/char array usages
-    stringCharArrayUsages();
+        // After the related function is completed, show the final explanations
+        std::cout << "\nRun another function by entering its number. Type '0' to see the menu again. Type '"
+                  << std::cin.eof()
+                  << "' to end the process.\n"
+                  << std::endl;
+    }
 }
