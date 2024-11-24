@@ -227,7 +227,9 @@ const void calculateVehicleExpenses()
     std::cout << "Total Daily Expenses for 1 KM: " << totalExpenses / traveledKM << std::endl;
 }
 
-const auto loopReader(int loopLength, void (*loopFunction)(int))
+// Common type definition of the loop functions
+typedef void (*loopFunctionPtr)(int);
+const auto loopReader(int loopLength, loopFunctionPtr loopFunction)
 {
     // Time recorder
     auto startTime = std::chrono::high_resolution_clock::now();
@@ -633,7 +635,7 @@ void stringCharArrayUsages()
     std::cin >> std::setw(10) >> enteredString;
     std::cout << "Allowed string to store in the system:\t" << enteredString << std::endl;
 
-    size_t characterLimit = 20; 
+    size_t characterLimit = 20;
     char enteredCharacters[characterLimit];
     // Using getLine limitations when getting an input helps us to take only limited characters from the entered text
     // It gets the entered text's 20 character after the 10 character cause the above functionality takes and stores the first 10 character
