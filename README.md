@@ -52,3 +52,10 @@ C++ Project with examples and notes from C++ How to Program (9th Edition) book. 
     - A `is-a` relation is based on inheritance. For example, **Car** (derived) class has `is-a` relation with the **Vehicle** (base) class. In short, the **Car** class is a sub-class of **Vehicle** class, so it can be described similarly as `Car class is a (subclass of) Vehicle class`.
     - A `has-a` relation is based on composition. For example, **Car** class has `has-a` relation with the `Wheel` and `Brakes` classes. In short, **Wheel** and **Brakes** are parts of a **Car**, so it can be described similarly as `Car has wheel and brakes`.
 - `typeid` operator returns the runtime type information of the parameter like a data type. For a class defined variable, it returns the information of the class (e.g. `typeid(...).name()` returns the class name).
+- The `typedef` keyword is used to create customized data types with aliased names. For example;
+    - `istream` type definition represents the `basic_istream<char>` template customization. `typedef` keyword is used like `typedef basic_istream<char> istream;`
+    - `ostream` type definition represents the `basic_istream<char>` template customization. `typedef` keyword is used like `typedef basic_ostream<char> ostream;`
+    - A customized `pointer` definition could be defined like `typedef Person * personPtr;`
+    - A customized `vector` definition could be defined like `typedef std::vector<Person> vPerson;`
+    - A customized `vector pointer` definition could be defined like `typedef std::vector<Person *> vPersonPtr;`
+    - A customized `function` definition could be defined like `typedef void (* personFunctionPtr)(std::char, int);`
