@@ -7,9 +7,15 @@
 #include "Person.cpp"
 #include "PhoneNumber.cpp"
 #include "Manager.cpp"
+#include "Manager.h"
 
 int main()
 {
+    // Custom type definitions
+    typedef std::vector<Person *> vPersonPtr;
+    typedef std::vector<Manager *> vManagerPtr;
+    typedef Manager* managerPtr;
+
     Date birthDate(1961, 4, 12);
     Date joinDate(1990, 6, 24);
     PhoneNumber personPhoneNumber;
@@ -31,7 +37,7 @@ int main()
               << "\nPerson Count which is registered to the system: \t" << Person::getPersonsCount()
               << std::endl;
 
-    std::vector<Person *> persons{&firstPerson, &secondPerson};
+    vPersonPtr persons{&firstPerson, &secondPerson};
     for (const auto *person : persons)
     {
         // typeid expression allows us to reach the class information of the variable
@@ -86,16 +92,16 @@ int main()
     Date firstManagerBirthDate = Date(1995, 4, 4);
 
     // Using the new keyword to manage memory allocation of this value manually
-    Manager *firstManager = new Manager("First", "Manager", "Female", firstManagerPhoneNumber, firstManagerBirthDate, Date(), "Co-Founder", 22.4);
+    managerPtr firstManager = new Manager("First", "Manager", "Female", firstManagerPhoneNumber, firstManagerBirthDate, Date(), "Co-Founder", 22.4);
 
     // Second Manager definitions
     PhoneNumber secondManagerPhoneNumber = PhoneNumber("90", "222", "1112233");
     Date secondManagerBirthDate = Date(1992, 6, 18);
 
     // Using the new keyword to manage memory allocation of this value manually
-    Manager *secondManager = new Manager("Second", "Manager", "Male", secondManagerPhoneNumber, secondManagerBirthDate, Date(), "Co-Founder", 77.6);
+    managerPtr secondManager = new Manager("Second", "Manager", "Male", secondManagerPhoneNumber, secondManagerBirthDate, Date(), "Co-Founder", 77.6);
 
-    std::vector<Manager *> managers{firstManager, secondManager};
+    vManagerPtr managers{firstManager, secondManager};
     for (const auto *manager : managers)
     {
         // typeid expression allows us to reach the class information of the variable
