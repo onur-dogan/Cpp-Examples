@@ -1,8 +1,7 @@
 #include <iostream>
 #include <math.h>
 #include <unordered_map>
-// For Time Recording
-#include <chrono>
+#include <chrono> // For Time Recording
 #include <iomanip>
 #include <map>
 #include <cstdlib>
@@ -507,12 +506,17 @@ const void generalVectorFeatures()
     std::vector<int> backupIntList(intList);
 
     // Compare them
-    std::cout << "Is the integer vector list same with backup vector list?:\t" << (intList == backupIntList ? "Yes!" : "No!") << std::endl;
+    std::cout << "Is the integer vector list same with backup vector list?:\t"
+              // std::boolalpha converts the boolean variable to text (1 ==> true, 0 ==> false)
+              // std::noboolalpha resets the format to the default for the following texts so it returns 1 or 0
+              << std::boolalpha << (intList == backupIntList)
+              << std::noboolalpha << "!"
+              << std::endl;
 
     // Try to achieve to an element index that doesn't exist and catch the error
     try
     {
-        std::cout << "Let's see the 100. element of the vector: " << intList.at(100) << std::endl;
+        std::cout << "Let's try to see the 100. element of the vector: " << intList.at(100) << std::endl;
     }
     catch (std::out_of_range &err)
     {
@@ -556,8 +560,12 @@ const void generalVectorFeatures()
 
     std::cout << "*** Integer List Exercises Are Done! *** \n\n"
               << "*** Remaining Exercises with Decimal elements: *** \n";
-    for (float &floatItem : floatList)
-        std::cout << floatItem << std::endl;
+    for (const float &floatItem : floatList)
+        // std::showpoint is used to show(fill) the 0s after the point(.) so each variable would be displayed in the same length
+        // e.g. 2.300 is displayed as 2.3 without it, 2.300 with it. It displays five 0 after the point as default.
+        // By setting precision, we can declare how many characters will be displayed totally(characters at point's left + characters at point's right)
+        // std::noshowpoint resets the showpoint manipulator changes and it works as in normal
+        std::cout << std::showpoint << floatItem << std::noshowpoint << std::endl;
 
     float replaceNum1, replaceNum2;
     std::cout << "Enter two decimal number to replace them with the first 2 element in the list";
@@ -574,7 +582,7 @@ const void generalVectorFeatures()
 
     std::cout << "\nUpdated decimal elements: \n";
     for (float &floatItem : floatList)
-        std::cout << floatItem << std::endl;
+        std::cout << std::setprecision(5) << std::showpoint << floatItem << std::noshowpoint << std::endl;
 }
 
 size_t getSize(double *ptr)
@@ -619,6 +627,7 @@ const void displayBytesByDataType()
               << "\nsizeof pointer(ptr) ==> " << sizeof(ptr)
               << std::endl;
 }
+
 const void stringCharArrayUsages()
 {
     // *** Character array constants have a static storage duration (they exist throughout the program) ***
@@ -646,10 +655,11 @@ const void stringCharArrayUsages()
               << "\nThe last element of the second array: " << languageWithSingleQuotes[sizeof(languageWithSingleQuotes) / sizeof(languageWithSingleQuotes[0]) - 1]
               << std::endl;
 
+    size_t textLength = 10;
     std::string enteredString;
     std::cout << "\nEnter any long string\n";
     // Using setw when getting an input helps us to take only limited characters from the entered text
-    std::cin >> std::setw(10) >> enteredString;
+    std::cin >> std::setw(textLength) >> enteredString;
     std::cout << "Allowed string to store in the system:\t" << enteredString << std::endl;
 
     size_t characterLimit = 20;
@@ -657,8 +667,31 @@ const void stringCharArrayUsages()
     // Using getLine limitations when getting an input helps us to take only limited characters from the entered text
     // It gets the entered text's 20 character after the 10 character cause the above functionality takes and stores the first 10 character
     std::cin.getline(enteredCharacters, characterLimit);
+
+    // Clear the input stream since we get limited characters. The remaining characters go as a value to the next input stream
+    // This causes some conflicts between input streams. So, it is good to clear the input stream after the it is ended it's flow
+    clearInputStream();
+
     // Char arrays can be displayed as a string on the terminal without using any loop
-    std::cout << "The list with the allowed characters in the system:\t" << enteredCharacters << std::endl;
+    // Same as ==> std::cout.write(enteredCharacters, std::cin.gcount());
+    std::cout << "The entered text as a char array with the allowed characters in the system:\t" << enteredCharacters << std::endl;
+}
+
+const void showDecimalNumberEquivalents()
+{
+    int number;
+    std::cout << "Enter a decimal number:" << std::endl;
+    std::cin >> number;
+
+    // Displays the hexadecimal equivalent of the entered decimal number
+    // **std::hex** is same as **std::setbase(16)**
+    std::cout << number << " in hexadecimal is: " << std::hex << number << std::endl;
+    // Displays the octal equivalent of the entered decimal number
+    // std::hex is same as std::setbase(8)
+    std::cout << std::dec << number << " in octal is: " << std::oct << number << std::endl;
+    // Displays the entered decimal number again
+    // std::setbase(10) is same as std::dec
+    std::cout << std::setbase(10) << number << " in octal is: " << number << std::endl;
 }
 
 struct OptionStructure
@@ -710,12 +743,13 @@ vOption getOptions() noexcept
         getOptionModel(displayBytesByDataType),
         // Gives some examples about using string/char array usages
         getOptionModel(stringCharArrayUsages),
-    };
+        // Show hexadecimal, octal equivalents of a decimal number
+        getOptionModel(showDecimalNumberEquivalents)};
 
     return options;
 }
 
-const void displayOptions(vOption &options)
+inline void displayOptions(vOption &options)
 {
     for (const auto &option : options | boost::adaptors::indexed(1))
         std::cout << option.index() << ". " << option.value().desc << std::endl;
