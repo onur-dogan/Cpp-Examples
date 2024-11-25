@@ -78,10 +78,16 @@ void multiplyNumber(int *numberPtr)
     *numberPtr = pow(*numberPtr, 3);
 }
 
+// An example of a manipulator. It can be used instead of \t as seen in the following function
+inline std::ostream &tab(std::ostream &output)
+{
+    return output << "\t";
+}
+
 void setPointerAndMultiplyNumber()
 {
     int value = 5;
-    std::cout << "Value: " << value << "\tIt's address in memory: (& gives address of a value) " << &value << std::endl;
+    std::cout << "Value: " << value << tab << "It's address in memory: (& gives address of a value) " << &value << std::endl;
 
     /**
      * Set value's address to a pointer. So, valuePtr stores the memory address of the value variable.
@@ -220,6 +226,13 @@ void arrayPointerCalculations()
               << std::endl;
 }
 
+// An example of a manipulator. It can be used instead of \n as seen in the following function
+inline std::ostream &endLine(std::ostream &output)
+{
+    return output << "\n"
+                  << std::flush;
+}
+
 void deallocateVariables()
 {
     size_t arrayLength = 10;
@@ -227,11 +240,11 @@ void deallocateVariables()
 
     std::cout << "*** BEFORE ***" << std::endl;
     for (unsigned int i = 0; i < arrayLength; i++)
-        std::cout << newArray[i] << "\n";
+        std::cout << newArray[i] << endLine;
 
     delete[] newArray;
 
     std::cout << "*** AFTER ***" << std::endl;
     for (unsigned int i = 0; i < arrayLength; i++)
-        std::cout << newArray[i] << "\n";
+        std::cout << newArray[i] << endLine;
 }

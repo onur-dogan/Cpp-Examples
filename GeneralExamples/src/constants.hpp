@@ -37,7 +37,9 @@ constexpr std::string_view Constants[] =
         // displayBytesByDataType
         "Displays bytes for each data type",
         // stringCharArrayUsages
-        "Some examples about using string/char array"
+        "Some examples about using string/char array",
+        // showDecimalNumberEquivalents
+        "Show Hexadecimal, octal equivalents of a decimal number",
 };
 
 #endif
