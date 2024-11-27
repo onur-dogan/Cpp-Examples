@@ -68,6 +68,7 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - `cin.fail()` method is used to check whether the entered input type is the same as the variable type. If it's not in the same data type, it returns 1. Otherwise, returns 0.
 - `#define` **preprocessor** directive is used to define a `macro`(constant). `Macros` are a way to represent a fragment of code or a constant value by giving it a name. When the **preprocessor** encounters the `macro` name in the code, it replaces it with the corresponding code fragment or value that is defined using the #define **preprocessor**.
 - `std::ofstream` **(Output File Stream)** is used to write into files. `std::ifstream` **(Input File Stream)** is used to read the data from a file.
+- `std::ios` is a base class for all stream classes using narrow char characters. Both this class and its parent class `ios_base`, define the components of streams that do not depend on whether the stream is an input or an output stream.
 - `std::ios::app` writes the new lines to the end of the file. So, the previous data in the file remains.
 - `std::ios::out` opens file for writing and deletes the previous data in the file. It writes the new data instead.
 - `std::ios::in` opens file for reading and allows inputs from the stream to get the data in the file.
