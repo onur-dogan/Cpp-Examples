@@ -39,7 +39,7 @@ constexpr std::string_view Constants[] =
         // stringCharArrayUsages
         "Some examples about using string/char array",
         // showDecimalNumberEquivalents
-        "Show Hexadecimal, octal equivalents of a decimal number",
+        "Show Hexadecimal, octal, scientific equivalents of a decimal number",
 };
 
 #endif

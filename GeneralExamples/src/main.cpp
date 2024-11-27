@@ -683,6 +683,14 @@ const void showDecimalNumberEquivalents()
     std::cout << "Enter a decimal number:" << std::endl;
     std::cin >> number;
 
+    // If the entered value isn't an integer
+    if (std::cin.fail())
+    {
+        std::cout << "Expected an integer but entered another type so the results can't be displayed! Try again!";
+        clearInputStream();
+        return;
+    }
+
     // Displays the hexadecimal equivalent of the entered decimal number
     // **std::hex** is same as **std::setbase(16)**
     std::cout << number << " in hexadecimal is: " << std::hex << number << std::endl;
@@ -692,6 +700,14 @@ const void showDecimalNumberEquivalents()
     // Displays the entered decimal number again
     // std::setbase(10) is same as std::dec
     std::cout << std::setbase(10) << number << " in octal is: " << number << std::endl;
+
+    double scientificNumber;
+    std::cout << "Enter a double number to see its scientific equivalent:" << std::endl;
+    std::cin >> scientificNumber;
+
+    std::cout << "The number: " << scientificNumber
+              << "\tIt's scientific format is: " << std::scientific << scientificNumber
+              << std::endl;
 }
 
 struct OptionStructure
@@ -743,7 +759,7 @@ vOption getOptions() noexcept
         getOptionModel(displayBytesByDataType),
         // Gives some examples about using string/char array usages
         getOptionModel(stringCharArrayUsages),
-        // Show hexadecimal, octal equivalents of a decimal number
+        // Show hexadecimal, octal and scientific equivalents of a decimal number
         getOptionModel(showDecimalNumberEquivalents)};
 
     return options;
@@ -784,7 +800,10 @@ int main()
 
         // If the user types 0, print the menu again
         if (selection == 0)
+        {
             displayOptions(options);
+            continue;
+        }
 
         // Show selected option information
         std::cout << "\nSelected option is: "
@@ -794,10 +813,12 @@ int main()
 
         // Run the related function
         options[selection - 1].function();
+        // Clear stream
+        clearInputStream();
 
         // After the related function is completed, show the final explanations
         std::cout << "\nRun another function by entering its number. Type '0' to see the menu again. Type '"
-                  << std::cin.eof()
+                  << EOF
                   << "' to end the process.\n"
                   << std::endl;
     }
