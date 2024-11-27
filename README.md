@@ -64,3 +64,11 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - `constexpr` keyword improves program performance by computing at compile time rather than run time. Unlike `const`, `constexpr` can also be applied to **functions** and **class** constructors.
 - `boolalpha` manipulator formats and displays the `boolean` variables in text format (`true` for `1`, and `false` for `0`). Using `noboolalpha` manipulator disables this feature so it displays as `1` or `0` as in normal.
 - `showpoint` manipulator is used to show(fill) the zeros of the decimal value. So, the variable could be displayed in a certain length. For example, a float variable with the `2.300` value shows as `2.3` in normal. By setting the `showpoint` manipulator, it shows as `2.30000`. Setting the `precision` function declares how many characters will be displayed in total, so the zeros could be limited. After setting `setprecision(5)`, it shows as `2.3000`. On the other hand, using the `noshowpoint` manipulator disables this feature, so the decimal point is only displayed for numbers whose decimal part is not zero as in normal.
+- `scientific` manipulator is used to display the numbers in scientific notations.
+- `cin.fail()` method is used to check whether the entered input type is the same as the variable type. If it's not in the same data type, it returns 1. Otherwise, returns 0.
+- `#define` **preprocessor** directive is used to define a `macro`(constant). `Macros` are a way to represent a fragment of code or a constant value by giving it a name. When the **preprocessor** encounters the `macro` name in the code, it replaces it with the corresponding code fragment or value that is defined using the #define **preprocessor**.
+- `std::ofstream` **(Output File Stream)** is used to write into files. `std::ifstream` **(Input File Stream)** is used to read the data from a file.
+- `std::ios::app` writes the new lines to the end of the file. So, the previous data in the file remains.
+- `std::ios::out` opens file for writing and deletes the previous data in the file. It writes the new data instead.
+- `std::ios::in` opens file for reading and allows inputs from the stream to get the data in the file.
+- `std::ios::binary` opens the file in binary mode. 
