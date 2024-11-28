@@ -1,6 +1,7 @@
 #include <iostream>
 #include <math.h>
 #include <iomanip>
+#include <vector>
 #include <boost/range/adaptor/indexed.hpp>
 /**
  * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
@@ -13,6 +14,7 @@
 
 // Ref and Ptr Examples
 
+// Definitions
 // Set default value to the parameter
 int squareByValue(unsigned int value = 2);
 void squareByValueReference(int &);
@@ -24,6 +26,11 @@ void updateConstantPointer();
 void arrayPointerCalculations();
 
 void deallocateVariables();
+
+void customIntegerIterators();
+void printNumbersReverse();
+
+void listExamples();
 
 int main()
 {
@@ -40,7 +47,15 @@ int main()
     // arrayPointerCalculations();
 
     // Deallocate variables
-    deallocateVariables();
+    // deallocateVariables();
+
+    // Created some custom integer iterators for output/input streams
+    // customIntegerIterators();
+
+    // Prints the numbers in reverse format
+    // printNumbersReverse();
+
+    listExamples();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -247,4 +262,59 @@ void deallocateVariables()
     std::cout << "*** AFTER ***" << std::endl;
     for (unsigned int i = 0; i < arrayLength; i++)
         std::cout << newArray[i] << endLine;
+}
+
+void customIntegerIterators()
+{
+    std::cout << "Enter two integers";
+
+    // New istream iterator to read the inputs
+    std::istream_iterator<int> inputInt(std::cin);
+
+    int number1 = *inputInt;
+    std::cout << "First integer address: " << &inputInt << " and value: " << *inputInt << std::endl;
+
+    // Get the next value
+    ++inputInt;
+    int number2 = *inputInt;
+    std::cout << "Second integer address: " << &inputInt << " and value: " << *inputInt << std::endl;
+
+    // New ostream_iterator to print the inputs
+    std::ostream_iterator<int> outputInt(std::cout);
+    // Streams the result automatically
+    *outputInt = number1 + number2;
+}
+
+void printNumbersReverse()
+{
+    const size_t ARRAY_SIZE = 6;
+    std::array<int, ARRAY_SIZE> newArray{10, 20, 30, 40, 50, 60};
+    // Create a new vector by using the variables in the array
+    std::vector<int> numbers{newArray.begin(), newArray.end()};
+    // Stream iterator to print the integer variables. \n is used to print each one in a line
+    std::ostream_iterator<int> printer(std::cout, "\n");
+
+    std::cout << "The variables in the vector: " << std::endl;
+    // It copies the vector elements to print via printer func
+    std::copy(numbers.begin(), numbers.end(), printer);
+
+    // Lets change the first element automatically
+    numbers[0] = 999;
+
+    int newFirstNumber, newSecondNumber;
+    std::cout << "Enter two number to add as the first and the second elements: " << std::endl;
+    std::cin >> newFirstNumber >> newSecondNumber;
+    numbers.insert(numbers.begin(), newFirstNumber);
+    numbers.insert(numbers.begin()++, newSecondNumber);
+
+    std::cout << "The variables in the vector after the changes: " << std::endl;
+    std::copy(numbers.begin(), numbers.end(), printer);
+
+    std::cout << "The variables as reversed: " << std::endl;
+    for (auto reverseIterator = numbers.crbegin(); reverseIterator != numbers.crend(); reverseIterator++)
+        std::cout << *reverseIterator;
+}
+
+void listExamples()
+{   
 }

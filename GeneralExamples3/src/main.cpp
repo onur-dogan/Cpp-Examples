@@ -176,7 +176,7 @@ void readFile()
     std::ifstream inputFile(filePath, std::ios::in);
     if (!inputFile)
     {
-        throw std::invalid_argument("The related file couldn't opened/created! Try again...");
+        throw std::invalid_argument("The related file couldn't be opened! It probably does not exist. You must create the file with this name first!...");
         exit(EXIT_FAILURE);
     }
 
@@ -189,12 +189,19 @@ void readFile()
     // Print each line in the file
     PersonStructure personStr;
     while (inputFile >> personStr.name >> personStr.surName >> personStr.age)
+        /**
+         * file.(seekg | seekp)(n) ==> Locates the current location to the nth **byte** of the file
+         * file.(seekg | seekp)(n, std::ios::cur) ==> Moves the current location of the file forward n bytes
+         * file.(seekg | seekp)(n, std::ios::end) ==> Moves the current location of the file backward n bytes
+         * file.(seekg | seekp)(0, std::ios::end) ==> Locates to the end of the file
+         */
         outputLine(personStr);
 
     // The ofstream's destructor already closes the file but it is good to close it manually too as an extra example
     inputFile.close();
 }
 
+// Common main functions
 inline const void clearInputStream()
 {
     // Ignore and clear the input stream to prevent the conflicts situations between this and the below input stream
