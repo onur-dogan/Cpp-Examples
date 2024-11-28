@@ -16,6 +16,8 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - `vector.insert()` and `vector.emplace` are used for the same purpose. However;
     - `emplace` constructs an object in place at a specified position, potentially **avoiding a copy operation**.
     - `insert` adds a **copy** of the object at the specified position.
+- `std::vector::crbegin` returns a read-only reverse iterator that points to the last element in the vector.
+- `std::vector::crend` returns a read-only reverse iterator that pointsto one before the first element in the vector.
 - It is important to set a default value like `nullptr` to the pointers. It might cause critical issues to update a pointer that doesn't have a default value since the value might not point to a valid memory location.
 - `lvalue` simply means an object that has an identifiable location in memory.
 - `r-value` simply means, an object that has no identifiable location in memory.
@@ -73,3 +75,4 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - `std::ios::out` opens file for writing and deletes the previous data in the file. It writes the new data instead.
 - `std::ios::in` opens file for reading and allows inputs from the stream to get the data in the file.
 - `std::ios::binary` opens the file in binary mode. 
+- **Iterators** are used to access and iterate through elements of data structures. `std::istream_iterator` provides input iterator semantics for streams. `std::ostream_iterator` provides output iterator semantics for streams.
