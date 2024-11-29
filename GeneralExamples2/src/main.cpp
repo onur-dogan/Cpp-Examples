@@ -2,6 +2,10 @@
 #include <math.h>
 #include <iomanip>
 #include <vector>
+#include <list>
+#include <deque>
+#include <queue>
+#include <set>
 #include <boost/range/adaptor/indexed.hpp>
 /**
  * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
@@ -30,7 +34,16 @@ void deallocateVariables();
 void customIntegerIterators();
 void printNumbersReverse();
 
+// Common print function
+template <typename T>
+inline void printElements(std::string title, T &list);
+
 void listExamples();
+
+void dequeueExamples();
+void queueExamples();
+
+void linkedSetExamples();
 
 int main()
 {
@@ -55,7 +68,17 @@ int main()
     // Prints the numbers in reverse format
     // printNumbersReverse();
 
-    listExamples();
+    // List usage and examples of the common methods
+    // listExamples();
+
+    // Dequeue usage and examples of the common methods
+    // dequeueExamples();
+
+    // Queue usage and examples of the common methods
+    // queueExamples();
+
+    // Linked Set, multiple set usage and examples of the common methods
+    linkedSetExamples();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -272,12 +295,12 @@ void customIntegerIterators()
     std::istream_iterator<int> inputInt(std::cin);
 
     int number1 = *inputInt;
-    std::cout << "First integer address: " << &inputInt << " and value: " << *inputInt << std::endl;
+    std::cout << "First integer's address: " << &inputInt << " and value: " << *inputInt << std::endl;
 
     // Get the next value
     ++inputInt;
     int number2 = *inputInt;
-    std::cout << "Second integer address: " << &inputInt << " and value: " << *inputInt << std::endl;
+    std::cout << "Second integer's address: " << &inputInt << " and value: " << *inputInt << std::endl;
 
     // New ostream_iterator to print the inputs
     std::ostream_iterator<int> outputInt(std::cout);
@@ -315,6 +338,230 @@ void printNumbersReverse()
         std::cout << *reverseIterator;
 }
 
+// Common print function to print the elements in the list/dequeue
+template <typename T>
+inline void printElements(std::string title, T &list)
+{
+    // Print the title first
+    std::cout << "\n"
+              << title
+              << ":\n";
+    // Then, print the elements in the list
+    for (auto num = list.cbegin(); num != list.cend(); num++)
+        std::cout << *num << "\t";
+
+    // Or use iterator
+    // std::ostream_iterator<int> outputIterator(std::cout, "\t");
+    // Overloads for streambuf iterators.
+    // std::copy(list.cbegin(), list.cend(), outputIterator);
+}
+
 void listExamples()
-{   
+{
+    const size_t SIZE = 4;
+    std::array<int, SIZE> numbers{5, 10, 15, 20};
+    std::list<int> intList;
+    std::list<int> otherIntList;
+
+    std::cout << "Enter 4 numbers to add in the list: " << std::endl;
+
+    std::istream_iterator<int> intListListener(std::cin);
+    // Set the first entered data
+    intList.push_back(*intListListener);
+    // Then loop the enters until the list is fully filled
+    while (intList.size() != 4)
+        intList.push_back(*(++intListListener));
+
+    // Print the list
+    printElements("The list", intList);
+
+    // Sort and print the list again
+    intList.sort();
+    printElements("The list after sorting process", intList);
+
+    // Copy the elemets of the created list to the other one
+    otherIntList.insert(otherIntList.cbegin(), intList.cbegin(), intList.cend());
+    printElements("\nYour list is copied to the other list. The other list after copying process", otherIntList);
+
+    // splice function copies the elements of the list to the other one and purges the elements from the main list
+    intList.splice(intList.cend(), otherIntList);
+    printElements("\nThe other list is spliced to the main list. The list after splice process", intList);
+    printElements("The other list after splice process", otherIntList);
+
+    // Sort and print the spliced list
+    intList.sort();
+    printElements("\nThe merged list after sorting process", intList);
+
+    // Set list with the custom data
+    otherIntList.insert(otherIntList.cend(), numbers.cbegin(), numbers.cend());
+    otherIntList.sort();
+    printElements("\nThe other list is like that now", otherIntList);
+
+    // merge function copies the elements of the list **as sorted** to the other one and purges the elements from the main list
+    intList.merge(otherIntList);
+    printElements("\nThe main list is merged with the other list. The list after merging process", intList);
+    printElements("The other after merging process", otherIntList);
+
+    // unique function removes the duplicated values
+    intList.unique();
+    printElements("\nThe main list after removing the duplicated values", intList);
+
+    std::cout << "\nEnter a value you would like to remove from the list" << std::endl;
+    // Removes every element in the list equal to value
+    intList.remove(*(++intListListener));
+
+    printElements("\nThe main list after removing the value you entered", intList);
+
+    std::cout << "\n End of the list functions.." << std::endl;
+}
+
+void dequeueExamples()
+{
+    size_t DEQUEUE_SIZE = 5;
+    std::deque<std::string> personDequeue;
+
+    std::cout << "Enter the names of the 5 persons in the first place of the queue to the last\n"
+              << std::endl;
+
+    std::istream_iterator<std::string> dequeueListener(std::cin);
+    personDequeue.push_back(*dequeueListener);
+    while (personDequeue.size() != DEQUEUE_SIZE)
+        personDequeue.push_back(*(++dequeueListener));
+
+    // Print the queue
+    printElements("The persons in the queue", personDequeue);
+
+    // Remove the first person from the queue
+    personDequeue.pop_front();
+    printElements("The first person is removed from the queue. The new queue is", personDequeue);
+
+    /**
+     * The first person accepted to give its place to the second person. Change their positions in the queue
+     *
+     * Quick Note and Example:
+     *  If we would take the address of the queue's 0 element here like this:
+     * std::string *firstPerson = &personDequeue[0];
+     * personDequeue[0] = personDequeue[1];
+     * personDequeue[1] = *firstPerson;
+     * Then it would change person 1's name with the changed person 0's name so the first and the second persons would have the same name
+     * Because, it would get the value in the related address. The value in the address was already changed with the person[1] value, in the 2. line
+     *
+     *  */
+    std::string firstPerson = personDequeue[0];
+    personDequeue[0] = personDequeue[1];
+    personDequeue[1] = firstPerson;
+
+    printElements("The first person changed the queue place with the second person. The new queue is", personDequeue);
+}
+
+void queueExamples()
+{
+    size_t QUEUE_SIZE = 5;
+    // Normal queue
+    std::queue<std::string> personQueue;
+
+    std::cout << "Enter the names of the 5 persons in the first place of the queue to the last\n"
+              << std::endl;
+
+    std::istream_iterator<std::string> queueListener(std::cin);
+    // In queue, it always pushes to the back ()
+    personQueue.push(*queueListener);
+    while (personQueue.size() != QUEUE_SIZE)
+        personQueue.push(*(++queueListener));
+
+    std::cout << "The person who is at the first place of the queue: \t" << personQueue.front() << std::endl;
+    personQueue.pop();
+
+    std::cout << "The person who was in the first place entered the room. So, the new person in the first place of the queue: \t"
+              << personQueue.front()
+              << std::endl;
+
+    // PRIORTY QUEUE
+    // Priority queue that sorts the values automatically and sets the variable with the biggest value to the top
+    std::priority_queue<int> personAgePriortyQueue;
+    std::cout << "Enter the age of the 5 persons to make a queue\n"
+              << std::endl;
+
+    std::istream_iterator<int> priorityQueueListener(std::cin);
+
+    personAgePriortyQueue.push(*priorityQueueListener);
+    while (personAgePriortyQueue.size() != QUEUE_SIZE)
+        personAgePriortyQueue.push(*(++priorityQueueListener));
+
+    // So, the priority queue sorts the elements automatically and locates the biggest value to the top(front) of the queue
+    std::cout << "The person who should be at the first place of the priority queue with age of: \t" << personAgePriortyQueue.top() << std::endl;
+    personAgePriortyQueue.pop();
+
+    std::cout << "The person who was in the first place entered the room. So, the new person in the first place of the queue with age of: \t"
+              << personAgePriortyQueue.top()
+              << std::endl;
+}
+
+void linkedSetExamples()
+{
+    // It sorts the variables automatically. If the sorting doesn't important, then use **unordered_set**
+    // The default sorting is less. It can be configured by setting the 2. parameter below:
+    // For example, I set it to sort by greater or equal
+    std::set<double, std::greater<double>> doubleLinkedSet({44.44, 3.3, 1.1, 88.88, 5.5});
+    printElements("Elements in the list", doubleLinkedSet);
+
+    // The sets don't allow to storage of the same variables. That's one of the best features of it. So, it doesn't allow to insert a value that exists
+    // However, we can configure it to allow that by setting `greater_equal` or `less_equal` when defining the set.
+    // It allows variables that exist because of the _equal setting. See the example below:
+    std::cout << "\nLet's try to insert some elements to the list" << std::endl;
+
+    auto insertedValue = doubleLinkedSet.insert(*doubleLinkedSet.begin());
+    std::cout << "\n"
+              << *insertedValue.first << (insertedValue.second ? " is" : " is not")
+              << " inserted!";
+    printElements("Elements in the list after trying to insert the element", doubleLinkedSet);
+
+    insertedValue = doubleLinkedSet.insert(120.99);
+    std::cout << "\n"
+              << *insertedValue.first << (insertedValue.second ? " is" : " is not")
+              << " inserted!";
+    printElements("Elements in the list after trying to insert the element", doubleLinkedSet);
+
+    // ----------------------------------------------------------------------------------------
+    // The other linked set that allows to insert the equal values
+    std::set<double, std::greater_equal<double>> otherDoubleLinkedSet({200, 300, 400, 500, 100});
+    printElements("\nThe elements in the other list", otherDoubleLinkedSet);
+
+    std::cout << "\nLet's try to insert some elements to the list" << std::endl;
+
+    insertedValue = otherDoubleLinkedSet.insert(*otherDoubleLinkedSet.begin());
+    std::cout << "\n"
+              << *insertedValue.first << (insertedValue.second ? " is" : " is not")
+              << " inserted!";
+    printElements("Elements in the list after trying to insert the element", otherDoubleLinkedSet);
+
+    insertedValue = otherDoubleLinkedSet.insert(11.22);
+    std::cout << "\n"
+              << *insertedValue.first << (insertedValue.second ? " is" : " is not")
+              << " inserted!";
+    printElements("Elements in the list after trying to insert the element", otherDoubleLinkedSet);
+
+    // -----------------------------------------------------------------------------------------
+    // Multiset variable example with the less as Compare parameter, to run find function
+    std::multiset<double, std::less<double>> doubleMultipleSet(otherDoubleLinkedSet.begin(), otherDoubleLinkedSet.end());
+    printElements("The elements in the multiset list", doubleMultipleSet);
+
+    double search, nearestNum;
+    std::cout << "\nEnter a number to check whether it is in this list: ";
+    std::istream_iterator<double> searchListener(std::cin);
+    search = *searchListener;
+
+    auto result = doubleMultipleSet.find(search);
+    // Note that, looks like the find method doesn't work as expected if the multiset is created without less compare parameter
+    std::cout << search << ((result == doubleMultipleSet.end()) ? " doesn't exist" : " exists") << " in the list\n";
+
+    std::cout << "\nEnter a number to see the nearest elements to it in the list: ";
+    nearestNum = *(++searchListener);
+
+    auto p = doubleMultipleSet.equal_range(nearestNum);
+    std::cout << "Lower bound: " << *(p.first)
+              << "\nUpper bound: " << *(p.second);
+    // If would like to get the bounds separately, the function below prints the same response:
+    // std::cout << "Lower bound: " << *(doubleMultipleSet.lower_bound(nearestNum))
+    //           << "\nUpper bound: " << *(doubleMultipleSet.upper_bound(nearestNum));
 }
