@@ -76,3 +76,11 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - `std::ios::in` opens file for reading and allows inputs from the stream to get the data in the file.
 - `std::ios::binary` opens the file in binary mode. 
 - **Iterators** are used to access and iterate through elements of data structures. `std::istream_iterator` provides input iterator semantics for streams. `std::ostream_iterator` provides output iterator semantics for streams.
+- `std::splice` carries the elements of the list to the other one and purges the elements from the main list.
+- `std::merge` carries the elements of the list to the other one **as sorted** and purges the elements from the main list.
+- `std::unique` removes the duplicates.
+- `std::remove` removes the element in the list equal to value(parameter).
+- `std::priority_queue` sorts the elements automatically and locates the biggest value to the top(front) of the queue. It is available to sort it descending and locate the lowers value to the top(front) by settings the 3.(`_Compare`) parameter. The default of it is `less`. The other options are: `equal_to`, `not_equal_to`, `greater`, `greater_equal`, `less_equal`.
+- `equal_range` function returns a `std::pair` containing a pair of iterators as **pair::first** and **pair::second**. 
+    - The `pair::first` value is the same as the `upper_bound` function returns. `upper_bound` is a built-in function used to find the first element in a sorted range that is strictly greater than a given value. 
+    - The `pair::second` value is the same as the `lower_bound` function returns. `lower_bound` is a built-in function used to find the position of an element in a sorted range that has a value not less than the given value.
