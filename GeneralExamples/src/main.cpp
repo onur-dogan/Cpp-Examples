@@ -710,6 +710,29 @@ const void showDecimalNumberEquivalents()
               << std::endl;
 }
 
+static char letter = 'A';
+inline char generateLetter()
+{
+    return letter++;
+}
+
+const void printLettersInAlphabet()
+{
+    const size_t LETTER_LENGTH = 26;
+    std::array<char, LETTER_LENGTH> letters;
+    std::fill(letters.begin(), letters.end(), 'C');
+
+    std::ostream_iterator<char> lettersPrinter(std::cout, ",");
+
+    std::cout << "\nThe letters array after filling with a single character:" << std::endl;
+    std::copy(letters.cbegin(), letters.cend(), lettersPrinter);
+
+    // Generate takes a _Generator function as 3. parameter and sets the values according to the return values of this func
+    std::generate(letters.begin(), letters.end(), generateLetter);
+    std::cout << "\nThe letters after generation:" << std::endl;
+    std::copy(letters.cbegin(), letters.cend(), lettersPrinter);
+}
+
 struct OptionStructure
 {
     std::string desc;
@@ -760,7 +783,9 @@ vOption getOptions() noexcept
         // Gives some examples about using string/char array usages
         getOptionModel(stringCharArrayUsages),
         // Show hexadecimal, octal and scientific equivalents of a decimal number
-        getOptionModel(showDecimalNumberEquivalents)};
+        getOptionModel(showDecimalNumberEquivalents),
+        // Print letters in the alphabet
+        getOptionModel(printLettersInAlphabet)};
 
     return options;
 }

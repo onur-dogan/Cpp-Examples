@@ -40,6 +40,8 @@ constexpr std::string_view Constants[] =
         "Some examples about using string/char array",
         // showDecimalNumberEquivalents
         "Show Hexadecimal, octal, scientific equivalents of a decimal number",
+        // printLettersInAlphabet
+        "Print letters in the alphabet",
 };
 
 #endif
