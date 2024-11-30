@@ -84,3 +84,24 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - `equal_range` function returns a `std::pair` containing a pair of iterators as **pair::first** and **pair::second**. 
     - The `pair::first` value is the same as the `upper_bound` function returns. `upper_bound` is a built-in function used to find the first element in a sorted range that is strictly greater than a given value. 
     - The `pair::second` value is the same as the `lower_bound` function returns. `lower_bound` is a built-in function used to find the position of an element in a sorted range that has a value not less than the given value.
+- `std::bitset` represents a fixed-size sequence of N bits(each bit occupies 1 bit of memory).
+    - `set()` sets a given bit(1 or 0) to a particular value.
+    - `flips()` toggles every bit to its opposite value(1 to 0, 0 to 1).
+    - `reset()` sets every bit to false(0).
+    - `size()` returns the total number of bits.
+    - `count()` returns the number of bits which are set(1).
+    - `any()` checks whether **any** of the bits are on(1) and returns true if all the bits are set as 1. Otherwise, returns false.
+    - `all()` checks whether **all** of the bits are on(1) and returns true if all the bits are set as 1. Otherwise, returns false.
+    - `none()` checks whether **any** of the bits are on(1) and returns true if none of the bits are set as 1. Otherwise, returns false.
+    - `test()` checks the value of a bit and returns value at position. Returns 1 if the value is 1. Otherwise, returns 0.
+    - `bit1 &= bit2` performs binary logical AND operator and sets result into the `bit1`.
+    - `bit1 |= bit2` performs binary logical OR operator and sets result into the `bit1`.
+    - `bit1 ^= bit2` performs binary logical XOR operator and sets result into the `bit1`.
+    - `~bit1` performs binary logical NOT operator and flips the bits to opposite (1 to 0 or 0 to 1).
+    - `>>=` shifts the bits N step right.
+    - `<<=` shifts the bits N step left.
+    - `to_string()` converts bits to a string.
+    - `to_ulong()` returns a numerical interpretation (the integral equivalent of the bits) of the bitset by converting the bitset to an **unsigned long**.
+
+
+
