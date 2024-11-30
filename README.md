@@ -16,8 +16,12 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - `vector.insert()` and `vector.emplace` are used for the same purpose. However;
     - `emplace` constructs an object in place at a specified position, potentially **avoiding a copy operation**.
     - `insert` adds a **copy** of the object at the specified position.
-- `std::vector::crbegin` returns a read-only reverse iterator that points to the last element in the vector.
-- `std::vector::crend` returns a read-only reverse iterator that pointsto one before the first element in the vector.
+- `std::vector::begin` returns a **read/write** iterator that points to the first element in the vector.
+- `std::vector::end` returns a **read/write** iterator that points to the last element in the vector.
+- `std::vector::cbegin` returns a **read-only** iterator that points to the first element in the vector.
+- `std::vector::crend` returns a **read-only** reverse iterator that pointsto one before the first element in the vector.
+- `std::vector::crbegin` returns a **read-only** reverse iterator that points to the last element in the vector.
+- `std::vector::cend` returns a **read-only** iterator that points to the last element in the vector.
 - It is important to set a default value like `nullptr` to the pointers. It might cause critical issues to update a pointer that doesn't have a default value since the value might not point to a valid memory location.
 - `lvalue` simply means an object that has an identifiable location in memory.
 - `r-value` simply means, an object that has no identifiable location in memory.
@@ -102,6 +106,17 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
     - `<<=` shifts the bits N step left.
     - `to_string()` converts bits to a string.
     - `to_ulong()` returns a numerical interpretation (the integral equivalent of the bits) of the bitset by converting the bitset to an **unsigned long**.
+- The header `<algorithm>` defines a collection of functions especially designed to be used on ranges of elements. Some functions in `<algorithm>`:
+    - `equal` function compares whether the values are equal.
+    - `mismatch` function returns a pair of iterators. The pair's first iterator is the first array's unmatched first value. The pair's second iterator is the unmatched first value in the second array.
+    - `remove` function removes all elements equal to the value(parameter).
+    - `remove_copy` function removes all elements equal to the value(parameter) and copies new sequence to the other one.
+    - `remove_if` function removes elements for which `predicate` function returns true.
+    - `remove_copy_if` function removes elements for which `predicate` function returns true and copies new sequence to the other one.
+    - `replace` function replaces each element of one value with another value.
+    - `replace_copy` function replaces each element of one value with another value and copies new sequence to the other one.
+    - `replace_if` function replaces each element for which a predicate returns true with another value.
+    - `replace_copy_if` function replaces each element for which a predicate returns true with another value and copies new sequence to the other one.
 
 
 
