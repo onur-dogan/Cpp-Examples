@@ -7,6 +7,7 @@
 #include <queue>
 #include <set>
 #include <map>
+#include <bitset>
 #include <boost/range/adaptor/indexed.hpp>
 /**
  * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
@@ -51,6 +52,8 @@ void insertElement(std::map<std::string, int> &, std::pair<std::string, int>);
 inline void printPersons(std::map<std::string, int> &);
 void mapExamples();
 
+void bitsetExamples();
+
 int main()
 {
     // Squares values in different functions to compare updating referenced values
@@ -87,7 +90,10 @@ int main()
     // linkedSetExamples();
 
     // Map usage and examples of the common methods
-    mapExamples();
+    // mapExamples();
+
+    // Bitset usage and examples of the common methods
+    bitsetExamples();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -644,4 +650,122 @@ void mapExamples()
 
     std::cout << "*** The Person List ***\n";
     printPersons(personWithAges);
+}
+
+void bitsetExamples()
+{
+    // It sets bit size by this value. For example;
+    // It would be 00000 as default if the size would be 5. So in short, it adds a'0' byte as many as the size as default
+    const size_t MAX_BITSET_SIZE = 16;
+    std::bitset<MAX_BITSET_SIZE> bit;
+
+    // It changes the related bit as "on"(1). It doesn't allow to set bit size more than the MAX_BITSET_SIZE
+    std::vector<int> bitSetIndexes{1, 5, 8, 13};
+    for (auto bitSetIndex = bitSetIndexes.cbegin(); bitSetIndex != bitSetIndexes.cend(); ++bitSetIndex)
+        bit.set(*bitSetIndex);
+
+    // Display bool values as string
+    std::cout << std::boolalpha
+              << "\nBits: " << bit
+              // Returns the number of all bits.
+              << "\nBits size (.size()): " << bit.size()
+              // Returns the number of bits which are set.
+              << "\nBits count which are set as true(1) (.count()): " << bit.count()
+              // Tests whether any of the bits are on and returns true if at least one bit is set(1)
+              << "\nCheck whether any bit has set as true(1) (.any()): " << bit.any()
+              // Tests whether all the bits are on and returns true if all the bits are set(1)
+              << "\nCheck whether all of the bits has set as true(1) (.all()): " << bit.all()
+              // Tests whether any of the bits are on and returns true if none of the bits are set(1)
+              << "\nCheck whether all of the bits has set as false(0) (.any()): " << bit.none()
+              // Tests the value of a bit and returns 1 if the value is 1. If it is 0, then returns 0
+              // If the value isn't available in the bit variable, returns out_of_range error
+              << "\nCheck whether the first(far right) bit is true?: " << bit.test(0)
+              << std::endl;
+
+    std::bitset<MAX_BITSET_SIZE> bit2;
+    std::vector<int> bit2SetIndexes{0, 1, 4, 9, 10, 11};
+
+    for (auto bit2SetIndex = bit2SetIndexes.cbegin(); bit2SetIndex != bit2SetIndexes.cend(); ++bit2SetIndex)
+        bit2.set(*bit2SetIndex);
+
+    std::cout << "\nThe other bits: " << bit2
+              // Returns the number of all bits.
+              << "\nBits size (.size()): " << bit2.size()
+              // Returns the number of bits which are set.
+              << "\nBits count which are set as true(1) (.count()): " << bit2.count()
+              // Tests whether any of the bits are on and returns true if at least one bit is set
+              << "\nCheck whether any bit has set as true(1) (.any()): " << bit2.any()
+              // Tests whether all the bits are on and returns true if all the bits are set
+              << "\nCheck whether all of the bits has set as true(1) (.all()): " << bit2.all()
+              // Tests whether any of the bits are on and returns true if none of the bits are set
+              << "\nCheck whether all of the bits has set as false(0) (.any()): " << bit2.none()
+              // Tests the value of a bit and returns 1 if the value is 1. If it is 0, then returns 0
+              // If the value isn't available in the bit variable, returns out_of_range error
+              << "\nCheck whether the first(far right) bit is true?: " << bit2.test(0)
+              << std::endl;
+
+    std::bitset<MAX_BITSET_SIZE> bitAfterANDOperator, bitAfterOROperator, bitAfterXOROperator;
+    /**
+     * & operator is used for logical AND operators. &= equals the result to the value automatically.
+     * Logical &(AND) operator works like:
+     *  - 1 & 1 ==> 1
+     *  - 1 & 0 ==> 0
+     *  - 0 & 1 ==> 0
+     *  - 0 & 0 ==> 0
+     * So, `bit &= bit2` would make the process and set the result to the bit variable
+     */
+    bitAfterANDOperator = bit & bit2;
+    std::cout << "\nThe new bits after applying the logical AND operator: " << bitAfterANDOperator;
+
+    /**
+     * | operator is used for logical OR operators. |= equals the result to the value automatically.
+     * Logical |(OR) operator works like:
+     * - 1 | 1 ==> 1
+     * - 1 | 0 ==> 1
+     * - 0 | 1 ==> 1
+     * - 0 | 0 ==> 0
+     * So, `bit |= bit2` would make the process and set the result to the bit variable
+     */
+    bitAfterOROperator = bit | bit2;
+    std::cout << "\nThe new bits after applying the logical OR operator: " << bitAfterOROperator;
+
+    /**
+     * ^ operator is used for logical XOR operators. ^= equals the result to the value automatically.
+     * Logical ^(XOR) operator works like:
+     * - 1 | 1 ==> 0
+     * - 1 & 0 ==> 1
+     * - 0 & 1 ==> 1
+     * - 0 & 0 ==> 0
+     * So, `bit ^= bit2` would make the process and set the result to the bit variable
+     *
+     */
+    bitAfterXOROperator = bit ^ bit2;
+    std::cout << "\nThe new bits after applying the logical XOR operator: " << bitAfterXOROperator;
+
+    std::cout << "\nThe bits are like this currently: " << bit;
+
+    // Logical ~(NOT) operator converts the bits to the opposite, like converting 1 to 0 and 0 to 1.
+    std::cout << "\nThe bits after applying the logical NOT operator: " << ~bit;
+
+    bit >>= 1;
+    std::cout << "\nThe bits, after shifting 1 step right: " << bit;
+
+    bit <<= 1;
+    std::cout << "\nThe bits, after shifting 1 step left: " << bit;
+
+    // Converts bits to a string
+    std::string bitAsString = bit.to_string();
+    std::cout << "\nThe bits after converting to a string: " << bitAsString;
+
+    // Converts bits to a long(decimal) variable and returns a numerical interpretation of the %bitset.
+    long bitAsLong = bit.to_ulong();
+    std::cout << "\nThe bits after converting to a long(decimal): " << bitAsLong;
+
+    // Toggles every bit to its opposite value(1 to 0, 0 to 1)
+    bit.flip();
+    std::cout << "\nThe bits, after flipping process: " << bit;
+
+    // Sets every bit to false(0)
+    bit.reset();
+    std::cout << "\nThe bits, after reset: " << bit;
 }
