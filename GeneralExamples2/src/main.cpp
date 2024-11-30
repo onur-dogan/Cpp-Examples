@@ -54,6 +54,8 @@ void mapExamples();
 
 void bitsetExamples();
 
+void algorithmExamples();
+
 int main()
 {
     // Squares values in different functions to compare updating referenced values
@@ -93,7 +95,10 @@ int main()
     // mapExamples();
 
     // Bitset usage and examples of the common methods
-    bitsetExamples();
+    // bitsetExamples();
+
+    // Some array algorithm examples and explanations about some common methods
+    algorithmExamples();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -768,4 +773,129 @@ void bitsetExamples()
     // Sets every bit to false(0)
     bit.reset();
     std::cout << "\nThe bits, after reset: " << bit;
+}
+
+static int removeInt = 6;
+inline bool greaterThan(int number)
+{
+    return number > removeInt;
+}
+
+static int replaceInt = 5;
+inline bool lowerThan(int number)
+{
+    return number < replaceInt;
+}
+
+void algorithmExamples()
+{
+    const size_t ARRAY_LENGTH = 5;
+    std::array<int, ARRAY_LENGTH> array1{2, 4, 6, 10, 10};
+    std::array<int, ARRAY_LENGTH> array2(array1);
+    std::array<int, ARRAY_LENGTH> array3{2, 10, 14, 16, 18};
+
+    std::ostream_iterator<int> printArray(std::cout, ",");
+
+    std::cout << "***Arrays***" << std::endl;
+    std::cout << "\nFirst Array: ";
+    std::copy(array1.cbegin(), array1.cend(), printArray);
+    std::cout << "\nSecond Array: ";
+    std::copy(array2.cbegin(), array2.cend(), printArray);
+    std::cout << "\nThird Array: ";
+    std::copy(array3.cbegin(), array3.cend(), printArray);
+
+    // MATCH FUNCTIONS
+    std::cout << "\nAre the first and second arrays equal? " << std::boolalpha << std::equal(array1.cbegin(), array1.cend(), array2.cbegin());
+    std::cout << "\nAre the first and third arrays equal? " << std::boolalpha << std::equal(array1.cbegin(), array1.cend(), array3.cbegin());
+
+    auto mismatched = std::mismatch(array1.cbegin(), array1.cend(), array3.cbegin());
+    // mismatched.first gives the address of the value
+    std::cout << "\nThe one of the unmatched first array's elements between array1 and array3: " << *mismatched.first
+              << " (Index: " << mismatched.first - array1.begin() << ")"
+              << "\nThe one of the unmatched second array's elements between array1 and array3: " << *mismatched.second
+              << " (Index: " << mismatched.second - array3.begin() << ")";
+
+    char text1[] = "Test3 Text";
+    char text2[] = "Test2 Text";
+    std::cout << "\nText comparision between " << text1 << " and " << text2 << "."
+              << "Is " << text1 << " greater than the " << text2 << "?\t"
+              // lexicographical_compare function compares the texts and returns boolean.
+              // If the first sent text is greater, then returns true. Otherwise, returns false
+              << std::boolalpha << std::lexicographical_compare(std::begin(text1), std::end(text1), std::begin(text2), std::end(text2))
+              << std::endl;
+
+    // REMOVE FUNCTIONS
+    // Removes all 10 values from the array and returns the last element of the new array
+    auto newLastElement = std::remove(array1.begin(), array1.end(), removeInt);
+
+    std::cout << "The first and second arrays after removing all " << removeInt << "s from the first array";
+    std::cout << "\nFirst Array:\n";
+    std::copy(array1.begin(), newLastElement, printArray);
+    std::cout << "\nSecond Array:\n";
+    std::copy(array2.cbegin(), array2.cend(), printArray);
+
+    // Removes the related value from the main array and then copies the sequence to the other array(3. parameter)
+    std::remove_copy(array1.cbegin(), array1.cend(), array3.begin(), removeInt);
+    std::cout << "\n\nThe first and third arrays after removing all " << removeInt << "s from the first array and copy to the third";
+    std::cout << "\nFirst Array:\n";
+    std::copy(array1.cbegin(), array1.cend(), printArray);
+    std::cout << "\nThird Array:\n";
+    std::copy(array3.cbegin(), array3.cend(), printArray);
+
+    // Removes all values which are greater than 10 and returns the last element of the new array
+    newLastElement = std::remove_if(array1.begin(), array1.end(), greaterThan);
+    std::cout << "\n\nThe first and second arrays after removing all values which are greater than " << removeInt << " from the first array";
+    std::cout << "\nFirst Array:\n";
+    std::copy(array1.begin(), newLastElement, printArray);
+    std::cout << "\nSecond Array:\n";
+    std::copy(array2.cbegin(), array2.cend(), printArray);
+
+    // Removes the related value from the main array and then copies the sequence to the other array(3. parameter)
+    std::remove_copy_if(array1.cbegin(), array1.cend(), array3.begin(), greaterThan);
+    std::cout << "\n\nThe first and third arrays after removing all values which are greater than " << removeInt << " from the first array and copy to the third";
+    std::cout << "\nFirst Array:\n";
+    std::copy(array1.cbegin(), array1.cend(), printArray);
+    std::cout << "\nThird Array:\n";
+    std::copy(array3.cbegin(), array3.cend(), printArray);
+
+    // REPLACE FUNCTIONS
+    std::cout << "\n\nThe Array: " << std::endl;
+    std::copy(array1.cbegin(), array1.cend(), printArray);
+
+    // replace function replaces the related values with the new value(4. parameter)
+    int firstElement = array1[0], newValue = 200;
+    std::replace(array1.begin(), array1.end(), firstElement, newValue);
+
+    std::cout << "\nThe array after replacing " << firstElement << " with the " << newValue << ": ";
+    std::copy(array1.cbegin(), array1.cend(), printArray);
+
+    std::cout << "\n\nThe third array: " << std::endl;
+    std::copy(array3.cbegin(), array3.cend(), printArray);
+
+    // replace_copy replaces the related values with the new value(4. parameter) and copies this replaced array with the other one(3. parameter)
+    firstElement = array1[0], newValue = 500;
+    std::replace_copy(array1.begin(), array1.end(), array3.begin(), firstElement, newValue);
+
+    std::cout << "\nThe array after replaced " << firstElement << " with the " << newValue << " and then copied to the other array.";
+    std::cout << "\nThe other array after copying: ";
+    std::copy(array3.cbegin(), array3.cend(), printArray);
+
+    std::cout << "\n\nThe array: " << std::endl;
+    std::copy(array3.cbegin(), array3.cend(), printArray);
+
+    // replace_if replaces the values if the predicate function returns true for it
+    newValue = 350;
+    std::replace_if(array1.begin(), array1.end(), lowerThan, newValue);
+
+    std::cout << "\nThe array after replacing the values which are lower than " << replaceInt << " with the " << newValue << ":\n";
+    std::copy(array1.cbegin(), array1.cend(), printArray);
+
+    // replace_copy_if copies a sequence, replacing each value for which a predicate returns true with another value.
+    newValue = 7;
+    std::replace_copy_if(array1.cbegin(), array1.cend(), array3.begin(), greaterThan, newValue);
+    std::cout << "\n\nThe first and third arrays after replacing all values which are greaterThan than " << removeInt << " from the first array and copy to the third";
+    std::cout << "\nFirst Array:\n";
+    std::copy(array1.cbegin(), array1.cend(), printArray);
+    std::cout << "\nThird Array:\n";
+    std::copy(array3.cbegin(), array3.cend(), printArray);
 }
