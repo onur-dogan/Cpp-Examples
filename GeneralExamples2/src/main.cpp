@@ -6,6 +6,7 @@
 #include <deque>
 #include <queue>
 #include <set>
+#include <map>
 #include <boost/range/adaptor/indexed.hpp>
 /**
  * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
@@ -45,6 +46,11 @@ void queueExamples();
 
 void linkedSetExamples();
 
+inline bool checkValue(std::string, int);
+void insertElement(std::map<std::string, int> &, std::pair<std::string, int>);
+inline void printPersons(std::map<std::string, int> &);
+void mapExamples();
+
 int main()
 {
     // Squares values in different functions to compare updating referenced values
@@ -78,7 +84,10 @@ int main()
     // queueExamples();
 
     // Linked Set, multiple set usage and examples of the common methods
-    linkedSetExamples();
+    // linkedSetExamples();
+
+    // Map usage and examples of the common methods
+    mapExamples();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -564,4 +573,75 @@ void linkedSetExamples()
     // If would like to get the bounds separately, the function below prints the same response:
     // std::cout << "Lower bound: " << *(doubleMultipleSet.lower_bound(nearestNum))
     //           << "\nUpper bound: " << *(doubleMultipleSet.upper_bound(nearestNum));
+}
+
+inline bool checkValue(std::string name, int age)
+{
+    if (!name.length())
+    {
+        std::cerr << "The person must have a name information! Make sure you entered the correct information" << std::endl;
+        return false;
+    }
+
+    if (age <= 0)
+    {
+        std::cerr << "The person can't have age lower than 0! Make sure you entered the correct information" << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+void insertElement(std::map<std::string, int> &map, std::pair<std::string, int> pair)
+{
+    bool isValueOk = checkValue(pair.first, pair.second);
+    if (isValueOk)
+    {
+        // To check by using the find method, need to compare it with the end() function's result
+        if (map.find(pair.first) != map.end())
+        {
+            std::cerr << "There is a person with the same name(" << pair.first << ") already in the list, so it didn't inserted to the list.." << std::endl;
+            return;
+        }
+
+        map.insert(pair);
+    }
+}
+
+inline void printPersons(std::map<std::string, int> &map)
+{
+    for (const auto &person : map | boost::adaptors::indexed(1))
+        std::cout << person.index() << ". Person's Name(Key): " << person.value().first << ", Age(Value): " << person.value().second << "\n";
+}
+
+void mapExamples()
+{
+    const size_t MAP_SIZE = 5;
+    // A new map list with `{key = PersonName, value: age}` prototype that sorted by key. The first variable has set manually as an example
+    std::map<std::string, int, std::less<std::string>> personWithAges{{"Software Developer", 26}};
+
+    std::cout << "Enter the name and the age of each person to insert in the map list. (There will be 5 person in the list)" << std::endl;
+
+    int count = 1;
+    std::cout << count << ". Person's Name: ";
+    std::istream_iterator<std::string> nameListener(std::cin);
+
+    std::cout << *nameListener << "'s Age: ";
+    std::istream_iterator<int> ageListener(std::cin);
+    insertElement(personWithAges, std::make_pair(*nameListener, *ageListener));
+
+    while (count != MAP_SIZE)
+    {
+        ++count;
+        std::cout << count << ". Person's Name: ";
+        ++nameListener;
+
+        std::cout << *nameListener << "'s Age: ";
+        ++ageListener;
+
+        insertElement(personWithAges, std::make_pair(*nameListener, *ageListener));
+    }
+
+    std::cout << "*** The Person List ***\n";
+    printPersons(personWithAges);
 }
