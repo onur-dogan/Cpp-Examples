@@ -117,6 +117,42 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
     - `replace_copy` function replaces each element of one value with another value and copies new sequence to the other one.
     - `replace_if` function replaces each element for which a predicate returns true with another value.
     - `replace_copy_if` function replaces each element for which a predicate returns true with another value and copies new sequence to the other one.
-
-
-
+- Notes of some **mathematical algorithm** functions:
+    - `fill_n` function is used to fill the N elements with a given default value.
+    - `random_shuffle` randomly shuffle the elements of a sequence.
+    - `count` counts the number of copies of a value in a sequence.
+    - `count_if` counts the elements of a sequence for which a predicate is true.
+    - `minmax_element` return a pair of iterators pointing to the minimum and maximum elements in a range. `first` ==> min value, `second` ==> max value
+        - `min_element` returns the minimum element in the range.
+        - `min` returns the minimum value.
+        - `max_element` returns the maximum element in the range.
+        - `max` returns the maximum value.
+    - `accumulate` accumulates values in the range.
+    - `for_each` applies a function to every element of a sequence.
+    - `transform` function performs an operation to all elements in the array and, transforms the new elements to a new array.
+    - `find_if` finds the first element in a sequence for which a predicate is true.
+    - `find_if_not` finds the first element in a sequence for which a predicate is false.
+    - `binary_search` searches the value in the array and returns bool whether the value is in the array.
+    - `all_of` checks whether the predicate function returns **true** for **all** of the elements.
+    - `any_of` checks whether the predicate function returns **true** for **any** of the elements.
+    - `none_of` checks whether the predicate function returns **false** for **all** of the elements.
+    - `swap` swaps the elements with the each other.
+    - `iter_swap` uses iterator to swap the elements with the each other by the indexes.
+    - `swap_ranges` swaps each element in the range with the corresponding element in the range. The ranges must not overlap.
+    - `unique_copy` removes the **consecutive** duplicate values and copies result to a sequence.
+    - `unique` removes the **consecutive** duplicate values from the related array.
+    - `copy_backward` copies the elements to the other sequence. It has the same effect as `copy`, but starts at the end of the range and works its way to the start, returning the start of the result.
+    - `merge` merges two sorted ranges in one.
+    - `reverse` reverses the sequence.
+    - `includes` checks whether a sequence is a subsequence of the other one. It returns true if the sequence elements include the other sequence's elements.
+    - `set_difference` returns the difference of two sorted ranges.
+    - `set_intersection` returns the intersected elements of two sorted ranges.
+    - `set_symmetric_difference` returns the symmetric difference(The values which are in the array and not in merged array, or in merged array and not in main array) of two sorted ranges.
+    - `set_union` returns the union(The values which exist in one or both of the sequences) of two sorted ranges. 
+    - `equal_range` finds the lower and upper bound values and returns them as a pair.
+        - `lower_bound` finds the first value that is lower than or equal to the value.
+        - `upper_bound` finds the first value that is upper than the value.
+    - `is_heap` function determines whether the any elements in the range is a heap.
+    - `is_heap_until` searchs the end of a heap and returns an iterator pointing to the first element not in the heap.
+    - `make_heap` constructs a heap in the range of the array.
+    - `sort_heap` sort the elements in the heap.
