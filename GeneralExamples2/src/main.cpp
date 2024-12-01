@@ -8,6 +8,7 @@
 #include <set>
 #include <map>
 #include <bitset>
+#include <numeric>
 #include <boost/range/adaptor/indexed.hpp>
 /**
  * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
@@ -55,6 +56,7 @@ void mapExamples();
 void bitsetExamples();
 
 void algorithmExamples();
+void mathematicalAlgorithmExamples();
 
 int main()
 {
@@ -98,7 +100,10 @@ int main()
     // bitsetExamples();
 
     // Some array algorithm examples and explanations about some common methods
-    algorithmExamples();
+    // algorithmExamples();
+
+    // Some mathematical array algorithm examples and explanations about some common methods
+    mathematicalAlgorithmExamples();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -356,6 +361,11 @@ void printNumbersReverse()
     std::cout << "The variables as reversed: " << std::endl;
     for (auto reverseIterator = numbers.crbegin(); reverseIterator != numbers.crend(); reverseIterator++)
         std::cout << *reverseIterator;
+
+    // Print max and min numbers
+    int minNumber = std::min({5123, 1231, 43298, 9594, 1111});
+    int maxNumber = std::max({5123, 1231, 43298, 9594, 1111});
+    std::cout << "Additional test to find the max and min numbers quickly." << " Min: " << minNumber << ", Max:" << maxNumber;
 }
 
 // Common print function to print the elements in the list/dequeue
@@ -466,10 +476,13 @@ void dequeueExamples()
      * Then it would change person 1's name with the changed person 0's name so the first and the second persons would have the same name
      * Because, it would get the value in the related address. The value in the address was already changed with the person[1] value, in the 2. line
      *
+     * std::string firstPerson = personDequeue[0];
+     * personDequeue[0] = personDequeue[1];
+     * personDequeue[1] = firstPerson;
+     *
+     * Used swap function as shorthand.
      *  */
-    std::string firstPerson = personDequeue[0];
-    personDequeue[0] = personDequeue[1];
-    personDequeue[1] = firstPerson;
+    std::swap(personDequeue[0], personDequeue[1]);
 
     printElements("The first person changed the queue place with the second person. The new queue is", personDequeue);
 }
@@ -775,16 +788,16 @@ void bitsetExamples()
     std::cout << "\nThe bits, after reset: " << bit;
 }
 
-static int removeInt = 6;
+static int greaterThanInt = 6;
 inline bool greaterThan(int number)
 {
-    return number > removeInt;
+    return number > greaterThanInt;
 }
 
-static int replaceInt = 5;
+static int lowerThanInt = 5;
 inline bool lowerThan(int number)
 {
-    return number < replaceInt;
+    return number < lowerThanInt;
 }
 
 void algorithmExamples()
@@ -826,17 +839,17 @@ void algorithmExamples()
 
     // REMOVE FUNCTIONS
     // Removes all 10 values from the array and returns the last element of the new array
-    auto newLastElement = std::remove(array1.begin(), array1.end(), removeInt);
+    auto newLastElement = std::remove(array1.begin(), array1.end(), greaterThanInt);
 
-    std::cout << "The first and second arrays after removing all " << removeInt << "s from the first array";
+    std::cout << "The first and second arrays after removing all " << greaterThanInt << "s from the first array";
     std::cout << "\nFirst Array:\n";
     std::copy(array1.begin(), newLastElement, printArray);
     std::cout << "\nSecond Array:\n";
     std::copy(array2.cbegin(), array2.cend(), printArray);
 
     // Removes the related value from the main array and then copies the sequence to the other array(3. parameter)
-    std::remove_copy(array1.cbegin(), array1.cend(), array3.begin(), removeInt);
-    std::cout << "\n\nThe first and third arrays after removing all " << removeInt << "s from the first array and copy to the third";
+    std::remove_copy(array1.cbegin(), array1.cend(), array3.begin(), greaterThanInt);
+    std::cout << "\n\nThe first and third arrays after removing all " << greaterThanInt << "s from the first array and copy to the third";
     std::cout << "\nFirst Array:\n";
     std::copy(array1.cbegin(), array1.cend(), printArray);
     std::cout << "\nThird Array:\n";
@@ -844,7 +857,7 @@ void algorithmExamples()
 
     // Removes all values which are greater than 10 and returns the last element of the new array
     newLastElement = std::remove_if(array1.begin(), array1.end(), greaterThan);
-    std::cout << "\n\nThe first and second arrays after removing all values which are greater than " << removeInt << " from the first array";
+    std::cout << "\n\nThe first and second arrays after removing all values which are greater than " << greaterThanInt << " from the first array";
     std::cout << "\nFirst Array:\n";
     std::copy(array1.begin(), newLastElement, printArray);
     std::cout << "\nSecond Array:\n";
@@ -852,7 +865,7 @@ void algorithmExamples()
 
     // Removes the related value from the main array and then copies the sequence to the other array(3. parameter)
     std::remove_copy_if(array1.cbegin(), array1.cend(), array3.begin(), greaterThan);
-    std::cout << "\n\nThe first and third arrays after removing all values which are greater than " << removeInt << " from the first array and copy to the third";
+    std::cout << "\n\nThe first and third arrays after removing all values which are greater than " << greaterThanInt << " from the first array and copy to the third";
     std::cout << "\nFirst Array:\n";
     std::copy(array1.cbegin(), array1.cend(), printArray);
     std::cout << "\nThird Array:\n";
@@ -887,15 +900,185 @@ void algorithmExamples()
     newValue = 350;
     std::replace_if(array1.begin(), array1.end(), lowerThan, newValue);
 
-    std::cout << "\nThe array after replacing the values which are lower than " << replaceInt << " with the " << newValue << ":\n";
+    std::cout << "\nThe array after replacing the values which are lower than " << lowerThanInt << " with the " << newValue << ":\n";
     std::copy(array1.cbegin(), array1.cend(), printArray);
 
     // replace_copy_if copies a sequence, replacing each value for which a predicate returns true with another value.
     newValue = 7;
     std::replace_copy_if(array1.cbegin(), array1.cend(), array3.begin(), greaterThan, newValue);
-    std::cout << "\n\nThe first and third arrays after replacing all values which are greaterThan than " << removeInt << " from the first array and copy to the third";
+    std::cout << "\n\nThe first and third arrays after replacing all values which are greaterThan than " << greaterThanInt << " from the first array and copy to the third";
     std::cout << "\nFirst Array:\n";
     std::copy(array1.cbegin(), array1.cend(), printArray);
     std::cout << "\nThird Array:\n";
     std::copy(array3.cbegin(), array3.cend(), printArray);
+}
+
+void mathematicalAlgorithmExamples()
+{
+    const size_t ARRAY_SIZE = 10, DEFAULT_ARRAY_SIZE = 3, CONSTANT_VALUE = 10;
+    std::array<int, ARRAY_SIZE> numbers{5, 6, 3};
+    std::fill_n(numbers.begin() + DEFAULT_ARRAY_SIZE, numbers.size() - DEFAULT_ARRAY_SIZE, CONSTANT_VALUE);
+
+    printElements("The array elements", numbers);
+
+    // Randomly shuffle the elements of a sequence
+    std::random_shuffle(numbers.begin(), numbers.end());
+    printElements("The array elements", numbers);
+
+    // Count function returns the count of a value in the array
+    int constantValueCount = std::count(numbers.cbegin(), numbers.cend(), CONSTANT_VALUE);
+    std::cout << "\nThe count of " << CONSTANT_VALUE << "s in the array: " << constantValueCount;
+
+    int valuesCountByCondition = std::count_if(numbers.cbegin(), numbers.cend(), greaterThan);
+    std::cout << "\nThe count of the values which are greater than " << greaterThanInt << " in the array: " << valuesCountByCondition;
+
+    // Return a pair of iterators pointing to the minimum and maximum elements in a range. First ==> min value, Second ==> max value
+    auto minMaxNumbers = std::minmax_element(numbers.cbegin(), numbers.cend());
+    // Singly, `std::min_element(numbers.cbegin(), numbers.cend());` returns the min element. If only min value is needed, use this
+    std::cout << "\nThe minimum value in the array: " << *minMaxNumbers.first;
+
+    // Singly, `std::max_element(numbers.cbegin(), numbers.cend());` returns the max element. If only max value is needed, use this
+    std::cout << "\nThe maximum value in the array: " << *minMaxNumbers.second;
+
+    std::cout << "\nThe total of the elements: " << std::accumulate(numbers.cbegin(), numbers.cend(), 0);
+
+    std::cout << "\nThe square of the each element: ";
+    std::for_each(
+        numbers.begin(),
+        numbers.end(),
+        // Lambda function declared to make a basic process quickly
+        [](int number)
+        { std::cout << squareByValue(number) << "\t"; });
+
+    std::array<int, ARRAY_SIZE> transformedNumbers;
+    // Transform function performs an operation according to the function(4. parameter) to all elements in the array
+    // Then, sets this new array to the other array(3. parameter)
+    std::transform(numbers.cbegin(), numbers.cend(), transformedNumbers.begin(), [](int number)
+                   { return std::sqrt(number); });
+
+    printElements("\nThe main array", numbers);
+    printElements("\nThe transformed array includes the root values of each element", transformedNumbers);
+
+    // Find_if function finds the first element in a sequence for which a predicate(3. parameter) is true
+    auto foundElement = std::find_if(numbers.cbegin(), numbers.cend(), greaterThan);
+    std::cout << "\nThe first found element which is greater than " << greaterThanInt;
+    if (foundElement != numbers.cend())
+        std::cout << " is: " << *foundElement << " (Index: " << (foundElement - numbers.cbegin()) << ")";
+    else
+        std::cout << " is not available";
+
+    foundElement = std::find_if_not(numbers.cbegin(), numbers.cend(), greaterThan);
+    std::cout << "\nThe first found element which is not greater than " << greaterThanInt;
+    if (foundElement != numbers.cend())
+        std::cout << " is: " << *foundElement << " (Index: " << (foundElement - numbers.cbegin()) << ")";
+    else
+        std::cout << " is not available";
+
+    int searchInt;
+    std::cout << "\nEnter a number to search it in the array by using binary_search: ";
+    std::cin >> searchInt;
+    // binary_search function searches the value in the array and returns bool whether the value is in the array
+    std::cout << "Is " << searchInt << " in the array? " << std::boolalpha << std::binary_search(numbers.cbegin(), numbers.cend(), searchInt) << std::endl;
+
+    std::cout << "\nAre all the values higher than << " << greaterThanInt << "? " << std::all_of(numbers.cbegin(), numbers.cend(), greaterThan);
+    std::cout << "\nIs any value higher than << " << greaterThanInt << "? " << std::any_of(numbers.cbegin(), numbers.cend(), greaterThan);
+    std::cout << "\nIs none of the values higher than << " << greaterThanInt << "? " << std::none_of(numbers.cbegin(), numbers.cend(), greaterThan);
+
+    // Swaps the elements with the each other
+    std::swap(numbers[1], numbers[4]);
+    printElements("\nAfter swapping the 2. element with the 5. element, the array looks like", numbers);
+
+    // Uses iterator to swap the elements with the each other by the indexes
+    std::iter_swap(numbers.begin() + 2, numbers.end() - 3);
+    printElements("\nAfter swapping the 3. element with the 8. element, the array looks like", numbers);
+
+    // Swaps each element in the range with the corresponding element in the range. The ranges must not overlap
+    std::swap_ranges(numbers.begin(), numbers.begin() + 3, numbers.end() - 3);
+    printElements("\nAfter swapping the first 3 elements with the last 3 elements", numbers);
+
+    // unique_copy function removes the **consecutive** duplicate values and copies result to a sequence
+    std::vector<int> uniqueNumbers;
+    std::unique_copy(numbers.cbegin(), numbers.cend(), std::back_inserter(uniqueNumbers));
+    printElements("The new unique array", uniqueNumbers);
+
+    /**
+     * `unique` function removes the **consecutive** duplicate values. For example;
+     * If the array is like 10, 10, 20, 20, 10, 10, 5, the result of the unique function would be 10, 20, 10, 5
+     * It removes the duplicates but only the consecutive ones
+     */
+    auto endLocation = std::unique(numbers.begin(), numbers.end());
+    std::cout << "\nAfter removing the consecutive duplicate values, the array looks like:\n";
+    std::ostream_iterator<int> numberPrinter(std::cout, "\t");
+    std::copy(numbers.begin(), endLocation, numberPrinter);
+
+    // Copies the elements to the the back of the other array
+    // It has the same effect as copy, but starts at the end of the range and works its way to the start, returning the start of the result
+    printElements("\nThe other array looks like", transformedNumbers);
+    std::copy_backward(numbers.cbegin() + 5, numbers.cend(), transformedNumbers.end());
+    printElements("After copying the unique array's first 5 elements to the end of the other array, the other array looks like", transformedNumbers);
+
+    // Merges two sorted ranges in one
+    std::array<int, ARRAY_SIZE * 2> mergedNumbers;
+    std::merge(numbers.cbegin(), numbers.cend(), transformedNumbers.cbegin(), transformedNumbers.cend(), mergedNumbers.begin());
+    printElements("The main array", numbers);
+    printElements("The other array", transformedNumbers);
+    printElements("These arrays are merged in one array. The merged array", mergedNumbers);
+
+    // Reverses the array
+    std::reverse(mergedNumbers.begin(), mergedNumbers.end());
+    printElements("These array is reversed. The reversed array", mergedNumbers);
+
+    std::sort(numbers.begin(), numbers.end());
+    std::sort(mergedNumbers.begin(), mergedNumbers.end());
+    printElements("\nThe main array(sorted)", numbers);
+    printElements("The merged array(sorted)", mergedNumbers);
+    std::cout << "\nIs the merged array includes the main array? "
+              << std::boolalpha << std::includes(mergedNumbers.cbegin(), mergedNumbers.cend(), numbers.cbegin(), numbers.cend());
+
+    // Return the difference of two sorted ranges.
+    std::array<int, ARRAY_SIZE> differentNumbers, intersectedNumbers, symmetricDifferentNumbers;
+    auto differenceResultEnd = std::set_difference(mergedNumbers.cbegin(), mergedNumbers.cend(), numbers.cbegin(), numbers.cend(), differentNumbers.begin());
+    std::cout << "\nThe different values of the main array with the merged array: \n";
+    std::copy(differentNumbers.begin(), differenceResultEnd, numberPrinter);
+
+    auto intersectionReqsultEnd = std::set_intersection(numbers.cbegin(), numbers.cend(), mergedNumbers.cbegin(), mergedNumbers.cend(), intersectedNumbers.begin());
+    std::cout << "\nThe intersected values between the main array and the merged array: \n";
+    std::copy(intersectedNumbers.begin(), intersectionReqsultEnd, numberPrinter);
+
+    auto diffResultEnd = std::set_symmetric_difference(numbers.cbegin(), numbers.cend(), mergedNumbers.cbegin(), mergedNumbers.cend(), symmetricDifferentNumbers.begin());
+    std::cout << "\nThe values which exist in main array and not in merged array and exists in merged array and not in main array: \n";
+    std::copy(symmetricDifferentNumbers.begin(), diffResultEnd, numberPrinter);
+
+    std::array<int, ARRAY_SIZE * 2> unionNumbers;
+    auto unionResultEnd = std::set_union(numbers.cbegin(), numbers.cend(), mergedNumbers.cbegin(), mergedNumbers.cend(), unionNumbers.begin());
+    std::cout << "\nThe values which exist in one or both of the main array and merged array: \n";
+    std::copy(unionNumbers.begin(), unionResultEnd, numberPrinter);
+
+    const size_t BOUND_LIMIT = 5;
+    auto numberBounds = std::equal_range(numbers.cbegin(), numbers.cend(), BOUND_LIMIT);
+    std::cout
+        // It finds the lower bound in the array by the given value. If need to get only lower bound, use the below function
+        // auto lower = std::lower_bound(numbers.cbegin(), numbers.cend(), BOUND_LIMIT);
+        << "\nLower bound of " << BOUND_LIMIT << " in main array is " << *numberBounds.first
+        << " (Index: " << numberBounds.first - numbers.cbegin() << ")"
+        // It finds the upper bound in the array by the given value. If need to get only upper bound, use the below function
+        // auto upper = std::upper_bound(numbers.cbegin(), numbers.cend(), BOUND_LIMIT);
+        << "\nUpper bound of " << BOUND_LIMIT << " in main array is " << *numberBounds.second
+        << " (Index: " << numberBounds.second - numbers.cbegin() << ")";
+
+    // Heap functions
+    printElements("The main array looks like", numbers);
+
+    // is_heap function checks whether the any elements in the range is a heap
+    std::cout << "\n\nDoes the main array include heap elements: " << std::boolalpha << std::is_heap(numbers.cbegin(), numbers.cend());
+    // Constructs a heap in the range of the array
+    std::make_heap(numbers.begin(), numbers.end());
+    printElements("The array after running make_heap function", numbers);
+    std::cout << "\nDoes the main array includes heap elements: " << std::boolalpha << std::is_heap(numbers.cbegin(), numbers.cend());
+    // Search the end of a heap
+    std::cout << "\nThe end of the heap: " << *std::is_heap_until(numbers.cbegin(), numbers.cend());
+
+    // Sort the elements in the heap
+    std::sort_heap(numbers.begin(), numbers.end());
+    printElements("The arrat after running sort_heap function", numbers);
 }
