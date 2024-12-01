@@ -58,6 +58,8 @@ void bitsetExamples();
 void algorithmExamples();
 void mathematicalAlgorithmExamples();
 
+void lambdaFunctions();
+
 int main()
 {
     // Squares values in different functions to compare updating referenced values
@@ -103,7 +105,10 @@ int main()
     // algorithmExamples();
 
     // Some mathematical array algorithm examples and explanations about some common methods
-    mathematicalAlgorithmExamples();
+    // mathematicalAlgorithmExamples();
+
+    // Lambda function usage and some examples
+    lambdaFunctions();
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -940,6 +945,7 @@ void mathematicalAlgorithmExamples()
     // Singly, `std::max_element(numbers.cbegin(), numbers.cend());` returns the max element. If only max value is needed, use this
     std::cout << "\nThe maximum value in the array: " << *minMaxNumbers.second;
 
+    // Accumulate values in a range.
     std::cout << "\nThe total of the elements: " << std::accumulate(numbers.cbegin(), numbers.cend(), 0);
 
     std::cout << "\nThe square of the each element: ";
@@ -1081,4 +1087,32 @@ void mathematicalAlgorithmExamples()
     // Sort the elements in the heap
     std::sort_heap(numbers.begin(), numbers.end());
     printElements("The arrat after running sort_heap function", numbers);
+}
+
+void lambdaFunctions()
+{
+    const size_t ARRAY_SIZE = 5;
+    std::array<int, ARRAY_SIZE> numbers{7, 12, 15, 20, 30};
+    int total = 0;
+
+    std::ostream_iterator<int> printer(std::cout, "\t");
+    std::cout << "***Numbers***\n";
+    copy(numbers.cbegin(), numbers.cend(), printer);
+
+    for (unsigned int counter = 1; counter <= 5; ++counter)
+    {
+        std::cout << "\nResults of the " << counter << ". power of the numbers\n";
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            [&counter, &total](int num)
+            {
+                int result = std::pow(num, counter);
+                std::cout << result << ", ";
+
+                total += result;
+            });
+    }
+
+    std::cout << "\nTotal of the all values that are calculated: " << total << std::endl;
 }
