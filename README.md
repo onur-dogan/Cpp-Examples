@@ -156,3 +156,4 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
     - `is_heap_until` searchs the end of a heap and returns an iterator pointing to the first element not in the heap.
     - `make_heap` constructs a heap in the range of the array.
     - `sort_heap` sort the elements in the heap.
+- `lambda` expressions are a convenient way of defining an anonymous function object (a closure) right at the location where it's invoked or passed as an argument to a function. Typically lambdas are used to encapsulate a few lines of code that are passed to algorithms or asynchronous functions.
