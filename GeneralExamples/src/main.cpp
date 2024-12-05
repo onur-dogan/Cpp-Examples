@@ -847,4 +847,6 @@ int main()
                   << "' to end the process.\n"
                   << std::endl;
     }
+
+    return 0;
 }

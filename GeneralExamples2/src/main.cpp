@@ -60,7 +60,14 @@ void mathematicalAlgorithmExamples();
 
 void lambdaFunctions();
 
-int main()
+/**
+ * @param argc ==> Non-negative value representing the number of arguments passed to the program from the environment in which the program is run.
+ * @param argv ==> Pointer to the first element of an array of argc + 1 pointers, of which the last one is null and the previous ones,
+ * if any, point to null-terminated multibyte strings that represent the arguments passed to the program from the execution environment.
+ * If argv[0] is not a null pointer (or, equivalently, if argc > 0), it points to a string that represents the name used to invoke the program,
+ * or to an empty string.
+ */
+int main(int argc, char *argv[])
 {
     // Squares values in different functions to compare updating referenced values
     // squareValueAndReference();
@@ -109,6 +116,8 @@ int main()
 
     // Lambda function usage and some examples
     lambdaFunctions();
+
+    return 0;
 }
 
 // It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
@@ -1089,6 +1098,9 @@ void mathematicalAlgorithmExamples()
     printElements("The arrat after running sort_heap function", numbers);
 }
 
+auto sumLambda = [](int &total, int number)
+{ total += number; };
+
 void lambdaFunctions()
 {
     const size_t ARRAY_SIZE = 5;
@@ -1101,7 +1113,7 @@ void lambdaFunctions()
 
     for (unsigned int counter = 1; counter <= 5; ++counter)
     {
-        std::cout << "\nResults of the " << counter << ". power of the numbers\n";
+        std::cout << "\nResults of the " << counter << ". power of the numbers:\n";
         std::for_each(
             numbers.begin(),
             numbers.end(),
@@ -1110,7 +1122,7 @@ void lambdaFunctions()
                 int result = std::pow(num, counter);
                 std::cout << result << ", ";
 
-                total += result;
+                sumLambda(total, result);
             });
     }
 

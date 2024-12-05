@@ -39,4 +39,6 @@ int main()
     // Also, the destructor functions wait until all of the main scope lines are run.
     // After the workflows are completed for the related defined classes, the destructor functions trigger.
     time2Ptr->showTime();
+
+    return 0;
 }
