@@ -3,6 +3,13 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 
 
 **Some Quick Notes**
+- The `main` function is the designated start for program execution. All C++ programs must have a main function. If you try to compile a C++ program without a main function, the compiler raises an error. It can't be overloaded or declared an `inline` or `static` function. Also, it can't have its address taken, and can't be called from your program. It can be declared in different forms:
+    1. `int main() {...}` which runs independently of environment-provided arguments.
+    2. `int main(int argc, char *argv[]) {...}` which accepts environment provided arguments: 
+        - `argc (Argument Count)` argument is a non-negative integer that contains the count of arguments that follow in `argv[]`
+        - `argv[] (Argument Vector)` argument is an array of null-terminated strings representing command-line arguments entered by the user of the program. By convention, `argv[0]` is the command with which the program is invoked. So, `argv[0]` displays the program filename. `argv[1]` is the first command-line argument. The last argument from the command line is `argv[argc - 1]`, and `argv[argc]` is always **NULL**.
+        - The size of the array pointed to by `argv` is at least `argc + 1`, and the last element, `argv[argc]`, is guaranteed to be a **NULL** pointer:
+    3. `int main(/* implementation-defined */) {...}` which accepts implementation-defined type parameters. The C++ standards recommend implementation-defined main functions to place the extra (optional) parameters after `argv` argument.
 - `endl` manipulator inserts a **newline** and flushes the stream.
 - **Header** files shouldn't include namespaces.
 - **unsigned** keyword allows the variable to be only a positive. The integer can never be a negative value.
