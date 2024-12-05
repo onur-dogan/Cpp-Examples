@@ -32,4 +32,6 @@ int main()
     std::cout << "The Random Number is: " << floatRandomNumber
               << "\nThe nearest number you did guess: " << GuessNumberTemplate(floatRandomNumber, float1, float2, float3)
               << std::endl;
+
+    return 0;
 }

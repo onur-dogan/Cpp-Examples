@@ -120,4 +120,6 @@ int main()
     // To test, just comment out the following line, run this part and check desctructing logs. Then uncomment it and check again.
     delete firstManager;
     delete secondManager;
+
+    return 0;
 }

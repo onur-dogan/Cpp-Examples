@@ -102,8 +102,8 @@ int main()
                   << "' to end the process.\n"
                   << std::endl;
     }
-    writeFile();
-    readFile();
+
+    return 0;
 }
 
 inline std::string getEnteredFileName()

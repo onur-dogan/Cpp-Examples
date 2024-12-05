@@ -63,4 +63,6 @@ int main()
               << enteredDate.getDate() << ") < (" << lastDateOfTheYear.getDate() << ") ?\n"
               << "Answer: " << (enteredDateEarlierThanLastDay == 1 ? "Yes" : "No")
               << std::endl;
+
+    return 0;
 }
