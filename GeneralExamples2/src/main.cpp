@@ -22,6 +22,8 @@
 // Ref and Ptr Examples
 
 // Definitions
+void printMainArguments(int, char *[]);
+
 // Set default value to the parameter
 int squareByValue(unsigned int value = 2);
 void squareByValueReference(int &);
@@ -61,14 +63,18 @@ void mathematicalAlgorithmExamples();
 void lambdaFunctions();
 
 /**
- * @param argc ==> Non-negative value representing the number of arguments passed to the program from the environment in which the program is run.
- * @param argv ==> Pointer to the first element of an array of argc + 1 pointers, of which the last one is null and the previous ones,
- * if any, point to null-terminated multibyte strings that represent the arguments passed to the program from the execution environment.
- * If argv[0] is not a null pointer (or, equivalently, if argc > 0), it points to a string that represents the name used to invoke the program,
- * or to an empty string.
+ * @param argc (Argument Count) ==> A non-negative integer that contains the count of arguments that follow in `argv[]`
+ * @param argv (Argument Vector) ==> An array of null-terminated strings representing command-line arguments entered by the user of the program.
+ * By convention, argv[0] is the command with which the program is invoked. So, argv[0] displays the program filename.
+ * argv[1] is the first command-line argument. The last argument from the command line is argv[argc - 1], and argv[argc] is always NULL
+ *
+ * @example Run the first function (printMainArguments) to see the outputs of the arguments
  */
 int main(int argc, char *argv[])
 {
+    // Print the arguments of the main function
+    // printMainArguments(argc, argv);
+
     // Squares values in different functions to compare updating referenced values
     // squareValueAndReference();
 
@@ -120,15 +126,26 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// It doesn't update the value which is in parameter since it's reference isn't same with the x's reference
-// Here, it creates a new value and makes the processes on it so it doesn't affect the x value in squareValueAndReference
+void printMainArguments(int argc, char *argv[])
+{
+    std::cout << "argc: " << argc;
+    // The size of the array pointed to by **argv** is at least **argc + 1**
+    for (unsigned int i; i != argc; i++)
+        std::cout << "\nargv[" << i << "]: " << std::quoted(argv[i]);
+
+    // The last element `argv[argc]`, is guaranteed to be a **NULL** pointer
+    std::cout << "\nargv[argc(" << argc << ")]: " << static_cast<void *>(argv[argc]) << "\n";
+}
+
+// It doesn't update the value which is in parameter since it's reference isn't same with the value's reference
+// Here, it creates a new value and makes the processes on it. So, it doesn't affect the value in the squareValueAndReference
 int squareByValue(unsigned int value)
 {
     return value *= value;
 }
 
-// The valueRef parameter has same value/reference with y cause of using ampersand(&)
-// So when it's updated, y (with same reference) value also updates
+// The valueRef parameter has the same value/reference as the value that was sent via caller function cause of using ampersand(&)
+// So when it's updated in this function, the value parameter that is sent from the caller function (with the same reference) updates
 void squareByValueReference(int &valueRef)
 {
     valueRef *= valueRef;
