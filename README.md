@@ -167,6 +167,8 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - `noexcept` expression specifies whether a function could throw exceptions. It is a suffix to a function declaration that represents a set of types that might be matched by an exception handler for any exception that exits a function.
 - `set_new_handler` takes a replacement handler as the argument, returns the
 previous handler. The newly configured handler function is the function called by allocation functions whenever a memory allocation attempt fails. It transfers control to your error-handling mechanism if the new operator fails to allocate memory. So, it allows us to catch and manage the memory allocation issues.
+- `overflow_error` specifies the arithmetic overflow errors for the situations in which a result of an arithmetic computation is too large for the destination type.
+- `underflow_error` specifies the arithmetic underflow errors for the situations in which the result of an arithmetic computation is less than the smallest value that can be stored in the computer.
 - `abort` function aborts the execution and generate a core-dump.
 - `unique_ptr` is a **smart pointer** that automatically manages the dynamically allocated resources on the heap via a pointer. 
     - A unique pointer can point to only one resource(a single object or dynamically allocated array of objects). 
