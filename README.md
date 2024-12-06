@@ -2,7 +2,7 @@
 The C++ Project includes some examples and notes (mostly C++11). It also includes some additional examples/notes from the C++ How to Program (9th Edition) book.
 
 
-**Some Quick Notes**
+**Notes**
 - The `main` function is the designated start for program execution. All C++ programs must have a main function. If you try to compile a C++ program without a main function, the compiler raises an error. It can't be overloaded or declared an `inline` or `static` function. Also, it can't have its address taken, and can't be called from your program. It can be declared in different forms:
     1. `int main() {...}` which runs independently of environment-provided arguments.
     2. `int main(int argc, char *argv[]) {...}` which accepts environment provided arguments: 
@@ -164,3 +164,11 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
     - `make_heap` constructs a heap in the range of the array.
     - `sort_heap` sort the elements in the heap.
 - `lambda` expressions are a convenient way of defining an anonymous function object (a closure) right at the location where it's invoked or passed as an argument to a function. Typically lambdas are used to encapsulate a few lines of code that are passed to algorithms or asynchronous functions.
+- `noexcept` expression specifies whether a function could throw exceptions. It is a suffix to a function declaration that represents a set of types that might be matched by an exception handler for any exception that exits a function.
+- `set_new_handler` takes a replacement handler as the argument, returns the
+previous handler. The newly configured handler function is the function called by allocation functions whenever a memory allocation attempt fails. It transfers control to your error-handling mechanism if the new operator fails to allocate memory. So, it allows us to catch and manage the memory allocation issues.
+- `abort` function aborts the execution and generate a core-dump.
+- `unique_ptr` is a **smart pointer** that automatically manages the dynamically allocated resources on the heap via a pointer. 
+    - A unique pointer can point to only one resource(a single object or dynamically allocated array of objects). 
+    - A `unique_ptr` can transfer the ownership of the managed object to another unique_ptr if it's not declared as const. 
+    - A `unique_ptr` variable is created by using the **new** keyword, so it allocates dynamically. So, it must be freed by using the `delete` keyword. As the name suggests, the unique pointers free the dynamically allocated resource memory automatically when the destructor function is called, so it avoids the dynamically allocated resource memory issues.
