@@ -62,6 +62,8 @@ void mathematicalAlgorithmExamples();
 
 void lambdaFunctions();
 
+void memoryAllocationExample();
+
 /**
  * @param argc (Argument Count) ==> A non-negative integer that contains the count of arguments that follow in `argv[]`
  * @param argv (Argument Vector) ==> An array of null-terminated strings representing command-line arguments entered by the user of the program.
@@ -121,7 +123,10 @@ int main(int argc, char *argv[])
     // mathematicalAlgorithmExamples();
 
     // Lambda function usage and some examples
-    lambdaFunctions();
+    // lambdaFunctions();
+
+    // Example of triggering memory allocation issue manually
+    // memoryAllocationExample();
 
     return 0;
 }
@@ -1144,4 +1149,29 @@ void lambdaFunctions()
     }
 
     std::cout << "\nTotal of the all values that are calculated: " << total << std::endl;
+}
+
+/**
+ * Custom error handler function which is used instead instead of a try-catch block in the below function
+ */
+void customErrorHandler()
+{
+    std::cerr << "Memory allocation issue is occurred";
+    abort();
+}
+
+void memoryAllocationExample()
+{
+    const size_t PTR_SIZE = 50000;
+    double *ptr[PTR_SIZE];
+
+    // Set a new handler to catch the memory allocation errors for the following loop
+    std::set_new_handler(customErrorHandler);
+
+    const size_t ARR_SIZE = pow(PTR_SIZE, 2);
+    for (size_t i = 0; i < PTR_SIZE; i++)
+    {
+        std::cout << "ptr[" << i << "] points to " << ARR_SIZE << " new doubles\n";
+        ptr[i] = new double[ARR_SIZE];
+    }
 }
