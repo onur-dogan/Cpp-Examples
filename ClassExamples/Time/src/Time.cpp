@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Time.h"
 #include <iomanip>
-#include <stdexcept>
+#include "Time.h"
+#include "TimeException.cpp"
 
 // *** Overloaded constructors ***
 // They allow to get limited parameters and sets the missing ones automatically
@@ -33,16 +33,23 @@ Time::~Time()
 // Set private values in a function
 void Time::setTime(int h, int m, int s)
 {
-    // Set private fields via set functions
-    setHour(h);
-    setSecond(s);
-    setMinute(m);
+    try
+    {
+        // Set private fields via set functions
+        setHour(h);
+        setSecond(s);
+        setMinute(m);
+    }
+    catch (TimeException &timeException)
+    {
+        std::cout << "Exception occurred: " << timeException.what() << std::endl;
+    }
 }
 
 void Time::setHour(int h)
 {
     if (h < 0 || h > 24)
-        throw std::invalid_argument("Entered hour was out of range");
+        throw TimeException("Entered hour was out of range");
 
     hour = h;
 }
@@ -50,15 +57,15 @@ void Time::setHour(int h)
 void Time::setMinute(int m)
 {
     if (m < 0 || m > 60)
-        throw std::invalid_argument("Entered minute was out of range");
+        throw TimeException("Entered minute was out of range");
 
     minute = m;
 }
 
 void Time::setSecond(int s)
 {
-    if (s < 0 || s > 24)
-        throw std::invalid_argument("Entered second was out of range");
+    if (s < 0 || s > 60)
+        throw TimeException("Entered second was out of range");
 
     second = s;
 }
