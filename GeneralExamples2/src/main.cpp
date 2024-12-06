@@ -9,6 +9,7 @@
 #include <map>
 #include <bitset>
 #include <numeric>
+#include <memory>
 #include <boost/range/adaptor/indexed.hpp>
 /**
  * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
@@ -63,6 +64,8 @@ void mathematicalAlgorithmExamples();
 void lambdaFunctions();
 
 void memoryAllocationExample();
+
+void uniquePtrExample();
 
 /**
  * @param argc (Argument Count) ==> A non-negative integer that contains the count of arguments that follow in `argv[]`
@@ -127,6 +130,9 @@ int main(int argc, char *argv[])
 
     // Example of triggering memory allocation issue manually
     // memoryAllocationExample();
+
+    // Unique(smart) pointer examples
+    uniquePtrExample();
 
     return 0;
 }
@@ -1174,4 +1180,40 @@ void memoryAllocationExample()
         std::cout << "ptr[" << i << "] points to " << ARR_SIZE << " new doubles\n";
         ptr[i] = new double[ARR_SIZE];
     }
+}
+
+struct numberStr
+{
+    explicit numberStr(int defaultNum) : number(defaultNum) {};
+
+    inline void setNumber(int number) { this->number = number; };
+    int &getNumber() { return this->number; };
+
+    ~numberStr() { std::cout << "Destructing the number: " << this->number << std::endl; };
+
+    int number;
+};
+
+void uniquePtrExample()
+{
+    std::cout << "***An example of creating a unique_ptr **smart pointer** that displays a integer number***" << std::endl;
+
+    // Example of dynamically located single object
+    std::unique_ptr<numberStr> ptrToNumber(new numberStr(10));
+
+    std::cout << "Using the **unique_ptr** to manipulate the number(int)\n";
+    ptrToNumber->setNumber(55);
+
+    // Example of dynamically located array of objects(string)
+    std::unique_ptr<std::string[]> ptrToStringArr(new std::string[10]);
+    std::cout << "Using the **unique_ptr** to manipulate a string array\n";
+    ptrToStringArr[1] = "Test";
+
+    // The unique(smart) pointers manages dynamically allocated resources(numberStr) and it's life cycle.
+    // Because of the value is created by using **new** keyword, it was allocated **dynamically**.
+    // Therefore, it must be freed dynamically by using the **delete** keyword.
+    // The unique pointers do that process itself so if the user forgets to free the allocated memory, it does that process automatically
+    // That's one of the reasons why it is called smart pointer
+    std::cout << "Number after run the setNumber: " << (*ptrToNumber).getNumber() << std::endl;
+    std::cout << "The text in the string array: " << ptrToStringArr[1] << std::endl;
 }
