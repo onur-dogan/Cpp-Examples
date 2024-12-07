@@ -18,7 +18,7 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - Stack: LIFO, Queue: FIFO.
 - The ampersand(&) is used in variable declarations to declare reference variable.
 - **Overloaded Function**: Function overloading is a feature of OOP where the multiple functions with the same name has different parameter data types.
-- **Temporary** is a construct that generates an ordinary type or function at compile time based on arguments the user supplies for the template parameters.
+- **Temporary** is a construct that generates an ordinary type or function at compile time based on arguments the user supplies for the **template** parameters. They are described as `template <typename T>` or `template<class T>`. `typename` and `class` keywords can be used interchangeably.
 - **Performance Concern**: If the performance is important, then better to avoid using recursion functions. It takes more time and uses more memory. The deeper the recursion, the more memory is used. Because each recursive call requires its own stack frame to store variables and other information.
 - `vector.insert()` and `vector.emplace` are used for the same purpose. However;
     - `emplace` constructs an object in place at a specified position, potentially **avoiding a copy operation**.
@@ -174,3 +174,5 @@ previous handler. The newly configured handler function is the function called b
     - A unique pointer can point to only one resource(a single object or dynamically allocated array of objects). 
     - A `unique_ptr` can transfer the ownership of the managed object to another unique_ptr if it's not declared as const. 
     - A `unique_ptr` variable is created by using the **new** keyword, so it allocates dynamically. So, it must be freed by using the `delete` keyword. As the name suggests, the unique pointers free the dynamically allocated resource memory automatically when the destructor function is called, so it avoids the dynamically allocated resource memory issues.
+- The last pointer of the linked data structure must point to a **NULL pointer** to mark the end of the list. Each node is connected with the next one and the last node doesn't have any node after itself so it can't point to other next node.
+- Defining **Dynamic Memory Allocation** for the data structures that grow and shrink, saves memory. 
