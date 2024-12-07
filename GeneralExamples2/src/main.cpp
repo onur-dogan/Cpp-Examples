@@ -1,6 +1,7 @@
 #include <iostream>
 #include <math.h>
 #include <iomanip>
+#include <iterator>
 #include <vector>
 #include <list>
 #include <deque>
