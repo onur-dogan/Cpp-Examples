@@ -10,6 +10,9 @@
 #include <random>
 
 // Definitions
+template <typename ARRAYTYPE, size_t arraySize>
+inline void shuffleElements(std::array<ARRAYTYPE, arraySize> &);
+
 // Search functions
 void searchingMethods();
 void printSearchingResult(size_t &);
@@ -49,6 +52,12 @@ void merge(std::array<ARRAYTYPE, arraySize> &, size_t, size_t, size_t, size_t);
 // Block sort
 template <typename ARRAYTYPE, size_t arraySize>
 void blockSort(std::array<ARRAYTYPE, arraySize> &);
+
+// Quick sort
+template <typename ARRAYTYPE, size_t arraySize>
+void quickSort(std::array<ARRAYTYPE, arraySize> &, size_t, size_t);
+template <typename ARRAYTYPE, size_t arraySize>
+size_t partition(std::array<ARRAYTYPE, arraySize> &, size_t, size_t);
 
 int main(int argc, char *argv[])
 {
@@ -192,14 +201,14 @@ void sortingMethods()
     printArrayElements(intArray);
 
     // Shuffle array again to make sure the next function works properly
-    std::random_shuffle(intArray.begin(), intArray.end());
+    shuffleElements(intArray);
 
     selectionSort(intArray);
     std::cout << "\n\n**The elements of the array after selection sorting process**\n";
     printArrayElements(intArray);
 
     // Shuffle array again to make sure the next function works properly
-    std::random_shuffle(intArray.begin(), intArray.end());
+    shuffleElements(intArray);
 
     std::cout << "\n\nMerge sort process is started...\n";
     printArrayElements(intArray);
@@ -209,8 +218,16 @@ void sortingMethods()
     printArrayElements(intArray);
 
     // Shuffle array again to make sure the next function works properly
-    std::random_shuffle(intArray.begin(), intArray.end());
+    shuffleElements(intArray);
+
     blockSort(intArray);
+
+    // Shuffle array again to make sure the next function works properly
+    shuffleElements(intArray);
+
+    quickSort(intArray, 0, intArray.size() - 1);
+    std::cout << "\n\n**The elements of the array after quick sorting process**\n";
+    printArrayElements(intArray);
 }
 
 /**
@@ -393,4 +410,59 @@ void blockSort(std::array<ARRAYTYPE, arraySize> &array)
     std::cout << "\n\n**The elements of the array after block sorting process**\n";
     for (const int &element : result)
         std::cout << element << " ";
+}
+
+template <typename ARRAYTYPE, size_t arraySize>
+size_t partition(std::array<ARRAYTYPE, arraySize> &array, size_t low, size_t high)
+{
+    // The default pivot is the last element
+    ARRAYTYPE pivot = array[high];
+
+    // Index of smaller element and indicates the right position of pivot found so far
+    size_t index = low - 1;
+
+    // Loop each element and sort the values by comparing them with the pivot value
+    // At the end, the index value will have the count (-1) of the values which are lower than the pivot value
+    // Therefore, the pivot value's correct index will be (index + 1) as a result
+    // and all of the smaller values will be placed at the left side of the pivot in list
+    for (size_t j = low; j <= high - 1; j++)
+    {
+        if (array[j] < pivot)
+        {
+            index++;
+
+            ARRAYTYPE tempVal = array[index];
+            array[index] = array[j];
+            array[j] = tempVal;
+        }
+    }
+
+    // The pivot(last) element's correct location is calculated in the above loop
+    // So, swap it with the value which is in its correct position. Then, the last element will be another value
+    // and the function will sort the elements by the new pivot value recursively. At the end, all of the elements will be sorted
+    ARRAYTYPE tempVal = array[index + 1];
+    array[index + 1] = array[high];
+    array[high] = tempVal;
+
+    return index + 1;
+}
+
+template <typename ARRAYTYPE, size_t arraySize>
+void quickSort(std::array<ARRAYTYPE, arraySize> &array, size_t low, size_t high)
+{
+    // If there's only one value in the list
+    if (low >= high)
+        return;
+
+    size_t pivotIndex = partition(array, low, high);
+
+    // Recursion calls for smaller elements and greater or equals elements
+    quickSort(array, low, pivotIndex - 1);
+    quickSort(array, pivotIndex + 1, high);
+}
+
+template <typename ARRAYTYPE, size_t arraySize>
+void shuffleElements(std::array<ARRAYTYPE, arraySize> &array)
+{
+    std::random_shuffle(array.begin(), array.end());
 }
