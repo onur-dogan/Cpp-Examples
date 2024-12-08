@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <array>
+#include <vector>
 #include <algorithm>
 #include <ctime>
 #include <random>
@@ -39,10 +40,15 @@ void insertionSort(std::array<ARRAYTYPE, arraySize> &);
 template <typename ARRAYTYPE, size_t arraySize>
 void selectionSort(std::array<ARRAYTYPE, arraySize> &);
 
+// Merge sort
 template <typename ARRAYTYPE, size_t arraySize>
 void mergeSort(std::array<ARRAYTYPE, arraySize> &, size_t, size_t);
 template <typename ARRAYTYPE, size_t arraySize>
 void merge(std::array<ARRAYTYPE, arraySize> &, size_t, size_t, size_t, size_t);
+
+// Block sort
+template <typename ARRAYTYPE, size_t arraySize>
+void blockSort(std::array<ARRAYTYPE, arraySize> &);
 
 int main(int argc, char *argv[])
 {
@@ -197,12 +203,19 @@ void sortingMethods()
 
     std::cout << "\n\nMerge sort process is started...\n";
     printArrayElements(intArray);
+
     mergeSort(intArray, 0, intArray.size() - 1);
     std::cout << "\n\n**The elements of the array after merging sorting process**\n";
     printArrayElements(intArray);
+
+    // Shuffle array again to make sure the next function works properly
+    std::random_shuffle(intArray.begin(), intArray.end());
+    blockSort(intArray);
 }
 
 /**
+ * Time Complexity: O(n²), O(n) best case
+ *
  * Insertion sort is a simple and **inefficient** sorting algorithm.
  * It works by iteratively inserting each element of an unsorted list into its correct position in a sorted portion of the list
  */
@@ -230,6 +243,8 @@ void insertionSort(std::array<ARRAYTYPE, arraySize> &array)
 }
 
 /**
+ * Time Complexity: O(n²)
+ *
  * Selection sort is another a simple and **inefficient** sorting algorithm.
  * It finds the smallest/largest value for each position of the unsorted array and swaps them with each other to sort the array.
  */
@@ -261,6 +276,8 @@ void selectionSort(std::array<ARRAYTYPE, arraySize> &array)
 }
 
 /**
+ * Time Complexity: O(n*logn) in both the average and worst cases.
+ *
  * Merge sort is efficient, general-purpose, and comparison-based sorting algorithm. It is also conceptually more complex.
  * It divides the array elements into smaller subarrays to sort them recursively.
  * After sorting the sub arrays, merges them into one combined array
@@ -322,4 +339,58 @@ void merge(std::array<ARRAYTYPE, arraySize> &array, size_t left, size_t leftLast
 
     for (size_t i = left; i <= rightLastIndex; ++i)
         array[i] = combinedArray[i];
+}
+
+/**
+ * Time Complexity: O(n*logn)
+ *
+ * Block sort is a sorting algorithm that sorts an array by dividing it into blocks of fixed size, and sorting each block individually
+ * After the elements in each block are sorted individually, merge the sorted blocks back into a single sorted array
+ */
+template <typename ARRAYTYPE, size_t arraySize>
+void blockSort(std::array<ARRAYTYPE, arraySize> &array)
+{
+    size_t blockSize = 3;
+    std::vector<std::vector<ARRAYTYPE>> blocks;
+
+    // Divide the array elements into blocks of fixed size(blockSize)
+    for (size_t i = 0; i < array.size(); i += blockSize)
+    {
+        std::vector<ARRAYTYPE> block;
+
+        for (size_t blockIndex = i; blockIndex < i + blockSize && blockIndex < array.size(); blockIndex++)
+            block.push_back(array[blockIndex]);
+
+        // Sort each block individually and then append it to the blocks list
+        std::sort(block.begin(), block.end());
+        blocks.push_back(block);
+    }
+
+    // Merge the sorted blocks into a single sorted list
+    std::vector<ARRAYTYPE> result;
+    while (!blocks.empty())
+    {
+        // Find the block which has the smallest element
+        size_t blockIndexWithSmallestValue = 0;
+        for (size_t i = 1; i < blocks.size(); i++)
+        {
+            if (blocks[i][0] < blocks[blockIndexWithSmallestValue][0])
+                blockIndexWithSmallestValue = i;
+        }
+
+        // Remove the smallest element from the related block and append it to the result list
+        result.push_back(blocks[blockIndexWithSmallestValue][0]);
+        blocks[blockIndexWithSmallestValue].erase(blocks[blockIndexWithSmallestValue].begin());
+
+        // If the block is empty, after removing the smallest element from it, then no need to check it more.
+        // Just remove it from the blocks list
+        if (blocks[blockIndexWithSmallestValue].empty())
+        {
+            blocks.erase(blocks.begin() + blockIndexWithSmallestValue);
+        }
+    }
+
+    std::cout << "\n\n**The elements of the array after block sorting process**\n";
+    for (const int &element : result)
+        std::cout << element << " ";
 }
