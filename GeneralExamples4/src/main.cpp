@@ -59,6 +59,12 @@ void quickSort(std::array<ARRAYTYPE, arraySize> &, size_t, size_t);
 template <typename ARRAYTYPE, size_t arraySize>
 size_t partition(std::array<ARRAYTYPE, arraySize> &, size_t, size_t);
 
+// Heap sort
+template <typename ARRAYTYPE, size_t arraySize>
+void heapSort(std::array<ARRAYTYPE, arraySize> &);
+template <typename ARRAYTYPE, size_t arraySize>
+void heapify(std::array<ARRAYTYPE, arraySize> &, size_t, size_t);
+
 int main(int argc, char *argv[])
 {
     // searchingMethods();
@@ -197,14 +203,14 @@ void sortingMethods()
     printArrayElements(intArray);
 
     insertionSort(intArray);
-    std::cout << "\n\n**The elements of the array after insertion sorting process**\n";
+    std::cout << "\n\n**The elements of the array after **insertion** sorting process**\n";
     printArrayElements(intArray);
 
     // Shuffle array again to make sure the next function works properly
     shuffleElements(intArray);
 
     selectionSort(intArray);
-    std::cout << "\n\n**The elements of the array after selection sorting process**\n";
+    std::cout << "\n\n**The elements of the array after **selection** sorting process**\n";
     printArrayElements(intArray);
 
     // Shuffle array again to make sure the next function works properly
@@ -214,7 +220,7 @@ void sortingMethods()
     printArrayElements(intArray);
 
     mergeSort(intArray, 0, intArray.size() - 1);
-    std::cout << "\n\n**The elements of the array after merging sorting process**\n";
+    std::cout << "\n\n**The elements of the array after **merge** sorting process**\n";
     printArrayElements(intArray);
 
     // Shuffle array again to make sure the next function works properly
@@ -225,13 +231,20 @@ void sortingMethods()
     // Shuffle array again to make sure the next function works properly
     shuffleElements(intArray);
 
+    printArrayElements(intArray);
     quickSort(intArray, 0, intArray.size() - 1);
-    std::cout << "\n\n**The elements of the array after quick sorting process**\n";
+    std::cout << "\n\n**The elements of the array after **quick** sorting process**\n";
+    printArrayElements(intArray);
+
+    // Shuffle array again to make sure the next function works properly
+    shuffleElements(intArray);
+    heapSort(intArray);
+    std::cout << "\n\n**The elements of the array after **heap** sorting process**\n";
     printArrayElements(intArray);
 }
 
 /**
- * Time Complexity: O(n²), O(n) best case
+ * Time Complexity: O(n²), Best Case: O(n)
  *
  * Insertion sort is a simple and **inefficient** sorting algorithm.
  * It works by iteratively inserting each element of an unsorted list into its correct position in a sorted portion of the list
@@ -292,6 +305,37 @@ void selectionSort(std::array<ARRAYTYPE, arraySize> &array)
     }
 }
 
+template <typename ARRAYTYPE, size_t arraySize>
+void merge(std::array<ARRAYTYPE, arraySize> &array, size_t left, size_t leftLastIndex, size_t right, size_t rightLastIndex)
+{
+    size_t leftFirstIndex = left,
+           rightFirstIndex = right,
+           combinedIndex = leftFirstIndex;
+    std::array<ARRAYTYPE, arraySize> combinedArray;
+
+    // This loop should be run until one of the left or the right side elements are fully processed.
+    // It locates the smallest value for each index and then gets the next value by incrementing the index and checking it as well.
+    // In the end, this loop will configure the combined array in ascending format
+    while (leftFirstIndex <= leftLastIndex && rightFirstIndex <= rightLastIndex)
+        combinedArray[combinedIndex++] = array[array[leftFirstIndex] <= array[rightFirstIndex] ? leftFirstIndex++ : rightFirstIndex++];
+
+    // After the above loop is done, the right first index and left first index will be increased.
+    // Check whether the remaining elements are on the left or right side.
+    // If all of the left side elements are copied to the combined array, then only the right side elements exist now.
+    // Therefore, the only choice is to copying them into the combined array
+    if (leftFirstIndex == right)
+        while (rightFirstIndex <= rightLastIndex)
+            combinedArray[combinedIndex++] = array[rightFirstIndex++];
+    // If there are values that are stayed on the left side, then the right side elements must be fully copied
+    // Therefore, no need to check anything more. Just copy them after the values since they must be the biggest values
+    else
+        while (leftFirstIndex <= leftLastIndex)
+            combinedArray[combinedIndex++] = array[leftFirstIndex++];
+
+    for (size_t i = left; i <= rightLastIndex; ++i)
+        array[i] = combinedArray[i];
+}
+
 /**
  * Time Complexity: O(n*logn) in both the average and worst cases.
  *
@@ -325,37 +369,6 @@ void mergeSort(std::array<ARRAYTYPE, arraySize> &array, size_t low, size_t high)
 
     // After split processes are done, merge the splitted arrays
     merge(array, low, middle1, middle2, high);
-}
-
-template <typename ARRAYTYPE, size_t arraySize>
-void merge(std::array<ARRAYTYPE, arraySize> &array, size_t left, size_t leftLastIndex, size_t right, size_t rightLastIndex)
-{
-    size_t leftFirstIndex = left,
-           rightFirstIndex = right,
-           combinedIndex = leftFirstIndex;
-    std::array<ARRAYTYPE, arraySize> combinedArray;
-
-    // This loop should be run until one of the left or the right side elements are fully processed.
-    // It locates the smallest value for each index and then gets the next value by incrementing the index and checking it as well.
-    // In the end, this loop will configure the combined array in ascending format
-    while (leftFirstIndex <= leftLastIndex && rightFirstIndex <= rightLastIndex)
-        combinedArray[combinedIndex++] = array[array[leftFirstIndex] <= array[rightFirstIndex] ? leftFirstIndex++ : rightFirstIndex++];
-
-    // After the above loop is done, the right first index and left first index will be increased.
-    // Check whether the remaining elements are on the left or right side.
-    // If all of the left side elements are copied to the combined array, then only the right side elements exist now.
-    // Therefore, the only choice is to copying them into the combined array
-    if (leftFirstIndex == right)
-        while (rightFirstIndex <= rightLastIndex)
-            combinedArray[combinedIndex++] = array[rightFirstIndex++];
-    // If there are values that are stayed on the left side, then the right side elements must be fully copied
-    // Therefore, no need to check anything more. Just copy them after the values since they must be the biggest values
-    else
-        while (leftFirstIndex <= leftLastIndex)
-            combinedArray[combinedIndex++] = array[leftFirstIndex++];
-
-    for (size_t i = left; i <= rightLastIndex; ++i)
-        array[i] = combinedArray[i];
 }
 
 /**
@@ -447,6 +460,14 @@ size_t partition(std::array<ARRAYTYPE, arraySize> &array, size_t low, size_t hig
     return index + 1;
 }
 
+/**
+ * Time Complexity: O(n*logn)
+ *
+ * Heap sort is an efficient general-purpose sorting algorithm.
+ * It chooses one of the elements as a pivot element.
+ * Then, it sorts the other elements around the pivot element by placing the pivot in its correct position.
+ * At the end, the smaller values will be located on the left of the pivot, and the greater values will be on its right.
+ */
 template <typename ARRAYTYPE, size_t arraySize>
 void quickSort(std::array<ARRAYTYPE, arraySize> &array, size_t low, size_t high)
 {
@@ -459,6 +480,65 @@ void quickSort(std::array<ARRAYTYPE, arraySize> &array, size_t low, size_t high)
     // Recursion calls for smaller elements and greater or equals elements
     quickSort(array, low, pivotIndex - 1);
     quickSort(array, pivotIndex + 1, high);
+}
+
+template <typename ARRAYTYPE, size_t arraySize>
+void heapify(std::array<ARRAYTYPE, arraySize> &array, size_t arrayLength, size_t index)
+{
+    // Initialize largest value as root
+    int largest = index,
+        // The value at the left node is placed after the root node 2n+1
+        leftIndex = 2 * index + 1,
+        // the value at the right node is placed after the root's left node 2n+2
+        rightIndex = 2 * index + 2;
+
+    // If left child is larger than the largest value, then it should be largest
+    if (leftIndex < arrayLength && array[leftIndex] > array[largest])
+        largest = leftIndex;
+
+    // If right child is larger than largest value, then it should be the largest
+    if (rightIndex < arrayLength && array[rightIndex] > array[largest])
+        largest = rightIndex;
+
+    // If the largest value is not root, then swap them with each other since the largest value should be the root
+    if (largest != index)
+    {
+        ARRAYTYPE tempVal = array[index];
+        array[index] = array[largest];
+        array[largest] = tempVal;
+
+        // Recursively heapify the affected sub-tree
+        heapify(array, arrayLength, largest);
+    }
+}
+
+/**
+ * Time Complexity: O(n*logn)
+ *
+ * Heap sort is an efficient comparison-based sorting algorithm.
+ * It works by visualizing the elements of the array as a special kind of complete **binary tree** called a **heap**
+ * The algorithm finds the max/min element and swap it with the last/first element.
+ * Then, it repeats the same process for the remaining elements
+ */
+template <typename ARRAYTYPE, size_t arraySize>
+void heapSort(std::array<ARRAYTYPE, arraySize> &array)
+{
+    size_t arrayLength = array.size();
+
+    // Checks left and right trees at the same time so the loop should be run for tree value length / 2 - 1(-1 for the root)
+    for (int i = arrayLength / 2 - 1; i >= 0; i--)
+        heapify(array, arrayLength, i);
+
+    for (size_t i = arrayLength - 1; i > 0; i--)
+    {
+        // Move current root to end
+        ARRAYTYPE tempVal = array[0];
+        array[0] = array[i];
+        array[i] = tempVal;
+
+        // Call max heapify on the reduced heap
+        heapify(array, i, 0);
+    }
 }
 
 template <typename ARRAYTYPE, size_t arraySize>
