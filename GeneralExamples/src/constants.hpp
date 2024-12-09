@@ -42,6 +42,10 @@ constexpr std::string_view Constants[] =
         "Show Hexadecimal, octal, scientific equivalents of a decimal number",
         // printLettersInAlphabet
         "Print letters in the alphabet",
+        // generateRandomTextByUserEnter
+        "Generate random text",
+        // charStringOperations
+        "Example of some string operations"
 };
 
 #endif
