@@ -8,6 +8,13 @@
 #include <algorithm>
 #include <ctime>
 #include <random>
+/**
+ * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
+ * Used {
+ *  boost::adaptors::indexed
+ * }
+ */
+#include <boost/range/adaptor/indexed.hpp>
 
 // Definitions
 template <typename ARRAYTYPE, size_t arraySize>
@@ -15,7 +22,7 @@ inline void shuffleElements(std::array<ARRAYTYPE, arraySize> &);
 
 // Search functions
 void searchingMethods();
-void printSearchingResult(size_t &);
+void printSearchingResult(int);
 template <typename ARRAYTYPE, size_t arraySize>
 void displayElements(std::array<ARRAYTYPE, arraySize> &, size_t, size_t, size_t);
 
@@ -65,11 +72,45 @@ void heapSort(std::array<ARRAYTYPE, arraySize> &);
 template <typename ARRAYTYPE, size_t arraySize>
 void heapify(std::array<ARRAYTYPE, arraySize> &, size_t, size_t);
 
+typedef void (*MethodFunction)();
+struct methodFunctionStr
+{
+    MethodFunction f;
+    std::string desc;
+};
+
 int main(int argc, char *argv[])
 {
-    // searchingMethods();
+    std::vector<methodFunctionStr> definitions{
+        // Examples and explanations of some searching algorithm methods
+        {f : searchingMethods, desc : "Searching Algorithm Examples"},
+        // Examples and explanations of some sorting algorithm methods
+        {f : sortingMethods, desc : "Sorting Algorithm Examples"}};
 
-    sortingMethods();
+    std::cout << "**Welcome to the 4th General Algorithm Examples**";
+    std::cout << "**\nType number to see the example outputs.. (Type -1 to end the process!)**";
+
+    int selection;
+    while (selection != -1)
+    {
+        for (const auto definition : definitions | boost::adaptors::indexed(1))
+            std::cout << "\n"
+                      << definition.index() << ". Run the "
+                      << definition.value().desc << " function";
+
+        std::cout << std::endl;
+        std::cin >> selection;
+        try
+        {
+            std::cout << definitions.at(selection - 1).desc << " running...";
+            definitions.at(selection - 1).f();
+        }
+        catch (std::out_of_range err)
+        {
+            std::cout << "\nThe related function couldn't run since you typed a number that isn't available in the list..."
+                      << "\nPlease make sure typed an available number!";
+        }
+    }
 }
 
 void searchingMethods()
@@ -84,21 +125,32 @@ void searchingMethods()
         element = randomNumberGenerator(randomNumberEngine);
 
     int searchKey;
-    while (searchKey != -1)
+    while (true)
     {
         std::cout << "\nEnter an integer number to search in the array(Type -1 to end the process): ";
         std::cin >> searchKey;
+        if (searchKey == -1)
+            break;
 
-        // linearSearch(intArray, searchKey);
+        std::cout << "\n**The related element is searched by using **linear search** algorithm. The results:**\n";
+        linearSearch(intArray, searchKey);
+
+        std::cout << "\n\n**The related element is searched by using **binary search** algorithm. The results:**\n";
         binarySearch(intArray, searchKey);
     }
 }
 
-void printSearchingResult(size_t foundIndex)
+void printSearchingResult(int foundIndex)
 {
-    foundIndex >= 0 ? std::cout << "The value is found! It is in " << foundIndex << ". index.\n" : std::cout << "The value not found!\n";
+    foundIndex >= 0 ? (std::cout << "The value is found! It is in " << foundIndex << ". index.\n") : (std::cout << "The value not found!\n");
 }
 
+/**
+ * Time Complexity: O(n)
+ *
+ * Linear search is a simple searching algorithm.
+ * It traverses the list to find the search element.
+ */
 template <typename ARRAYTYPE, size_t arraySize>
 void linearSearch(std::array<ARRAYTYPE, arraySize> &array, const ARRAYTYPE &searchKey)
 {
@@ -131,6 +183,13 @@ inline int calculateMiddlePoint(size_t lowestIndex, size_t highestIndex)
     return (lowestIndex + highestIndex + 1) / 2;
 }
 
+/**
+ * Time Complexity: O(logn)
+ *
+ * Binary search is an efficient searching algorithm.
+ * In a **sorted** array, it finds the search value by repeatedly comparing the search element with the middle element
+ * It divides the array and determines a new middle element until the search element is found or all elements are compared.
+ */
 template <typename ARRAYTYPE, size_t arraySize>
 void binarySearch(std::array<ARRAYTYPE, arraySize> &array, const ARRAYTYPE &searchKey)
 {
@@ -138,10 +197,11 @@ void binarySearch(std::array<ARRAYTYPE, arraySize> &array, const ARRAYTYPE &sear
         high = array.size() - 1,
         middle = calculateMiddlePoint(low, high),
         foundIndex = -1,
-        attemptCounter = 0;
+        attemptCounter = 1;
 
     std::sort(array.begin(), array.end());
     std::cout << "** Elements as sorted for binary searching (The middle element indicates with asterisks(** **)) **\n";
+
     // Display elements at the beginning
     displayElements(array, 0, array.size() - 1, middle);
 
@@ -199,7 +259,7 @@ void sortingMethods()
         [&randomNumberGenerator, &randomNumberEngine](int &value)
         { value = randomNumberGenerator(randomNumberEngine); });
 
-    std::cout << "**The random elements of the **unsorted** array**\n";
+    std::cout << "\n**The random elements of the **unsorted** array**\n";
     printArrayElements(intArray);
 
     insertionSort(intArray);
@@ -231,7 +291,6 @@ void sortingMethods()
     // Shuffle array again to make sure the next function works properly
     shuffleElements(intArray);
 
-    printArrayElements(intArray);
     quickSort(intArray, 0, intArray.size() - 1);
     std::cout << "\n\n**The elements of the array after **quick** sorting process**\n";
     printArrayElements(intArray);
