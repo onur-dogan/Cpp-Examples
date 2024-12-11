@@ -9,6 +9,7 @@
 #include <vector>
 #include <array>
 #include <algorithm>
+#include <cstring>
 // For processing string based streams (e.g. ostringstream, istringstream, etc.)
 #include <sstream>
 /**
@@ -910,6 +911,93 @@ const void charStringOperations()
     {
         std::cout << "An error occurred while converting " << mixedText << " to an integer! Error: " << err.what();
     }
+
+    size_t copyText1Length = 30, copyText2Length = 7;
+    char text[] = "C++ is love!";
+    char copyText1[copyText1Length];
+    char copyText2[copyText2Length];
+
+    strcpy(copyText1, text);
+    strncpy(copyText2, copyText1, copyText2Length);
+    copyText2[copyText2Length] = '\0';
+
+    std::cout << "\n\nText: " << text
+              << "\n1. Copied Text(Whole text is copied): " << copyText1
+              << "\n2. Copied Text(Only 10 characters are copied): " << copyText2;
+
+    strcat(copyText1, text);
+    strncat(copyText2, text, 5);
+    std::cout << "\n\nText is combined with 1. Copied Text: " << copyText1
+              << "\n2. Copied text is combined with text's first 5 characters: " << copyText2;
+
+    char *wordsPtr = strtok(copyText1, " ");
+    std::cout << "\n\nWords in 1. Copied Text: \n";
+    while (wordsPtr != nullptr)
+    {
+        // strlen function gets char as parameter and returns the length of it
+        std::cout << wordsPtr << " (" << strlen(wordsPtr) << " Character)" << "\n";
+        // Sending 1. argument as NULL, orders strtok function to continue from the latest call point.
+        // strtok function stores the latest saved point information in the background.
+        // So, it returns the next divided string each time from the string.
+        // When it is called, if there's no unit stored in strtok function, then it returns NULL
+        wordsPtr = strtok(NULL, " ");
+    }
+
+    std::cout << "After strtok function process is completed, the 1. Copied Text is: " << copyText1;
+
+    std::cout << "\n\n***Converting C(Char) pointer strings to numerical values processes***\n"
+              << "Some type explanations: (P: Pointer, K: Constant, c: Char, d: Double, i: Int, l: Long, etc.)\n";
+
+    const char *doubleChar = "954.596",
+               *intChar = "999",
+               *longChar = "12345678";
+    /**
+     * Type of char that returns by typeid is PKc. So, what 'P', 'K', 'c' means?
+     * 'P' means **Pointer**
+     * 'K' means **Constant**
+     * 'c' means **char**
+     * Running `c++filt -t` command returns the equivalent of this type name.
+     * For example: `c++filt -t PKc` command returns `char const*`
+     *
+     * For **classes**, the type name returns a string that includes the `length of class name letters + class name`
+     * For example, if the class name is 'Student';
+     * typeid().name() function returns `7Student`
+     *
+     * Converter Functions:
+     * atof ==> Converts a string to a floating-point number
+     * atoi ==> Converts a string to an integer
+     * atol ==> Convert a string to a long integer
+     */
+    std::cout << "\nChar double string: " << doubleChar << " (Type: " << typeid(doubleChar).name() << ')'
+              << "\nDouble Equivalent(atof): " << atof(doubleChar) << " (Type: " << typeid(atof(doubleChar)).name() << ')'
+              << "\n\nChar integer string: " << intChar << " (Type: " << typeid(intChar).name() << ')'
+              << "\nInteger Equivalent(atoi): " << atoi(intChar) << " (Type: " << typeid(atoi(intChar)).name() << ')'
+              << "\n\nChar long string: " << longChar << " (Type: " << typeid(longChar).name() << ')'
+              << "\nLong Equivalent(atoi): " << atol(longChar) << " (Type: " << typeid(atol(longChar)).name() << ')';
+}
+
+const void displayBits()
+{
+    int number;
+    std::cout << "Enter an unsigned int to see its equivalent as bits: ";
+    std::cin >> number;
+
+    unsigned int eachBitLimit = sizeof(double);
+
+    const int shift = eachBitLimit * sizeof(int) - 1;
+    const unsigned int mask = 1 << shift;
+
+    std::cout << number << " ==> ";
+    for (size_t i = 1; i <= shift + 1; i++)
+    {
+        std::cout << (number & mask ? '1' : '0');
+        number <<= 1;
+
+        if (i % eachBitLimit == 0)
+            std::cout << ' ';
+    }
+
+    std::cout << std::endl;
 }
 
 struct OptionStructure
@@ -969,6 +1057,8 @@ vOption getOptions() noexcept
         getOptionModel(generateRandomTextByUserEnter),
         // Some string operation example and explanations
         getOptionModel(charStringOperations),
+        // Display bit equivalent of an unsigned integer
+        getOptionModel(displayBits),
     };
 
     return options;
