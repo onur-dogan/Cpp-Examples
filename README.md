@@ -176,3 +176,22 @@ previous handler. The newly configured handler function is the function called b
     - A `unique_ptr` variable is created by using the **new** keyword, so it allocates dynamically. So, it must be freed by using the `delete` keyword. As the name suggests, the unique pointers free the dynamically allocated resource memory automatically when the destructor function is called, so it avoids the dynamically allocated resource memory issues.
 - The last pointer of the linked data structure must point to a **NULL pointer** to mark the end of the list. Each node is connected with the next one and the last node doesn't have any node after itself so it can't point to other next node.
 - Defining **Dynamic Memory Allocation** for the data structures that grow and shrink, saves memory. 
+- `size_t` is a `unsigned` data type that only represents non-negative values.
+- Some `string` functions:
+    - `substr` function constructs and returns a new string using the n characters starting at a position.
+    - `compare` function compares the value of the string objects and returns an integer.
+    - `insert` function inserts value of a string by starting at a position. If adding characters causes the length to exceed max_size(), **length_error** is thrown.
+    - `replace` function removes the characters in a range from the string. In place, the characters of the other string would be inserted.
+    - `copy` function copies substring into the string.
+    - `c_str` function returns a const pointer to null-terminated content. This is a handle to internal data so shouldn't be modified.
+    - `data` function returns a `non-const pointer` to contents. This is a pointer to the character sequence held by the string. Modifying the characters in the sequence is allowed.
+    - `istringstream` is a class for **input** memory streams that stream the string into different variables.
+    - `ostringstream` is a class for **output** memory streams. It effectively stores an instance of **basic_string** and performs output operations to it.
+    - `stoi` function converts a string to an **integer** value.
+    - `stol` function converts a string to an **long** value.
+    - `stoul` function converts a string to an **unsigned long** value.
+    - `stoll` function converts a string to an **long long** value.
+    - `stoull` function converts a string to an **unsigned long long** value.
+    - `stof` function converts a string to an **float** value.
+    - `stod` function converts a string to an **double** value.
+    - `stold` function converts a string to an **long double** value.
