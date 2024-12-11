@@ -9,6 +9,8 @@
 #include <vector>
 #include <array>
 #include <algorithm>
+// For processing string based streams (e.g. ostringstream, istringstream, etc.)
+#include <sstream>
 /**
  * See: https://www.boost.org/doc/libs/1_72_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
  * Used {
@@ -19,6 +21,9 @@
 
 #include "colors.h"
 #include "constants.hpp"
+
+#define LETTER_LENGTH 26
+#define FIRST_LETTER 'A'
 
 const void calculateWithNumbers()
 {
@@ -710,7 +715,7 @@ const void showDecimalNumberEquivalents()
               << std::endl;
 }
 
-static char letter = 'A';
+static char letter = FIRST_LETTER;
 inline char generateLetter()
 {
     return letter++;
@@ -718,7 +723,6 @@ inline char generateLetter()
 
 const void printLettersInAlphabet()
 {
-    const size_t LETTER_LENGTH = 26;
     std::array<char, LETTER_LENGTH> letters;
     std::fill(letters.begin(), letters.end(), 'C');
 
@@ -731,6 +735,181 @@ const void printLettersInAlphabet()
     std::generate(letters.begin(), letters.end(), generateLetter);
     std::cout << "\nThe letters after generation:" << std::endl;
     std::copy(letters.cbegin(), letters.cend(), lettersPrinter);
+}
+
+/**
+ * @param textLength Send text length to generate random text with that length
+ */
+std::string generateRandomText(int textLength)
+{
+    int firstLetterASCIIEquivalent = static_cast<int>(FIRST_LETTER);
+    std::default_random_engine randomTextEngine(static_cast<int>(time(nullptr)));
+    std::uniform_int_distribution<int> randomNumberGenerator(firstLetterASCIIEquivalent, firstLetterASCIIEquivalent + LETTER_LENGTH - 1);
+
+    // Generate random characters and combine them into a string
+    std::string randomText;
+    for (size_t i = 0; i < textLength; i++)
+        randomText += randomNumberGenerator(randomTextEngine);
+
+    return randomText;
+}
+
+const void generateRandomTextByUserEnter()
+{
+    int textLength;
+    std::cout << "\nEnter the text length you would like to generate: ";
+    std::cin >> textLength;
+
+    // Generate random characters and combine them into a string
+    std::string randomText = generateRandomText(textLength);
+    std::cout << "\nCongratulations! Generated Text: " << randomText;
+}
+
+const void charStringOperations()
+{
+    size_t RANDOM_STR_LENGTH = 15;
+    std::string randomStr1 = generateRandomText(RANDOM_STR_LENGTH);
+    std::string randomStr2 = generateRandomText(RANDOM_STR_LENGTH * 2).substr(RANDOM_STR_LENGTH, RANDOM_STR_LENGTH * 2);
+
+    std::cout << "\n1. Text Informations:"
+              << "\nText: " << randomStr1
+              << "\nCapacity: " << randomStr1.capacity()
+              << "\nMax Size: " << randomStr1.max_size()
+              << "\nSize: " << randomStr1.size()
+              << "\nLength: " << randomStr1.size();
+    std::cout << "\n2. Text Informations: "
+              << "\nText: " << randomStr2
+              << "\nCapacity: " << randomStr2.capacity()
+              << "\nMax Size: " << randomStr2.max_size()
+              << "\nSize: " << randomStr2.size()
+              << "\nLength: " << randomStr2.size();
+
+    std::cout << "\n**Comparing Results**\n";
+    // Compare function compares the strings/substrings with each other and returns integer according to the result
+    int compareResult = randomStr1.compare(randomStr2);
+    std::cout << (compareResult > 0   ? "1. Text > 2. Text"
+                  : compareResult < 0 ? "2. Text > 1. Text"
+                                      : "Texts are the same!");
+
+    std::string insertionText = "TEST";
+    // Inserts a string after the position index in string
+    randomStr1.insert(RANDOM_STR_LENGTH / 2, insertionText);
+    std::cout << "\n1. Text after inserting a random text into the middle of the string: " << randomStr1;
+
+    randomStr1.replace(RANDOM_STR_LENGTH / 2, insertionText.size(), "");
+    std::cout << "\n1. Text after removing the inserted string: " << randomStr1;
+
+    size_t randomStr1Length = randomStr1.size();
+    // It stores each character of the string as a pointer
+    char *randomStr1Ptr = new char[randomStr1Length - 1];
+
+    randomStr1.copy(randomStr1Ptr, randomStr1Length, 0);
+    // Set the latest pointer to nullptr
+    randomStr1Ptr[randomStr1Length] = '\0';
+
+    // c_str returns const pointer to null-terminated contents.
+    std::cout << "\n1. Text is converted to a pointer-based string: " << randomStr1.c_str()
+              << "\nIt's pointer equivalent is: " << randomStr1Ptr;
+
+    // data function returns non-const pointer to contents so it stores each character of the string
+    const char *randomStr1CharactersPtr = randomStr1.data();
+    std::cout << "\nA new char pointer list to display each character of 1. Text: ";
+    for (size_t i = 0; i < randomStr1Length; i++)
+        // Print each character
+        std::cout << *(randomStr1CharactersPtr + i) << " ";
+
+    std::string::const_iterator stringIterator = randomStr1.begin();
+    std::cout << "\nEach character of the 1. Text by using a string iterator: ";
+    while (stringIterator != randomStr1.end())
+        // Print the character and then get the next pointer
+        std::cout << *(stringIterator++) << " ";
+
+    std::string inputExample("Test 123 66.55 P");
+    // istringstream is a class for char input memory streams.
+    // The inputExample mentions the input whether the buffer can read, or write, or both
+    std::istringstream stringInput(inputExample);
+    std::string str;
+    int num;
+    double decNum;
+    char character;
+
+    // It allows taking the inputs with their types from a string text(The types must be in correct order)
+    stringInput >> str >> num >> decNum >> character;
+    std::cout << "\n\n**istringstream Example**"
+              << "\nText is: " << inputExample
+              << "\nstring: " << str
+              << "\ninteger: " << num
+              << "\ndouble: " << decNum
+              << "\nchar: " << character;
+
+    long longVal;
+    stringInput >> longVal;
+    // If the related type doesn't correct, then we can check that with input functions
+    stringInput.good() ? std::cout << "\nThe long value is: " << longVal : std::cout << "\nInput doesn't start with a long type value";
+
+    std::ostringstream outputString;
+    std::cout << "\n\n**ostringstream Example**";
+    std::string text1("\n**Output of several data types**");
+    std::string text2("\n            VALUES");
+    std::string text3("\n            double: ");
+    std::string text4("\n           integer: ");
+    std::string text5("\naddress of integer: ");
+
+    double doubleVal = 121.12;
+    int intVal = 99;
+
+    // Set related values as a output to the ostringstream
+    outputString << text1 << text2
+                 << text3 << doubleVal
+                 << text4 << intVal
+                 << text5 << &intVal;
+
+    // str function is used for displaying the character contents in the ostringstream
+    std::cout << "\nThe result text: " << outputString.str();
+    outputString << "\nExtra text is adde to the end!!";
+
+    std::cout << "\nThe result text after adding extra text: " << outputString.str();
+
+    /**
+     * Functions to convert string to a numerical value
+     * stoi ==> int
+     * stol ==> long
+     * stoul ==> unsigned long
+     * stoll ==> long long
+     * stoull ==> unsigned long long
+     * stof ==> float
+     * stod ==> double
+     * stold ==> long double
+     */
+    std::string intString = "5555Test",
+                longString = "-22.33Test",
+                unsignedLongString = "33.22Test",
+                longLongString = "-333.445Test",
+                unsignedLongLongString = "5555,999Test",
+                floatString = "123.55Test",
+                doubleString = "99.44Test",
+                longDoubleString = "-555.99Test";
+
+    std::cout << "\n\n**Testing converting string to a numerical value with functions**\n"
+              << "\nString: " << intString << "\tIt's integer equivalent with stoi: " << std::stoi(intString)
+              << "\nString: " << longString << "\tIt's long equivalent with stol: " << std::stol(longString)
+              << "\nString: " << unsignedLongString << "\tIt's unsigned long equivalent with stoul: " << std::stoul(longString)
+              << "\nString: " << longLongString << "\tIt's long long equivalent with stoll: " << std::stoll(longLongString)
+              << "\nString: " << unsignedLongLongString << "\tIt's unsigned long long equivalent with stoull: " << std::stoull(unsignedLongLongString)
+              << "\nString: " << floatString << "\tIt's float equivalent with stof: " << std::stof(floatString)
+              << "\nString: " << doubleString << "\tIt's double equivalent with stod: " << std::stod(doubleString)
+              << "\nString: " << longDoubleString << "\tIt's long double equivalent with stold: " << std::stold(longDoubleString)
+              << std::endl;
+
+    std::string mixedText = "Hello123Test";
+    try
+    {
+        int number = std::stoi(mixedText);
+    }
+    catch (std::invalid_argument err)
+    {
+        std::cout << "An error occurred while converting " << mixedText << " to an integer! Error: " << err.what();
+    }
 }
 
 struct OptionStructure
@@ -785,7 +964,12 @@ vOption getOptions() noexcept
         // Show hexadecimal, octal and scientific equivalents of a decimal number
         getOptionModel(showDecimalNumberEquivalents),
         // Print letters in the alphabet
-        getOptionModel(printLettersInAlphabet)};
+        getOptionModel(printLettersInAlphabet),
+        // Generate random text
+        getOptionModel(generateRandomTextByUserEnter),
+        // Some string operation example and explanations
+        getOptionModel(charStringOperations),
+    };
 
     return options;
 }

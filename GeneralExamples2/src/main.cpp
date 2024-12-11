@@ -21,7 +21,7 @@
 
 #include "colors.h"
 
-// Ref and Ptr Examples
+// Ref, Ptr, Data Structures, Lambda, Memory Allocation Examples
 
 // Definitions
 void printMainArguments(int, char *[]);
