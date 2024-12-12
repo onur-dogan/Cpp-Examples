@@ -948,9 +948,10 @@ const void charStringOperations()
     std::cout << "\n\n***Converting C(Char) pointer strings to numerical values processes***\n"
               << "Some type explanations: (P: Pointer, K: Constant, c: Char, d: Double, i: Int, l: Long, etc.)\n";
 
-    const char *doubleChar = "954.596",
-               *intChar = "999",
-               *longChar = "12345678";
+    const char *doubleChar = "95.596% double process running",
+               *intChar = "999 employees are working in this department",
+               *longChar = "12345678 KM distance between the cities",
+               *negativeLongChar = "-12345678 is an even negative number";
     /**
      * Type of char that returns by typeid is PKc. So, what 'P', 'K', 'c' means?
      * 'P' means **Pointer**
@@ -974,6 +975,33 @@ const void charStringOperations()
               << "\nInteger Equivalent(atoi): " << atoi(intChar) << " (Type: " << typeid(atoi(intChar)).name() << ')'
               << "\n\nChar long string: " << longChar << " (Type: " << typeid(longChar).name() << ')'
               << "\nLong Equivalent(atoi): " << atol(longChar) << " (Type: " << typeid(atol(longChar)).name() << ')';
+
+    char *stringPtrOfDoubleChar, *stringPtrOfLongChar, *stringPtrOfUnsignedLongChar;
+    stringPtrOfDoubleChar = stringPtrOfLongChar = stringPtrOfUnsignedLongChar = nullptr;
+
+    /**
+     * strtod ==> Converts a string to a floating-point number.
+     * Returns the converted floating-point value and sets the string to a char pointer(2. parameter).
+     *
+     * strtol ==> Convert a string to a long integer.
+     * Returns the converted long integer and sets the string values from the converted value to a char pointer(2. parameter).
+     *
+     * strtol ==> Convert a string to a unsigned long integer.
+     * Returns the converted unsigned long integer and sets the string values from the converted value to a char pointer(2. parameter).
+     */
+    double doubleValueInString = strtod(doubleChar, &stringPtrOfDoubleChar);
+    long longValueInString = strtol(negativeLongChar, &stringPtrOfLongChar, 0);
+    unsigned long unsignedLongValueInString = strtoul(longChar, &stringPtrOfUnsignedLongChar, 0);
+
+    std::cout << "\n\nThe double type text: " << doubleChar
+              << "\t(The double value: " << doubleValueInString
+              << "\tThe string value: '" << stringPtrOfDoubleChar << "'"
+              << "\n\nThe negative long type text: " << negativeLongChar
+              << "\t(The long value: " << longValueInString
+              << "\tThe string value: '" << stringPtrOfUnsignedLongChar << "'"
+              << "\n\nThe long type text: " << longChar
+              << "\t(The unsigned long value: " << unsignedLongValueInString
+              << "\tThe string value: '" << stringPtrOfLongChar << "'";
 }
 
 const void displayBits()
