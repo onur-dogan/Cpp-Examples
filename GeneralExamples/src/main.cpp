@@ -24,8 +24,12 @@
 #include "colors.h"
 #include "constants.hpp"
 
+#ifndef LETTER_LENGTH
 #define LETTER_LENGTH 26
+#endif
+#ifndef FIRST_LETTER
 #define FIRST_LETTER 'A'
+#endif
 
 const void calculateWithNumbers()
 {
@@ -1049,12 +1053,12 @@ const void stringMemoryOperations()
               << "\nText after memmove: " << text << "\tCopied Text after memmove: " << copiedText << "\tComparing results: " << memcmp(text, copiedText, 2);
 
     // const_cast is used to cast away the constness of variables
-    // In this example, const_cast is used for setting a constant char to a non-constant char value. 
+    // In this example, const_cast is used for setting a constant char to a non-constant char value.
     char *maxPtr = const_cast<char *>(findMax(text, copiedText));
     for (size_t i = 0; i < strlen(maxPtr); i++)
         maxPtr[i] = toupper(maxPtr[i]);
 
-    std::cout << "\nThe text after updating it as non-constant and make all letters upper: " << maxPtr; 
+    std::cout << "\nThe text after updating it as non-constant and make all letters upper: " << maxPtr;
 }
 
 const void displayBits()

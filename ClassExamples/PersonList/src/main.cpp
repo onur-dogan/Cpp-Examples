@@ -14,7 +14,7 @@ int main()
     // Custom type definitions
     typedef std::vector<Person *> vPersonPtr;
     typedef std::vector<Manager *> vManagerPtr;
-    typedef Manager* managerPtr;
+    typedef Manager *managerPtr;
 
     Date birthDate(1961, 4, 12);
     Date joinDate(1990, 6, 24);

@@ -15,8 +15,12 @@
 #include "constants.hpp"
 
 // Macros (Constants)
+#ifndef DOCS_FOLDER_PATH
 #define DOCS_FOLDER_PATH "docs/"
+#endif
+#ifndef EXTENSION
 #define EXTENSION ".txt"
+#endif
 
 // *** File Processing Examples ***
 
