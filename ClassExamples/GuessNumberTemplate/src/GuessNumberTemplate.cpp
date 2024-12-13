@@ -2,6 +2,8 @@
 #include "GuessNumberTemplate.h"
 #include <random>
 
+using namespace guessnumbertemplate;
+
 int main()
 {
     std::default_random_engine randomEngine(static_cast<unsigned int>(time(0)));

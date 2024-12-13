@@ -1,6 +1,8 @@
 #include <iostream>
 #include "DateComparator.cpp"
 
+using namespace datecomparator;
+
 int main()
 {
     // Current date
