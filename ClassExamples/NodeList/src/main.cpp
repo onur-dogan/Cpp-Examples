@@ -3,6 +3,8 @@
 #include <iterator>
 #include "NodeList.hpp"
 
+using namespace nodelist;
+
 void showInstructions();
 
 template <typename T>
