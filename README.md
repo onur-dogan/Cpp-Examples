@@ -62,6 +62,7 @@ The C++ Project includes some examples and notes (mostly C++11). It also include
 - For the inherited classes;
     - When an object of the **derived class** is created, the constructor of the **base class** executes first. Then, the constructor of the **derived class** executes. If there is a deeper inheritance hierarchy, then this flow executes in the same order **(cascade)**.
     - In the opposite way, when the **derived class's object** is destroyed, the destructors are called in the **reverse order of the constructors**. So, the destructor function of the derived class executes first, followed by execution of the destructor of the base class.
+- `mutable` specifier is used to allow class members to be able to be modified even if the containing object is declared const.
 - One of the advantages of OOP is code reuse. There are two ways we can do code reuse either by the implementation of inheritance (`is-a` relationship), or object composition (`has-a` relationship)
     - A `is-a` relation is based on inheritance. For example, **Car** (derived) class has `is-a` relation with the **Vehicle** (base) class. In short, the **Car** class is a sub-class of **Vehicle** class, so it can be described similarly as `Car class is a (subclass of) Vehicle class`.
     - A `has-a` relation is based on composition. For example, **Car** class has `has-a` relation with the `Wheel` and `Brakes` classes. In short, **Wheel** and **Brakes** are parts of a **Car**, so it can be described similarly as `Car has wheel and brakes`.
@@ -188,10 +189,22 @@ previous handler. The newly configured handler function is the function called b
     - `istringstream` is a class for **input** memory streams that stream the string into different variables.
     - `ostringstream` is a class for **output** memory streams. It effectively stores an instance of **basic_string** and performs output operations to it.
     - `stoi` function converts a string to an **integer** value.
-    - `stol` function converts a string to an **long** value.
+    - `stol` function converts a string to a **long** value.
     - `stoul` function converts a string to an **unsigned long** value.
-    - `stoll` function converts a string to an **long long** value.
+    - `stoll` function converts a string to a **long long** value.
     - `stoull` function converts a string to an **unsigned long long** value.
-    - `stof` function converts a string to an **float** value.
-    - `stod` function converts a string to an **double** value.
-    - `stold` function converts a string to an **long double** value.
+    - `stof` function converts a string to a **float** value.
+    - `stod` function converts a string to a **double** value.
+    - `stold` function converts a string to a **long double** value.
+    - `strtod` function converts a string to a **floating-point** number. It returns the converted floating-point value and sets the string part to char pointer.
+    - `strtol` function converts a string to a **long integer**. It returns the converted long integer and sets the string part to a char pointer.
+    - `strtoul` function converts a string to a **unsigned long integer**. It returns the converted unsigned long integer and sets the string part to a char pointer.
+- `C string` is stored as an array of characters. `C` does not have a **string** type to create a string value. Instead, uses `char[]` type to create an array of characters to create a string value.  
+- `strcpy` function copies the **C string** pointed by the source into the array pointed by the destination, including the terminating null character.
+- `strncpy` function copies N of the characters of the source to the array pointed by the destination.
+- `strchr` function finds the occurrence of a character in a string.
+- `strpbrk` function finds the first matched character of the search text in the text and returns the pointer to the first character of the search text found in the text. If there is no match, it returns NULL.
+- `memcpy` copies N bytes from one memory location to the other memory location regardless of the type of data stored. It is meant to be the fastest library routine for memory-to-memory copy.
+- `memcmp` compares the first num bytes of the block of memory pointed by a pointer to the first num bytes pointed by other pointer. Returning 0 if they all match or a value different from zero representing which is greater if they do not.
+- `memmove` copies N bytes of the source string to the destination string, guaranteeing correct behavior for overlapping strings.
+- `const_cast` operator is used to cast away the **constness** of variables. It configures a constant(**const**) variable as a non-const variable.
