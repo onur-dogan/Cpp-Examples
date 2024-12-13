@@ -19,7 +19,7 @@ void Course::setCourseInstructor(std::string newCourseInstructor)
     courseInstructor = newCourseInstructor;
 }
 
-void Course::setCourseGradeAverage(float totalGrade, int gradesLength)
+void Course::setCourseGradeAverage(float totalGrade, int gradesLength) const
 {
     if (totalGrade <= 0 | gradesLength < 1)
         return;

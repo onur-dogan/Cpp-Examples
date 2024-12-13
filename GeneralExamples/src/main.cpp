@@ -1014,7 +1014,7 @@ const void guessCharactersInRandomString()
     std::cout << "\nEnter a character to guess whether it is in the random text: ";
     std::cin >> searchChr;
 
-    // strchr function finds the first matched character in the string.
+    // strchr function finds the occurrence of a character in a string.
     std::cout << "\nThe text: " << text
               << "\nResult: " << searchChr
               << (strchr(text, static_cast<char>(toupper(searchChr))) ? " is" : " is not")
@@ -1039,15 +1039,17 @@ const void stringMemoryOperations()
     char text[] = "Example Text";
     char copiedText[LENGTH];
 
-    // Copy N bytes of the source string to the destination string
+    // It copies N bytes from one memory location to the other memory location regardless of the type of data stored
     memcpy(copiedText, text, LENGTH);
     std::cout << "\nThe empty text after copying: " << copiedText
+              // memcmp compares N bytes of a string with the other string
               << "\nText: " << text << "\tCopied Text: " << copiedText << "\tComparing results: " << memcmp(copiedText, text, 2)
+              // memmove copies N bytes of source string to destination string, guaranteeing correct behavior for overlapping strings
               << "\nThe string after memmove function run to copy: " << static_cast<char *>(memmove(copiedText, &copiedText[8], 10))
               << "\nText after memmove: " << text << "\tCopied Text after memmove: " << copiedText << "\tComparing results: " << memcmp(text, copiedText, 2);
 
     // const_cast is used to cast away the constness of variables
-    // In this example, for setting a constant char to a non-constant char value, const_cast is used
+    // In this example, const_cast is used for setting a constant char to a non-constant char value. 
     char *maxPtr = const_cast<char *>(findMax(text, copiedText));
     for (size_t i = 0; i < strlen(maxPtr); i++)
         maxPtr[i] = toupper(maxPtr[i]);
