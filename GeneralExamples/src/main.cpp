@@ -10,6 +10,7 @@
 #include <array>
 #include <algorithm>
 #include <cstring>
+#include <cctype>
 // For processing string based streams (e.g. ostringstream, istringstream, etc.)
 #include <sstream>
 /**
@@ -1004,6 +1005,56 @@ const void charStringOperations()
               << "\tThe string value: '" << stringPtrOfLongChar << "'";
 }
 
+const void guessCharactersInRandomString()
+{
+    std::string randomText = generateRandomText(30);
+    const char *text = randomText.c_str();
+    char searchChr;
+
+    std::cout << "\nEnter a character to guess whether it is in the random text: ";
+    std::cin >> searchChr;
+
+    // strchr function finds the first matched character in the string.
+    std::cout << "\nThe text: " << text
+              << "\nResult: " << searchChr
+              << (strchr(text, static_cast<char>(toupper(searchChr))) ? " is" : " is not")
+              << " found in the text!";
+
+    const char *testChr = "TEST";
+    // strpbrk function checks the text by search text and returns the first character of search text which is found in the text
+    std::cout << "\n\nText: " << text
+              << "\nSearch Text: " << testChr
+              << "\n"
+              << *strpbrk(text, testChr) << " is the first Search Text character that is found in the Text...";
+}
+
+const char *findMax(const char *first, const char *second)
+{
+    return ((strcmp(first, second)) >= 0 ? first : second);
+};
+
+const void stringMemoryOperations()
+{
+    size_t LENGTH = 13;
+    char text[] = "Example Text";
+    char copiedText[LENGTH];
+
+    // Copy N bytes of the source string to the destination string
+    memcpy(copiedText, text, LENGTH);
+    std::cout << "\nThe empty text after copying: " << copiedText
+              << "\nText: " << text << "\tCopied Text: " << copiedText << "\tComparing results: " << memcmp(copiedText, text, 2)
+              << "\nThe string after memmove function run to copy: " << static_cast<char *>(memmove(copiedText, &copiedText[8], 10))
+              << "\nText after memmove: " << text << "\tCopied Text after memmove: " << copiedText << "\tComparing results: " << memcmp(text, copiedText, 2);
+
+    // const_cast is used to cast away the constness of variables
+    // In this example, for setting a constant char to a non-constant char value, const_cast is used
+    char *maxPtr = const_cast<char *>(findMax(text, copiedText));
+    for (size_t i = 0; i < strlen(maxPtr); i++)
+        maxPtr[i] = toupper(maxPtr[i]);
+
+    std::cout << "\nThe text after updating it as non-constant and make all letters upper: " << maxPtr; 
+}
+
 const void displayBits()
 {
     int number;
@@ -1085,6 +1136,10 @@ vOption getOptions() noexcept
         getOptionModel(generateRandomTextByUserEnter),
         // Some string operation example and explanations
         getOptionModel(charStringOperations),
+        // Guess characters in a random string
+        getOptionModel(guessCharactersInRandomString),
+        // Example of string memory operations
+        getOptionModel(stringMemoryOperations),
         // Display bit equivalent of an unsigned integer
         getOptionModel(displayBits),
     };
