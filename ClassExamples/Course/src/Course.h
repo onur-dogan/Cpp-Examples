@@ -13,15 +13,6 @@
 // This class can't(shouldn't) be a base class
 class Course final
 {
-private:
-    // Define variables that will be private and be able to be used in the class functions only
-    std::string courseName;
-    std::string courseInstructor;
-    float courseGradeAverage;
-    int courseGradeLength;
-    // Limit variable to store a limited string
-    int courseNameLimit;
-
 public:
     // Set course name as default in explicit(constructor)
     // It is mostly good to define a default variable in constructur instead of waiting to set a value to the variables
@@ -33,7 +24,7 @@ public:
     // Set course instructor variable
     void setCourseInstructor(std::string);
     // Set student grades in this course
-    void setCourseGradeAverage(float, int);
+    void setCourseGradeAverage(float, int) const;
 
     // *** Getter Functions ***
     // Get course name
@@ -53,7 +44,15 @@ public:
     void displayCourseInstructor() const;
     // Displays course grade average text
     void displayCourseGradeAverageText() const;
-};
 
+private:
+    // Define variables that will be private and be able to be used in the class functions only
+    std::string courseName;
+    std::string courseInstructor;
+    mutable float courseGradeAverage;
+    mutable int courseGradeLength;
+    // Limit variable to store a limited string
+    int courseNameLimit;
+};
 
 #endif
