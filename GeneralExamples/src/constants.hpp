@@ -45,7 +45,11 @@ constexpr std::string_view Constants[] =
         // generateRandomTextByUserEnter
         "Generate random text",
         // charStringOperations
-        "Example of some string operations",
+        "Examples of some string operations",
+        // guessCharactersInRandomString
+        "Guess characters in a random text",
+        // stringMemoryOperations
+        "Examples of some string memory operations",
         // displayBits
         "Display the equivalent of an unsigned integer as bits"
 };
