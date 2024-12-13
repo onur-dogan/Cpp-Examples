@@ -2,15 +2,21 @@
 #include "GuessNumberTemplate.h"
 #include <random>
 
+#ifndef DISPLAY_HEADER
+// The parameter is used with the "#" operator to embed it in the text
+#define DISPLAY_HEADER(text) std::cout << "** " #text " **" << std::endl;
+#endif
+
 using namespace guessnumbertemplate;
 
 int main()
 {
+    // Use same template to guess random number with comparing the integer numbers
     std::default_random_engine randomEngine(static_cast<unsigned int>(time(0)));
     std::uniform_int_distribution intRandomNumberGenerator(1, 200);
 
-    // Use same template to guess random number with comparing the integer numbers
-    std::cout << "** Guess the number between 1-50 **" << std::endl;
+    // Display header message by using a macro (declared with "define" preprocessor directive)
+    DISPLAY_HEADER(Guess the number between 1 - 50);
 
     int int1, int2, int3;
     std::cout << "Enter three integer value: ";
