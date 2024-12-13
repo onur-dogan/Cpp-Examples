@@ -68,6 +68,8 @@ void memoryAllocationExample();
 
 void uniquePtrExample();
 
+void displayPreDefinedPreProcessors();
+
 /**
  * @param argc (Argument Count) ==> A non-negative integer that contains the count of arguments that follow in `argv[]`
  * @param argv (Argument Vector) ==> An array of null-terminated strings representing command-line arguments entered by the user of the program.
@@ -133,7 +135,10 @@ int main(int argc, char *argv[])
     // memoryAllocationExample();
 
     // Unique(smart) pointer examples
-    uniquePtrExample();
+    // uniquePtrExample();
+
+    // Displays predefined preprocessor macros
+    displayPreDefinedPreProcessors();
 
     return 0;
 }
@@ -1217,4 +1222,15 @@ void uniquePtrExample()
     // That's one of the reasons why it is called smart pointer
     std::cout << "Number after run the setNumber: " << (*ptrToNumber).getNumber() << std::endl;
     std::cout << "The text in the string array: " << ptrToStringArr[1] << std::endl;
+}
+
+void displayPreDefinedPreProcessors()
+{
+    std::cout << "\nThe current line row number:\t" << __LINE__
+              << "\nThe source file name:\t" __FILE__
+              << "\nThe date of compilation:\t" __DATE__
+              << "\nThe time of compilation:\t" __TIME__
+              << "\nIs the program whether complies with the standards of ANSI/ISO C (It returns 1 if it is)?:\t" << __STDC__
+              << "\nIs source file complies by a C++ compiler? (It returns undefined if it's not):\t" << __cplusplus
+              << std::endl;
 }
