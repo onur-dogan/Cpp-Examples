@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Course.cpp"
 
+using namespace course;
+
 int main()
 {
     // Define a new course variable that have Course class properties
