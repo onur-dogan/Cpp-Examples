@@ -1,8 +1,13 @@
 #include <iostream>
-#include "Time.cpp"
+#include "Time.h"
+
+using namespace timeClass;
 
 int main()
 {
+    std::cout << "\n*** Welcome to review the Time Class Examples ***\n"
+              << std::endl;
+
     Time time;
     // A reference value that stores the reference address of the time variable
     Time &timeRef = time;
@@ -10,7 +15,7 @@ int main()
     Time *timePtr = &time;
 
     int hour, minute, second;
-    std::cout << "Enter hour, minute and second in order" << std::endl;
+    std::cout << "Enter hour, minute and second in order:" << std::endl;
     std::cin >> hour >> minute >> second;
 
     timePtr->setTime(hour, minute, second);
