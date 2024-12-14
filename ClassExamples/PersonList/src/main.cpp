@@ -3,11 +3,17 @@
 #include <queue>
 #include <typeinfo>
 #include <unistd.h>
-#include "Date.cpp"
-#include "Person.cpp"
-#include "PhoneNumber.cpp"
-#include "Manager.cpp"
+#include <iomanip>
+
+#include "Date.h"
+#include "Person.h"
+#include "PhoneNumber.h"
 #include "Manager.h"
+
+using namespace dateClass;
+using namespace personClass;
+using namespace phoneNumberClass;
+using namespace managerClass;
 
 int main()
 {
@@ -41,8 +47,8 @@ int main()
     for (const auto *person : persons)
     {
         // typeid expression allows us to reach the class information of the variable
-        std::cout << "\n"
-                  << typeid(person).name() << " Information"
+        std::cout << "\nClass Type: (It writes like PK({Length of Class Name}){Class Name}. e.g. 'PK7Manager') "
+                  << typeid(person).name()
                   << std::endl;
 
         person->showInformations();

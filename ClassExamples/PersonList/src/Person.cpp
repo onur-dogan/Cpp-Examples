@@ -5,191 +5,194 @@
 #include "Date.h"
 #include "PhoneNumber.h"
 
-// First, set the default value of the static variables
-unsigned int Person::count = 0;
-
-// Default constructor
-Person::Person() : Person("", "", "", PhoneNumber(), Date(2000, 1, 1), Date(2000, 1, 1)) {}
-
-// Main constructor
-Person::Person(std::string fName, std::string lName, std::string pGender, const PhoneNumber &pNumber, const Date &pBirthDate, const Date &pJoinDate)
-    : firstName(fName), lastName(lName), gender(pGender), phoneNumber(pNumber), joinDate(pJoinDate)
+namespace personClass
 {
-    setBirthDate(pBirthDate);
-    increaseCounter();
-}
+    // First, set the default value of the static variables
+    unsigned int Person::count = 0;
 
-// Setter Functions
-void Person::setInformations(std::string fName, std::string lName, int genderIndex, PhoneNumber phoneNumber, Date pBirthDate, Date pJoinDate)
-{
-    setFirstName(fName);
-    setLastName(lName);
-    setGender(genderIndex);
-    setPhoneNumber(phoneNumber);
-    setBirthDate(pBirthDate);
-    setJoinDate(pJoinDate);
-}
+    // Default constructor
+    Person::Person() : Person("", "", "", PhoneNumber(), Date(2000, 1, 1), Date(2000, 1, 1)) {}
 
-Person &Person::setFirstName(std::string firstName)
-{
-    if (!firstName.empty())
-        // Use this keyword to access the properties of class.
-        // e.g. the parameter has the same name as a private member so this keyword is used to specify the related class's field
-        this->firstName = firstName;
+    // Main constructor
+    Person::Person(std::string fName, std::string lName, std::string pGender, const PhoneNumber &pNumber, const Date &pBirthDate, const Date &pJoinDate)
+        : firstName(fName), lastName(lName), gender(pGender), phoneNumber(pNumber), joinDate(pJoinDate)
+    {
+        setBirthDate(pBirthDate);
+        increaseCounter();
+    }
 
-    // Return class properties reference to support repeatedly updates
-    return *this;
-}
+    // Setter Functions
+    void Person::setInformations(std::string fName, std::string lName, int genderIndex, PhoneNumber phoneNumber, Date pBirthDate, Date pJoinDate)
+    {
+        setFirstName(fName);
+        setLastName(lName);
+        setGender(genderIndex);
+        setPhoneNumber(phoneNumber);
+        setBirthDate(pBirthDate);
+        setJoinDate(pJoinDate);
+    }
 
-Person &Person::setLastName(std::string lastName)
-{
-    if (!lastName.empty())
-        // Use this keyword to access the properties of class.
-        // e.g. the parameter has the same name as a private member so this keyword is used to specify the related class's field
-        this->lastName = lastName;
+    Person &Person::setFirstName(std::string firstName)
+    {
+        if (!firstName.empty())
+            // Use this keyword to access the properties of class.
+            // e.g. the parameter has the same name as a private member so this keyword is used to specify the related class's field
+            this->firstName = firstName;
 
-    // Return class properties reference to support repeatedly updates
-    return *this;
-}
+        // Return class properties reference to support repeatedly updates
+        return *this;
+    }
 
-// Function to update fields repeatedly
-void Person::setFullName(std::string firstName, std::string lastName)
-{
-    // this-> is same with (*this). So, why used parentheses here? Wouldn't it work without parentheses?
-    // Because the dot(.) operator is prioritized higher than the asterisk(*) operator.
-    // The compiler would show an error if try to use it without parentheses
-    // this->setFirstName(firstName).setLastName(lastName);
-    (*this).setFirstName(firstName).setLastName(lastName);
-}
+    Person &Person::setLastName(std::string lastName)
+    {
+        if (!lastName.empty())
+            // Use this keyword to access the properties of class.
+            // e.g. the parameter has the same name as a private member so this keyword is used to specify the related class's field
+            this->lastName = lastName;
 
-void Person::setPhoneNumber(PhoneNumber &phoneNumber)
-{
-    this->phoneNumber = phoneNumber;
-}
+        // Return class properties reference to support repeatedly updates
+        return *this;
+    }
 
-void Person::setGender(int genderIndex)
-{
-    gender = getGenderByIndex(genderIndex);
-}
+    // Function to update fields repeatedly
+    void Person::setFullName(std::string firstName, std::string lastName)
+    {
+        // this-> is same with (*this). So, why used parentheses here? Wouldn't it work without parentheses?
+        // Because the dot(.) operator is prioritized higher than the asterisk(*) operator.
+        // The compiler would show an error if try to use it without parentheses
+        // this->setFirstName(firstName).setLastName(lastName);
+        (*this).setFirstName(firstName).setLastName(lastName);
+    }
 
-void Person::setBirthDate(Date pBirthDate)
-{
-    birthDate = pBirthDate;
-    age = 2024 - pBirthDate.getYear();
-}
+    void Person::setPhoneNumber(PhoneNumber &phoneNumber)
+    {
+        this->phoneNumber = phoneNumber;
+    }
 
-void Person::setJoinDate(Date pJoinDate)
-{
-    joinDate = pJoinDate;
-}
+    void Person::setGender(int genderIndex)
+    {
+        gender = getGenderByIndex(genderIndex);
+    }
 
-void Person::increaseCounter()
-{
-    count++;
-}
+    void Person::setBirthDate(Date pBirthDate)
+    {
+        birthDate = pBirthDate;
+        age = 2024 - pBirthDate.getYear();
+    }
 
-// Getter Functions
-std::string Person::getFirstName() const
-{
-    return firstName;
-}
+    void Person::setJoinDate(Date pJoinDate)
+    {
+        joinDate = pJoinDate;
+    }
 
-std::string Person::getLastName() const
-{
-    return lastName;
-}
+    void Person::increaseCounter()
+    {
+        count++;
+    }
 
-std::string Person::getFullName() const
-{
-    return this->firstName + " " + this->lastName;
-}
+    // Getter Functions
+    std::string Person::getFirstName() const
+    {
+        return firstName;
+    }
 
-std::string Person::getPhoneNumber() const
-{
-    return this->phoneNumber.getPhoneNumber();
-}
+    std::string Person::getLastName() const
+    {
+        return lastName;
+    }
 
-std::string Person::getGender() const
-{
-    return gender;
-}
+    std::string Person::getFullName() const
+    {
+        return this->firstName + " " + this->lastName;
+    }
 
-int Person::getAge() const
-{
-    return this->age;
-}
+    std::string Person::getPhoneNumber() const
+    {
+        return this->phoneNumber.getPhoneNumber();
+    }
 
-Date Person::getBirthDate() const
-{
-    return birthDate;
-}
+    std::string Person::getGender() const
+    {
+        return gender;
+    }
 
-Date Person::getJoinDate() const
-{
-    return joinDate;
-}
+    int Person::getAge() const
+    {
+        return this->age;
+    }
 
-unsigned int Person::getPersonsCount()
-{
-    // Static functions work independently of the class so, this keyword is meaningless in the static functions
-    return count;
-}
+    Date Person::getBirthDate() const
+    {
+        return birthDate;
+    }
 
-// Helper function to get gender by index
-std::string Person::getGenderByIndex(int genderIndex) const
-{
-    const size_t genderLength = 3;
-    // When a variable is declared as static, space for it gets allocated for the lifetime of the program.
-    // Even if the function is called multiple times, space for the static variable is allocated only once
-    static const std::array<std::string, genderLength> genders = {"Male", "Female", "Unknown"};
+    Date Person::getJoinDate() const
+    {
+        return joinDate;
+    }
 
-    if (genderIndex != 0 && genderIndex != 1)
-        // Returns the latest one as default
-        return genders[genderLength - 1];
+    unsigned int Person::getPersonsCount()
+    {
+        // Static functions work independently of the class so, this keyword is meaningless in the static functions
+        return count;
+    }
 
-    return genders[genderIndex];
-}
+    // Helper function to get gender by index
+    std::string Person::getGenderByIndex(int genderIndex) const
+    {
+        const size_t genderLength = 3;
+        // When a variable is declared as static, space for it gets allocated for the lifetime of the program.
+        // Even if the function is called multiple times, space for the static variable is allocated only once
+        static const std::array<std::string, genderLength> genders = {"Male", "Female", "Unknown"};
 
-// Printer Functions
-void Person::showInformations() const
-{
-    std::cout << "\n*** Welcome, " << getFirstName() << " " << getLastName() << " ***" << std::endl;
-    std::cout << "\n*** Personal Information ***"
-              << "\nFirst Name: \t" << getFirstName()
-              << "\nLast Name: \t" << getLastName()
-              << "\nAge: \t" << getAge()
-              << "\nGender: \t" << getGender();
+        if (genderIndex != 0 && genderIndex != 1)
+            // Returns the latest one as default
+            return genders[genderLength - 1];
 
-    // Show phone number only if all of the requred fields are filled
-    std::cout << "\n*** Phone Number ***\n";
-    // Print phone number by using the overloaded << operator that is customized to display phone numbers 
-    std::cout << phoneNumber;
-    // It is also possible to print via another function
-    // phoneNumber.showPhoneNumber();
+        return genders[genderIndex];
+    }
 
-    std::cout << "\n*** Birth Date ***";
-    birthDate.showDate();
+    // Printer Functions
+    void Person::showInformations() const
+    {
+        std::cout << "\n*** Welcome, " << getFirstName() << " " << getLastName() << " ***" << std::endl;
+        std::cout << "\n*** Personal Information ***"
+                  << "\nFirst Name: \t" << getFirstName()
+                  << "\nLast Name: \t" << getLastName()
+                  << "\nAge: \t" << getAge()
+                  << "\nGender: \t" << getGender();
 
-    std::cout << "*** Join Date ***";
-    joinDate.showDate();
-}
+        // Show phone number only if all of the requred fields are filled
+        std::cout << "\n*** Phone Number ***\n";
+        // Print phone number by using the overloaded << operator that is customized to display phone numbers
+        std::cout << phoneNumber;
+        // It is also possible to print via another function
+        // phoneNumber.showPhoneNumber();
 
-// Friend Setter Functions
-void setFirstNameByFriendFunc(Person &person, std::string newFirstName)
-{
-    person.firstName = newFirstName;
-}
+        std::cout << "\n*** Birth Date ***";
+        birthDate.showDate();
 
-// Destructor
-Person::~Person()
-{
-    std::cout << "\nPerson Class is destructing with fields:..."
-              << "\nFirst Name: \t" << getFirstName()
-              << "\nLast Name: \t" << getLastName()
-              << "\nAge: \t" << getAge()
-              << "\nGender: \t" << getGender()
-              << "\nPhone Number: \t" << phoneNumber.getPhoneNumber()
-              << "\nBirth Date: \t" << birthDate.getDate()
-              << "\nJoin Date: \t" << joinDate.getDate()
-              << std::endl;
+        std::cout << "*** Join Date ***";
+        joinDate.showDate();
+    }
+
+    // Friend Setter Functions
+    void setFirstNameByFriendFunc(Person &person, std::string newFirstName)
+    {
+        person.firstName = newFirstName;
+    }
+
+    // Destructor
+    Person::~Person()
+    {
+        std::cout << "\nPerson Class is destructing with fields:..."
+                  << "\nFirst Name: \t" << getFirstName()
+                  << "\nLast Name: \t" << getLastName()
+                  << "\nAge: \t" << getAge()
+                  << "\nGender: \t" << getGender()
+                  << "\nPhone Number: \t" << phoneNumber.getPhoneNumber()
+                  << "\nBirth Date: \t" << birthDate.getDate()
+                  << "\nJoin Date: \t" << joinDate.getDate()
+                  << std::endl;
+    }
 }

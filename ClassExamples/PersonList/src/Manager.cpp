@@ -2,69 +2,72 @@
 #include "Manager.h"
 #include "Person.h"
 
-// Constructor
-Manager::Manager(std::string fName, std::string lName, std::string mGender, const PhoneNumber &mNumber, const Date &mBirthDate, const Date &mJoinDate, std::string mTitle, float mSharesPercentage)
-    : Person(fName, lName, mGender, mNumber, mBirthDate, mJoinDate), title(mTitle), sharesPercentage(mSharesPercentage) {}
-
-// Setters
-void Manager::setTitle(std::string title)
+namespace managerClass
 {
-    this->title = title;
-}
+    // Constructor
+    Manager::Manager(std::string fName, std::string lName, std::string mGender, const PhoneNumber &mNumber, const Date &mBirthDate, const Date &mJoinDate, std::string mTitle, float mSharesPercentage)
+        : Person(fName, lName, mGender, mNumber, mBirthDate, mJoinDate), title(mTitle), sharesPercentage(mSharesPercentage) {}
 
-void Manager::setSharesPercentage(float sharesPercentage)
-{
-    this->sharesPercentage = sharesPercentage;
-}
+    // Setters
+    void Manager::setTitle(std::string title)
+    {
+        this->title = title;
+    }
 
-// Getters
-std::string Manager::getTitle() const
-{
-    return this->title;
-}
+    void Manager::setSharesPercentage(float sharesPercentage)
+    {
+        this->sharesPercentage = sharesPercentage;
+    }
 
-float Manager::getSharesPercentage() const
-{
-    return this->sharesPercentage;
-}
+    // Getters
+    std::string Manager::getTitle() const
+    {
+        return this->title;
+    }
 
-// Printers
-void Manager::showTitle() const noexcept
-{
-    std::cout << "\n*** Title ***\n"
-              << this->getTitle()
-              << std::endl;
-}
+    float Manager::getSharesPercentage() const
+    {
+        return this->sharesPercentage;
+    }
 
-void Manager::showSharesPercentage() const noexcept
-{
-    std::cout << "\n*** Shares (%) ***\n"
-              << this->getSharesPercentage()
-              << "%"
-              << std::endl;
-}
+    // Printers
+    void Manager::showTitle() const noexcept
+    {
+        std::cout << "\n*** Title ***\n"
+                  << this->getTitle()
+                  << std::endl;
+    }
 
-// Overridden functions
-void Manager::showInformations() const
-{
-    // Print the base information by calling the default (virtual) function of the base class
-    // Calling the base function first is a good practice to avoid code duplication (DRY principle)
-    Person::showInformations();
+    void Manager::showSharesPercentage() const noexcept
+    {
+        std::cout << "\n*** Shares (%) ***\n"
+                  << this->getSharesPercentage()
+                  << "%"
+                  << std::endl;
+    }
 
-    // Then, print the additional specific fields of this derived class
-    this->showTitle();
-    this->showSharesPercentage();
-}
+    // Overridden functions
+    void Manager::showInformations() const
+    {
+        // Print the base information by calling the default (virtual) function of the base class
+        // Calling the base function first is a good practice to avoid code duplication (DRY principle)
+        Person::showInformations();
 
-// Destructor
-Manager::~Manager()
-{
-    std::cout << "Manager class is destructing.. for: \n"
-              << this->getFullName()
-              << " - "
-              << this->getTitle()
-              << " ("
-              << this->getSharesPercentage()
-              << "% Shares)"
-              << std::endl;
+        // Then, print the additional specific fields of this derived class
+        this->showTitle();
+        this->showSharesPercentage();
+    }
+
+    // Destructor
+    Manager::~Manager()
+    {
+        std::cout << "Manager class is destructing.. for: \n"
+                  << this->getFullName()
+                  << " - "
+                  << this->getTitle()
+                  << " ("
+                  << this->getSharesPercentage()
+                  << "% Shares)"
+                  << std::endl;
+    }
 }
