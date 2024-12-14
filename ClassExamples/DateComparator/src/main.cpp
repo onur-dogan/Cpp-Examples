@@ -1,10 +1,13 @@
 #include <iostream>
-#include "DateComparator.cpp"
+#include "DateComparator.h"
 
 using namespace datecomparator;
 
 int main()
 {
+    std::cout << "\n*** Welcome to review the Date Comparator Class Examples ***\n"
+              << std::endl;
+
     // Current date
     DateComparator currentDate;
     // Print current date

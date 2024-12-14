@@ -22,6 +22,7 @@ namespace datecomparator
         // Constructor
         explicit DateComparator(int, int, int, std::string);
         DateComparator(bool);
+        DateComparator();
 
         // Getters
         std::string getDate() const;
