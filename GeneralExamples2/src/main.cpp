@@ -80,6 +80,9 @@ void displayPreDefinedPreProcessors();
  */
 int main(int argc, char *argv[])
 {
+    std::cout << "\n*** Welcome to review the functions in the General Examples 2 ***\n"
+              << std::endl;
+
     // Print the arguments of the main function
     // printMainArguments(argc, argv);
 
