@@ -2,7 +2,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include <iomanip>
+#include <string_view>
 
 constexpr std::string_view Constants[] =
     {
@@ -51,7 +51,6 @@ constexpr std::string_view Constants[] =
         // stringMemoryOperations
         "Examples of some string memory operations",
         // displayBits
-        "Display the equivalent of an unsigned integer as bits"
-};
+        "Display the equivalent of an unsigned integer as bits"};
 
 #endif
