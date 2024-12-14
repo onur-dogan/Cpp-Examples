@@ -1161,7 +1161,10 @@ inline void displayOptions(vOption &options)
 
 int main()
 {
-    std::cout << "Enter the number of the function which you would like to run: "
+    std::cout << "\n*** Welcome to review the functions in the General Examples ***\n"
+              << std::endl;
+
+    std::cout << "\nEnter the number of the function which you would like to run: "
               << "(Type '" << std::cin.eof() << "' to end the process)"
               << std::endl;
 
