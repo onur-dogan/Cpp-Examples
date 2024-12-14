@@ -218,3 +218,19 @@ previous handler. The newly configured handler function is the function called b
 - `memcmp` compares the first num bytes of the block of memory pointed by a pointer to the first num bytes pointed by other pointer. Returning 0 if they all match or a value different from zero representing which is greater if they do not.
 - `memmove` copies N bytes of the source string to the destination string, guaranteeing correct behavior for overlapping strings.
 - `const_cast` operator is used to cast away the **constness** of variables. It configures a constant(**const**) variable as a non-const variable.
+- Notes of `CMake` commands:
+    - `cmake_minimum_required` sets the minimum required version of cmake for a project. Also updates the policy settings.
+    - `project` sets the name of the project, and stores it in the variable `PROJECT_NAME`. When called from the top-level `CMakeLists.txt` also stores the project name in the variable `CMAKE_PROJECT_NAME`.
+    - `set` sets a **normal**, **cache**, or **environment** variable to a given value.
+        - Setting normal value: `set(<variable> <value>... [PARENT_SCOPE])`. It sets or unsets `<variable>` in the current function or directory scope. If at least one `<value>...` is given, it sets the variable to that value. Otherwise, it unsets the variable. This is equivalent to `unset(<variable>)`.
+        - Setting cache entry: `set(<variable> <value>... CACHE <type> <docstring> [FORCE])`. It sets the given cache `<variable>` (cache entry). Since cache entries are meant to provide user-settable values this does not overwrite existing cache entries by default. Use the **FORCE** option to overwrite existing entries.
+        - Setting environment variable: `set(ENV{<variable>} [<value>])`. It sets an environment variable to the given value. Subsequent calls of `$ENV{<variable>}` will return this new value. 
+    - `add_executable` adds an executable to the project using the specified source files.
+    - `add_library` adds a library to the project using the specified source files. 
+        - Setting normal libraries like `add_library(<name> [<type>] [EXCLUDE_FROM_ALL] <sources>...)` add a library target called `<name>` to be built from the source files listed in the command invocation. The optional `<type>` specifies the type of library to be created:
+            - `STATIC`: An archive of object files for use when linking other targets.
+            - `SHARED`: A dynamic library that may be linked by other targets and loaded at runtime.
+            - `MODULE`: A plugin that may not be linked by other targets, but may be dynamically loaded at runtime using dlopen-like functionality.
+        - If no `<type>` is given the default is **STATIC** or **SHARED** based on the value of the **BUILD_SHARED_LIBS** variable. The options are:
+            - `EXCLUDE_FROM_ALL` sets the `EXCLUDE_FROM_ALL` target property automatically.
+    - `target_compile_features` adds expected compiler features to a target like `target_compile_features(<target> <PRIVATE|PUBLIC|INTERFACE> <feature> [...])`
