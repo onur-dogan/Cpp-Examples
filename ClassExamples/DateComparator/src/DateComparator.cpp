@@ -46,7 +46,6 @@ namespace datecomparator
         time_t timestamp = time(NULL);
         // Store the current time
         this->currentTime = *localtime(&timestamp);
-        ;
 
         // Set current date as default
         year = currentTime.tm_year + 1900;
@@ -57,6 +56,9 @@ namespace datecomparator
 
     DateComparator::DateComparator(int yearP, int monthP, int dayP, std::string timezoneP)
         : year(yearP), month(monthP), day(dayP), timezone(timezoneP) {}
+
+    // Default date comparator class that generates default date
+    DateComparator::DateComparator() : DateComparator(true) {}
 
     // Getters
     std::string DateComparator::getDate() const
