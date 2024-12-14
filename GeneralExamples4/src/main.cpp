@@ -81,14 +81,16 @@ struct methodFunctionStr
 
 int main(int argc, char *argv[])
 {
+    std::cout << "\n*** Welcome to review the functions in the General Examples 4 ***\n"
+              << std::endl;
+
     std::vector<methodFunctionStr> definitions{
         // Examples and explanations of some searching algorithm methods
         {f : searchingMethods, desc : "Searching Algorithm Examples"},
         // Examples and explanations of some sorting algorithm methods
         {f : sortingMethods, desc : "Sorting Algorithm Examples"}};
 
-    std::cout << "**Welcome to the 4th General Algorithm Examples**";
-    std::cout << "**\nType number to see the example outputs.. (Type -1 to end the process!)**";
+    std::cout << "\n**Type number to see the example outputs.. (Type -1 to end the process!)**";
 
     int selection;
     while (selection != -1)
