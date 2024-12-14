@@ -12,6 +12,9 @@ void testNodeList(NodeList<T> &, const std::string &);
 
 int main()
 {
+    std::cout << "\n*** Welcome to review the Node List Class Examples ***\n"
+              << std::endl;
+
     NodeList<int> integerNodeList;
     testNodeList(integerNodeList, "integer");
 
@@ -43,7 +46,7 @@ void testNodeList(NodeList<T> &nodeList, const std::string &typeName)
 
     do
     {
-        std::cout << "\n\nSelection is: ";
+        std::cout << "\nNew selection is: ";
         std::cin >> selection;
 
         switch (selection)
