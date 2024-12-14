@@ -57,4 +57,5 @@ namespace course
         int courseNameLimit;
     };
 }
+
 #endif

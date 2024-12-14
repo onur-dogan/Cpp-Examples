@@ -1,10 +1,13 @@
 #include <iostream>
-#include "Course.cpp"
+#include "Course.h"
 
 using namespace course;
 
 int main()
 {
+    std::cout << "\n*** Welcome to review the Course Class Examples ***\n"
+              << std::endl;
+
     // Define a new course variable that have Course class properties
     Course testCourse("Test Course", "Random Author", 20);
     std::cout << "Display default defined course name and instructor manually ==> "
