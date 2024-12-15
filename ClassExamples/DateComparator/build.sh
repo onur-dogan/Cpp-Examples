@@ -18,4 +18,8 @@ fi
 
 echo "CMake Building processes are done successfully for Date Comparator Class Examples!"
 
-./${project_name}
+# If the first parameter sent as fortest, then shouldn't run the functions. It is just for testing build process
+first_arg=$1
+if [ "$first_arg" != "fortest" ]; then
+    ./${project_name}
+fi
