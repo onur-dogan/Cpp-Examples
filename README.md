@@ -1,5 +1,5 @@
 # Cpp-Examples
-The C++ Project includes some examples and notes (mostly C++11). It also includes some additional examples/notes from the C++ How to Program (9th Edition) book.
+The C++ Project includes some examples and notes (mostly C++11). It also contains additional examples/notes from the C++ How to Program (9th Edition) book.
 
 
 **Notes**
