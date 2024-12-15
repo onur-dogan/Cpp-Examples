@@ -22,5 +22,5 @@ A clear and concise description of what you expected to happen.
 ### 5. (optional) Screenshots
 If applicable, add screenshots to help explain your problem.
 
-### 6. (optional)Additional context
+### 6. (optional) Additional context
 Add any other context about the problem here. Include any logs or source code that would be helpful to diagnose the problem.
